@@ -343,12 +343,32 @@ def fetch_fund_data_with_cache(fund_name, time_selection):
 def create_fund_report_tab(fund_name, color_palette, time_selection="Latest"):
     apply_custom_css()
     st.write(f"### {fund_name} Fund Report ({time_selection})")
-    fund_data = fetch_fund_data(fund_name, time_selection)
     
-    if fund_data is not None and not fund_data.empty:
-        create_pie_charts_and_table(fund_data)
+    # Special handling for Guinness Global Investors Fund - use local data
+    if fund_name == "Guinness Global Investors Fund":
+        try:
+            # Load local data
+            fund_data = pd.read_csv('data.csv')
+            # Filter for GGI fund only
+            fund_data = fund_data[fund_data['fund_name'] == 'Guinness Global Investors Fund']
+            
+            # Remove cash row for charts (but keep for table)
+            fund_data_for_charts = fund_data[fund_data['name'] != 'Cash'].copy()
+            
+            if not fund_data.empty:
+                create_pie_charts_and_table(fund_data_for_charts)
+            else:
+                st.error(f"No data found for {fund_name} in local data.")
+        except Exception as e:
+            st.error(f"Error loading local data for {fund_name}: {str(e)}")
     else:
-        st.error(f"No data found for {fund_name}.")
+        # Use API for other funds
+        fund_data = fetch_fund_data(fund_name, time_selection)
+        
+        if fund_data is not None and not fund_data.empty:
+            create_pie_charts_and_table(fund_data)
+        else:
+            st.error(f"No data found for {fund_name}.")
 
 # Function to plot charts (for both country and fund reports)
 def plot_chart(df, y_column, title, color):
