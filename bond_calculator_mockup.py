@@ -129,14 +129,14 @@ def create_google_sheets_tab():
     if sheet_url:
         st.markdown("#### Sheet Preview")
         
-        # Create mock data
+        # Create mock data with proper date types
         mock_sheet_data = pd.DataFrame({
             "ISIN": ["US912810RG64", "US912810QZ89", "GB00B24FF097", "XS1234567890", "US91282ABC12"],
             "Description": ["T 2.5 05/15/2030", "T 3.0 08/15/2028", "UKT 4.25 12/07/2040", 
                            "AAPL 3.45 02/09/2029", "T 1.75 11/15/2029"],
             "Price": [98.5, 99.125, 112.375, 102.25, 95.875],
             "Face Amount": [1000000, 500000, 750000, 2000000, 1500000],
-            "Settlement": ["2024-01-15", "2024-01-15", "2024-01-15", "2024-01-15", "2024-01-15"]
+            "Settlement": pd.to_datetime(["2024-01-15", "2024-01-15", "2024-01-15", "2024-01-15", "2024-01-15"])
         })
         
         # Editable dataframe
@@ -147,7 +147,10 @@ def create_google_sheets_tab():
             column_config={
                 "Price": st.column_config.NumberColumn(min_value=0, max_value=200, step=0.125),
                 "Face Amount": st.column_config.NumberColumn(min_value=0, step=100000),
-                "Settlement": st.column_config.DateColumn()
+                "Settlement": st.column_config.DateColumn(
+                    "Settlement Date",
+                    format="YYYY-MM-DD"
+                )
             }
         )
         

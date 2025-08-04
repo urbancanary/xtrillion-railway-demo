@@ -229,31 +229,34 @@ def create_pie_chart(data, names, values, title, legend_position='right'):
         outsidetextfont=dict(color='white', size=12),
     )
     
-    legend_x = 0.01 if legend_position == 'left' else 1.02
-    legend_y = 1.1
-    
+    # Fixed layout settings for consistency
     fig.update_layout(
         title=dict(
             text=title,
-            font=dict(size=20)
+            font=dict(size=20),
+            x=0.5,  # Center the title
+            xanchor='center',
+            y=0.98,  # Fixed title position
+            yanchor='top'
         ),
         paper_bgcolor='#1f1f1f',
         plot_bgcolor='#1f1f1f',
         font=dict(color='white', size=16),
-        height=500,
+        height=600,  # Fixed height for all charts
         width=None,  # Will be set by container
         transition_duration=500,
-        margin=dict(l=20, r=20, t=60, b=100),  # More bottom margin for labels
+        margin=dict(l=50, r=150, t=80, b=80),  # Fixed margins for consistency
         legend=dict(
             bgcolor='rgba(0,0,0,0)',
             bordercolor='rgba(0,0,0,0)',
             font=dict(color='white', size=14),
-            x=legend_x,
-            y=legend_y,
+            x=1.02,  # Fixed legend position
+            y=0.5,   # Middle of chart
             xanchor='left',
-            yanchor='top'
+            yanchor='middle'
         ),
         showlegend=True,
+        uniformtext=dict(minsize=10, mode='hide'),  # Ensure text doesn't affect layout
     )
     return fig
 
@@ -424,27 +427,34 @@ def create_pie_charts_and_table(fund_data):
             
             for i, (tab, (chart_type, fig)) in enumerate(zip(tabs, chart_contents)):
                 with tab:
-                    # Update figure size for better display in tabs with more bottom margin for labels
-                    fig.update_layout(
-                        height=600,
-                        width=None,  # Use full width
-                        margin=dict(l=20, r=20, t=40, b=80)  # Increased bottom margin for labels
-                    )
+                    # Create a container with fixed dimensions
+                    chart_container = st.container()
                     
-                    # Create columns for chart and export button
-                    chart_col, export_col = st.columns([5, 1])
-                    with chart_col:
-                        st.plotly_chart(fig, use_container_width=True, key=f"chart_{i}")
-                    with export_col:
-                        # Add export button
-                        if st.download_button(
-                            label="📥 Export",
-                            data=fig.to_html(include_plotlyjs='cdn'),
-                            file_name=f"{chart_type}_chart.html",
-                            mime="text/html",
-                            key=f"export_{i}"
-                        ):
-                            st.success("Chart exported successfully!", icon="✅")
+                    with chart_container:
+                        # Create columns for chart and export button
+                        chart_col, export_col = st.columns([5, 1])
+                        with chart_col:
+                            # Display chart with fixed config for consistent rendering
+                            st.plotly_chart(
+                                fig, 
+                                use_container_width=True, 
+                                key=f"chart_{i}",
+                                config={
+                                    'displayModeBar': False,  # Hide toolbar for cleaner look
+                                    'staticPlot': False,
+                                    'responsive': True
+                                }
+                            )
+                        with export_col:
+                            # Add export button
+                            if st.download_button(
+                                label="📥 Export",
+                                data=fig.to_html(include_plotlyjs='cdn'),
+                                file_name=f"{chart_type}_chart.html",
+                                mime="text/html",
+                                key=f"export_{i}"
+                            ):
+                                st.success("Chart exported successfully!", icon="✅")
         
         # Add summary cards after charts
         create_portfolio_summary_cards(fund_data)
@@ -465,11 +475,13 @@ def create_pie_charts_and_table(fund_data):
             if len(filtered_data) == 0:
                 st.warning(f"No results found for '{search_term}'")
         
-        # Holdings Data Section with export button
-        col1, col2 = st.columns([3, 1])
+        # Holdings Data Section with view options
+        col1, col2, col3 = st.columns([2, 1, 1])
         with col1:
             st.markdown("### 📋 Holdings Data")
         with col2:
+            view_mode = st.selectbox("View Mode", ["Standard Table", "Interactive Grid"], key="view_mode")
+        with col3:
             # Export to CSV button
             csv = convert_df_to_csv(filtered_data)
             st.download_button(
@@ -481,48 +493,59 @@ def create_pie_charts_and_table(fund_data):
             )
         st.markdown("---")
 
-        # Style the DataFrame using Styler with hover effects
-        styled_df = filtered_data.style.map(lambda _: 'color: white') \
-            .set_table_styles([
-                {'selector': 'th', 'props': [
-                    ('background-color', '#2f2f2f'),  # Header color
-                    ('color', 'white'),
-                    ('font-weight', 'bold'),
-                    ('padding', '10px'),
-                    ('text-align', 'left'),
-                    ('position', 'sticky'),
-                    ('top', '0'),
-                    ('z-index', '10')
-                ]},
-                {'selector': 'td', 'props': [
-                    ('padding', '10px'), 
-                    ('color', 'white'), 
-                    ('white-space', 'nowrap'),  # Ensure text doesn't wrap
-                    ('overflow', 'hidden'), 
-                    ('text-overflow', 'ellipsis'),  # Handle overflow with ellipsis if needed
-                    ('text-align', 'left'),
-                    ('background-color', '#1e1e1e'),
-                    ('max-width', '300px'),
-                    ('transition', 'background-color 0.2s ease')
-                ]},
-                {'selector': '.row_heading, .col_heading', 'props': [
-                    ('background-color', '#1e1e1e'),  # Row header color
-                    ('color', 'white')
-                ]},
-                {'selector': 'tbody tr:nth-child(even)', 'props': [
-                    ('background-color', '#252525')  # Even row background color
-                ]},
-                {'selector': 'tbody tr:hover', 'props': [
-                    ('background-color', '#3a3a3a !important'),  # Hover color
-                    ('cursor', 'pointer')
-                ]},
-                {'selector': 'tbody tr:hover td', 'props': [
-                    ('background-color', '#3a3a3a !important')  # Ensure all cells in row highlight
-                ]}
-            ])
+        # Display based on selected view mode
+        if view_mode == "Interactive Grid":
+            try:
+                from interactive_holdings_table import create_interactive_holdings_table
+                create_interactive_holdings_table(filtered_data)
+            except ImportError:
+                st.warning("Interactive Grid requires streamlit-aggrid. Falling back to standard table.")
+                st.info("To enable Interactive Grid, run: pip install streamlit-aggrid")
+                view_mode = "Standard Table"
+        
+        if view_mode == "Standard Table":
+            # Style the DataFrame using Styler with hover effects
+            styled_df = filtered_data.style.map(lambda _: 'color: white') \
+                .set_table_styles([
+                    {'selector': 'th', 'props': [
+                        ('background-color', '#2f2f2f'),  # Header color
+                        ('color', 'white'),
+                        ('font-weight', 'bold'),
+                        ('padding', '10px'),
+                        ('text-align', 'left'),
+                        ('position', 'sticky'),
+                        ('top', '0'),
+                        ('z-index', '10')
+                    ]},
+                    {'selector': 'td', 'props': [
+                        ('padding', '10px'), 
+                        ('color', 'white'), 
+                        ('white-space', 'nowrap'),  # Ensure text doesn't wrap
+                        ('overflow', 'hidden'), 
+                        ('text-overflow', 'ellipsis'),  # Handle overflow with ellipsis if needed
+                        ('text-align', 'left'),
+                        ('background-color', '#1e1e1e'),
+                        ('max-width', '300px'),
+                        ('transition', 'background-color 0.2s ease')
+                    ]},
+                    {'selector': '.row_heading, .col_heading', 'props': [
+                        ('background-color', '#1e1e1e'),  # Row header color
+                        ('color', 'white')
+                    ]},
+                    {'selector': 'tbody tr:nth-child(even)', 'props': [
+                        ('background-color', '#252525')  # Even row background color
+                    ]},
+                    {'selector': 'tbody tr:hover', 'props': [
+                        ('background-color', '#3a3a3a !important'),  # Hover color
+                        ('cursor', 'pointer')
+                    ]},
+                    {'selector': 'tbody tr:hover td', 'props': [
+                        ('background-color', '#3a3a3a !important')  # Ensure all cells in row highlight
+                    ]}
+                ])
 
-        # Display the styled dataframe
-        st.dataframe(styled_df, use_container_width=True, height=600)
+            # Display the styled dataframe
+            st.dataframe(styled_df, use_container_width=True, height=600)
         
         # Add help text for table columns
         with st.expander("📖 Column Definitions", expanded=False):

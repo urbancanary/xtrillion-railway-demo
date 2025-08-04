@@ -148,38 +148,104 @@ def display_welcome_page():
     </div>
     """, unsafe_allow_html=True)
     
-    # Feature cards
+    # Feature cards - styled as clickable cards
     st.markdown("""
-    <div class="feature-grid">
-        <div class="feature-card">
-            <div class="feature-icon">🌐</div>
-            <div class="feature-title">GGI Portfolio</div>
-            <div class="feature-desc">Our flagship Wealthy Nations Bond Fund with diversified holdings</div>
-        </div>
-        <div class="feature-card">
-            <div class="feature-icon">📊</div>
-            <div class="feature-title">Fund Reports</div>
-            <div class="feature-desc">Detailed analysis of SKEWNBF and SKESBF funds</div>
-        </div>
-        <div class="feature-card">
-            <div class="feature-icon">🌍</div>
-            <div class="feature-title">Country Analysis</div>
-            <div class="feature-desc">In-depth reports on Israel, Qatar, Mexico, and Saudi Arabia</div>
-        </div>
-        <div class="feature-card">
-            <div class="feature-icon">📈</div>
-            <div class="feature-title">Real-time Data</div>
-            <div class="feature-desc">Latest market data and portfolio performance metrics</div>
-        </div>
-    </div>
+    <style>
+        .stButton > button {
+            height: 150px;
+            width: 100%;
+            background: linear-gradient(135deg, #2a2a2a 0%, #1a1a1a 100%);
+            border: 1px solid #3a3a3a;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+            padding: 1.5rem;
+            text-align: left;
+        }
+        .stButton > button:hover {
+            transform: translateY(-5px);
+            border-color: #C8102E;
+            background: linear-gradient(135deg, #3a3a3a 0%, #2a2a2a 100%);
+            box-shadow: 0 6px 12px rgba(227, 6, 19, 0.2);
+        }
+        .stButton > button > div {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 0.5rem;
+        }
+        .card-icon {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+        .card-title {
+            color: #C8102E;
+            font-weight: bold;
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+        }
+        .card-desc {
+            color: #cccccc;
+            font-size: 0.9rem;
+            line-height: 1.4;
+        }
+    </style>
     """, unsafe_allow_html=True)
+    
+    # Create clickable cards that open sidebar
+    col1, col2 = st.columns(2)
+    
+    with col1:
+        # GGI Portfolio Card
+        ggi_clicked = st.button(
+            "🌐\n\n**GGI Portfolio**\n\nOur flagship Wealthy Nations Bond Fund with diversified holdings",
+            key="ggi_card",
+            use_container_width=True
+        )
+        if ggi_clicked:
+            st.session_state.sidebar_state = "expanded"
+            st.session_state.navigate_to = "ggi"
+            st.rerun()
+        
+        # Country Analysis Card
+        country_clicked = st.button(
+            "🌍\n\n**Country Analysis**\n\nIn-depth reports on Israel, Qatar, Mexico, and Saudi Arabia",
+            key="country_card",
+            use_container_width=True
+        )
+        if country_clicked:
+            st.session_state.sidebar_state = "expanded"
+            st.session_state.navigate_to = "israel"
+            st.rerun()
+    
+    with col2:
+        # Fund Reports Card
+        fund_clicked = st.button(
+            "📊\n\n**Fund Reports**\n\nDetailed analysis of SKEWNBF and SKESBF funds",
+            key="fund_card",
+            use_container_width=True
+        )
+        if fund_clicked:
+            st.session_state.sidebar_state = "expanded"
+            st.session_state.navigate_to = "skewnbf"
+            st.rerun()
+        
+        # Bond Calculator Card
+        calc_clicked = st.button(
+            "🧮\n\n**Bond Calculator**\n\nAdvanced bond analytics and portfolio calculations",
+            key="calc_card",
+            use_container_width=True
+        )
+        if calc_clicked:
+            st.session_state.sidebar_state = "expanded"
+            st.session_state.navigate_to = "calculator"
+            st.rerun()
     
     # Navigation hint
     st.markdown("""
     <div class="nav-hint">
         <div class="nav-hint-text">
-        👈 Use the navigation menu on the left to explore our reports and tools.
-        Start with <strong>GGI Portfolio</strong> to see our flagship fund.
+        👆 Click any card above to explore our reports and tools. 
+        The navigation menu will open automatically to show all available options.
         </div>
     </div>
     """, unsafe_allow_html=True)

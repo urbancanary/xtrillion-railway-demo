@@ -2,11 +2,14 @@
 
 import streamlit as st
 
+# Check if we should start with sidebar collapsed
+initial_state = "collapsed" if 'sidebar_state' not in st.session_state else st.session_state.get('sidebar_state', 'expanded')
+
 st.set_page_config(
     page_title="Guinness Global Investors",
     page_icon="🌐",
     layout="wide",
-    initial_sidebar_state="expanded",
+    initial_sidebar_state=initial_state,
     menu_items={
         'Get Help': None,
         'Report a bug': None,
@@ -126,7 +129,34 @@ with st.sidebar:
     # Create a container for the logo that will be positioned at top
     logo_placeholder = st.container()
 
-# Create navigation
+# Check if we need to navigate to a specific page
+if 'navigate_to' in st.session_state:
+    # Map navigation targets to page functions
+    nav_map = {
+        'ggi': ggi_portfolio,
+        'skewnbf': skewnbf_portfolio,
+        'skesbf': skesbf_portfolio,
+        'israel': israel_report,
+        'qatar': qatar_report,
+        'mexico': mexico_report,
+        'saudi-arabia': saudi_arabia_report,
+        'calculator': bond_calculator,
+        'valuation': portfolio_valuation
+    }
+    
+    # Get the target page function
+    target = st.session_state.navigate_to
+    if target in nav_map:
+        # Clear the navigation flag
+        del st.session_state.navigate_to
+        # Set the default page
+        default_page = nav_map[target]
+    else:
+        default_page = welcome_page
+else:
+    default_page = welcome_page
+
+# Create navigation with optional default
 pg = st.navigation(pages, position="sidebar")
 
 # Now add logo content to the placeholder
