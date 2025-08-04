@@ -34,6 +34,7 @@ from welcome_page_guinness_nav import display_welcome_page
 from logo_utils import get_logo_base64
 from bond_calculator_mockup import create_bond_calculator_page, add_custom_styles
 from portfolio_valuation import create_portfolio_valuation_page, add_valuation_styles
+from trade_calculator import create_trade_calculator_page, add_trade_styles
 import chatbot_demo
 
 # Official Guinness brand color palette
@@ -103,6 +104,10 @@ def portfolio_valuation():
     add_valuation_styles()
     create_portfolio_valuation_page()
 
+def trade_calculator():
+    add_trade_styles()
+    create_trade_calculator_page()
+
 # Define navigation pages with correct path handling
 pages = {
     "Main": [
@@ -119,6 +124,7 @@ pages = {
     ],
     "Tools": [
         st.Page(portfolio_valuation, title="Portfolio Valuation", icon="💰", url_path="valuation"),
+        st.Page(trade_calculator, title="Trade Calculator", icon="💱", url_path="trades"),
         st.Page(bond_calculator, title="Bond Calculator", icon="🧮", url_path="calculator"),
         st.Page(user_guide, title="User Guide", icon="📖", url_path="guide"),
     ]
