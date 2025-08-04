@@ -425,8 +425,8 @@ def create_mock_yield_curve():
         legend=dict(yanchor="top", y=0.99, xanchor="left", x=0.01)
     )
     
-    fig.update_xaxis(gridcolor='lightgray')
-    fig.update_yaxis(gridcolor='lightgray')
+    fig.update_xaxes(gridcolor='lightgray')
+    fig.update_yaxes(gridcolor='lightgray')
     
     return fig
 
