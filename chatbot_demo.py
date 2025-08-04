@@ -1,11 +1,21 @@
 # chatbot_demo.py
 
 import streamlit as st
-from openai import OpenAI
 import os
 import numpy as np
 from sklearn.metrics.pairwise import cosine_similarity
 import logging
+
+# Try to import OpenAI with proper error handling
+try:
+    from openai import OpenAI
+    api_key = os.getenv("OPENAI_API_KEY")
+    if api_key:
+        openai_client = OpenAI(api_key=api_key)
+    else:
+        openai_client = None
+except Exception as e:
+    openai_client = None
 
 class ChatbotAndy:
     def __init__(self, response_mode='auto', docs_service=None, drive_service=None, response_length=200, language="English", tone="Professional", style="The Economist"):
@@ -16,7 +26,7 @@ class ChatbotAndy:
         self.language = language
         self.tone = tone
         self.style = style
-        self.client = OpenAI()
+        self.client = openai_client
         self.conversation_history = []
         self.greeting_keywords = ["hello", "hi", "hey", "good morning", "good afternoon", "good evening"]
         self.initial_greeting = self.get_greeting_response()
@@ -40,6 +50,8 @@ class ChatbotAndy:
             return None, []
 
     def get_relevant_context(self, query, num_sentences=5):
+        if not self.client:
+            return []
         query_embedding = self.client.embeddings.create(input=[query], model="text-embedding-3-large").data[0].embedding
         similarities = cosine_similarity([query_embedding], self.embeddings)[0]
         most_similar = np.argsort(similarities)[-num_sentences:]
@@ -85,6 +97,9 @@ class ChatbotAndy:
         """
         
         try:
+            if not self.client:
+                return "OpenAI API key not configured. Please set OPENAI_API_KEY environment variable."
+            
             response = self.client.chat.completions.create(
                 model="gpt-4o-mini",
                 messages=[
@@ -122,6 +137,9 @@ class ChatbotAndy:
         """
 
         try:
+            if not self.client:
+                return "OpenAI API key not configured. Please set OPENAI_API_KEY environment variable."
+            
             response = self.client.chat.completions.create(
                 model="gpt-4o-mini",
                 messages=[

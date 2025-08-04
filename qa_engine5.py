@@ -2,9 +2,19 @@
 
 import os
 import numpy as np
-from openai import OpenAI
 
-client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
+# Try to import OpenAI, but handle missing API key gracefully
+try:
+    from openai import OpenAI
+    api_key = os.getenv("OPENAI_API_KEY")
+    if api_key:
+        client = OpenAI(api_key=api_key)
+    else:
+        print("Warning: OPENAI_API_KEY not set. QA features will be limited.")
+        client = None
+except Exception as e:
+    print(f"Warning: OpenAI import failed: {e}")
+    client = None
 
 class QAEngine:
     def __init__(self, sentences_file, embeddings_file):
@@ -39,6 +49,9 @@ class QAEngine:
         
     def query_embeddings(self, query, top_k=10):
         try:
+            if not self.client:
+                return []
+            
             query_embedding = self.client.embeddings.create(
                 input=[query],
                 model="text-embedding-3-large"
