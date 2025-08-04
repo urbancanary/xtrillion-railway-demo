@@ -51,12 +51,14 @@ except ImportError:
 try:
     from sidebar_demo import sidebar_component
     modules_status['sidebar'] = True
-except ImportError:
+except Exception as e:
     modules_status['sidebar'] = False
+    sidebar_error = str(e)
     def sidebar_component():
         with st.sidebar:
             st.header("XTrillion Demo")
             st.write("Sidebar module not available")
+            st.error(f"Error: {sidebar_error}")
 
 try:
     import chatbot_demo
