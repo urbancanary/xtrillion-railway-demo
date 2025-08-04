@@ -15,9 +15,10 @@ def display_welcome_page():
         }
         .brand-title {
             color: #E30613;
-            font-size: 3.5rem;
+            font-size: 2.8rem;
             font-weight: bold;
             margin-bottom: 0.5rem;
+            line-height: 1.2;
         }
         .brand-subtitle {
             color: #ffffff;
@@ -115,8 +116,7 @@ def display_welcome_page():
             """, unsafe_allow_html=True)
     
     # Brand text
-    st.markdown('<h1 class="brand-title">Guinness</h1>', unsafe_allow_html=True)
-    st.markdown('<h2 class="brand-subtitle">Global Investors</h2>', unsafe_allow_html=True)
+    st.markdown('<h1 class="brand-title">Guinness Global Investors</h1>', unsafe_allow_html=True)
     st.markdown('<p class="brand-tagline">Positively Different</p>', unsafe_allow_html=True)
     
     # Welcome message
