@@ -85,40 +85,56 @@ def display_welcome_page():
     # Main container
     st.markdown('<div class="welcome-container">', unsafe_allow_html=True)
     
-    # Logo in circular frame
-    col1, col2, col3 = st.columns([1, 2, 1])
-    with col2:
-        # Get base64 encoded logo
-        logo_base64 = get_logo_base64()
-        
-        if logo_base64:
-            # Logo with actual image in circle
-            st.markdown(f"""
-            <div style="text-align: center; margin-bottom: 1rem;">
-                <div style="width: 150px; height: 150px; background-color: #ffffff; 
-                            border-radius: 50%; margin: 0 auto; display: flex; 
-                            align-items: center; justify-content: center; 
-                            box-shadow: 0 4px 6px rgba(0,0,0,0.3); overflow: hidden;">
-                    <img src="data:image/png;base64,{logo_base64}" 
-                         style="width: 70%; height: auto; object-fit: contain;">
-                </div>
-            </div>
-            """, unsafe_allow_html=True)
-        else:
-            # Fallback to G placeholder
-            st.markdown("""
-            <div style="text-align: center; margin-bottom: 1rem;">
-                <div style="width: 150px; height: 150px; background-color: #ffffff; 
-                            border-radius: 50%; margin: 0 auto; display: flex; 
-                            align-items: center; justify-content: center; box-shadow: 0 4px 6px rgba(0,0,0,0.3);">
-                    <span style="color: #E30613; font-size: 60px; font-weight: bold;">G</span>
-                </div>
-            </div>
-            """, unsafe_allow_html=True)
+    # Header with logo and company name aligned
+    # Get base64 encoded logo
+    logo_base64 = get_logo_base64()
     
-    # Brand text
-    st.markdown('<h1 class="brand-title">Guinness Global Investors</h1>', unsafe_allow_html=True)
-    st.markdown('<p class="brand-tagline">Positively Different</p>', unsafe_allow_html=True)
+    if logo_base64:
+        # Logo and brand text in horizontal layout
+        st.markdown(f"""
+        <div style="display: flex; align-items: center; justify-content: center; margin-bottom: 2rem;">
+            <div style="width: 120px; height: 120px; background-color: #ffffff; 
+                        border-radius: 50%; display: flex; 
+                        align-items: center; justify-content: center; 
+                        box-shadow: 0 4px 6px rgba(0,0,0,0.3); overflow: hidden; 
+                        margin-right: 2rem;">
+                <img src="data:image/png;base64,{logo_base64}" 
+                     style="width: 70%; height: auto; object-fit: contain;">
+            </div>
+            <div style="text-align: left;">
+                <h1 style="color: #E30613; font-size: 2.5rem; font-weight: bold; 
+                           margin: 0; line-height: 1.2; white-space: nowrap;">
+                    Guinness Global Investors
+                </h1>
+                <p style="color: #E30613; font-style: italic; font-size: 1.2rem; 
+                          margin: 0.5rem 0 0 0;">
+                    Positively Different
+                </p>
+            </div>
+        </div>
+        """, unsafe_allow_html=True)
+    else:
+        # Fallback with G placeholder
+        st.markdown("""
+        <div style="display: flex; align-items: center; justify-content: center; margin-bottom: 2rem;">
+            <div style="width: 120px; height: 120px; background-color: #ffffff; 
+                        border-radius: 50%; display: flex; 
+                        align-items: center; justify-content: center; 
+                        box-shadow: 0 4px 6px rgba(0,0,0,0.3); margin-right: 2rem;">
+                <span style="color: #E30613; font-size: 48px; font-weight: bold;">G</span>
+            </div>
+            <div style="text-align: left;">
+                <h1 style="color: #E30613; font-size: 2.5rem; font-weight: bold; 
+                           margin: 0; line-height: 1.2; white-space: nowrap;">
+                    Guinness Global Investors
+                </h1>
+                <p style="color: #E30613; font-style: italic; font-size: 1.2rem; 
+                          margin: 0.5rem 0 0 0;">
+                    Positively Different
+                </p>
+            </div>
+        </div>
+        """, unsafe_allow_html=True)
     
     # Welcome message
     st.markdown("""
