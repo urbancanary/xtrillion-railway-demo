@@ -272,7 +272,7 @@ def create_pie_charts_and_table(fund_data):
             st.warning("Region data not available.")
 
         # Portfolio Analysis Section
-        st.markdown("### 📊 Portfolio Analysis")
+        st.markdown("<h3 style='margin-top: 1rem; margin-bottom: 0.5rem;'>📊 Portfolio Analysis</h3>", unsafe_allow_html=True)
         st.markdown("---")
         
         # Create tabs for better chart display
@@ -300,9 +300,9 @@ def create_pie_charts_and_table(fund_data):
                 with tab:
                     # Update figure size for better display in tabs
                     fig.update_layout(
-                        height=600,
+                        height=550,
                         width=None,  # Use full width
-                        margin=dict(l=20, r=20, t=50, b=20)
+                        margin=dict(l=20, r=20, t=40, b=20)
                     )
                     st.plotly_chart(fig, use_container_width=True)
 
@@ -370,9 +370,9 @@ def create_fund_report_tab(fund_name, color_palette, time_selection="Latest"):
     apply_custom_css()
     # Avoid redundant "Fund" in title
     if "Fund" in fund_name:
-        st.write(f"### {fund_name} Report ({time_selection})")
+        st.markdown(f"<h3 style='margin-top: 0; padding-top: 0;'>{fund_name} Report ({time_selection})</h3>", unsafe_allow_html=True)
     else:
-        st.write(f"### {fund_name} Fund Report ({time_selection})")
+        st.markdown(f"<h3 style='margin-top: 0; padding-top: 0;'>{fund_name} Fund Report ({time_selection})</h3>", unsafe_allow_html=True)
     
     # Special handling for GGI Wealthy Nations Bond Fund - use local data
     if fund_name == "GGI Wealthy Nations Bond Fund":
