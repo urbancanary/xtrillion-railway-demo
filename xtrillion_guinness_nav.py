@@ -155,7 +155,7 @@ with st.sidebar:
         # Logo with actual image in circle
         st.markdown(f"""
             <div style="text-align: center; padding: 20px 0;">
-                <div style="width: 120px; height: 120px; background-color: #E30613; 
+                <div style="width: 120px; height: 120px; background-color: #ffffff; 
                             border-radius: 50%; margin: 0 auto; display: flex; 
                             align-items: center; justify-content: center; 
                             box-shadow: 0 4px 6px rgba(0,0,0,0.3); overflow: hidden;">
@@ -169,10 +169,10 @@ with st.sidebar:
         # Fallback to G placeholder
         st.markdown("""
             <div style="text-align: center; padding: 20px 0;">
-                <div style="width: 120px; height: 120px; background-color: #E30613; 
+                <div style="width: 120px; height: 120px; background-color: #ffffff; 
                             border-radius: 50%; margin: 0 auto; display: flex; 
                             align-items: center; justify-content: center; box-shadow: 0 4px 6px rgba(0,0,0,0.3);">
-                    <span style="color: white; font-size: 48px; font-weight: bold;">G</span>
+                    <span style="color: #E30613; font-size: 48px; font-weight: bold;">G</span>
                 </div>
                 <p style="color: #E30613; font-style: italic; font-size: 14px; margin-top: 10px;">Positively Different</p>
             </div>

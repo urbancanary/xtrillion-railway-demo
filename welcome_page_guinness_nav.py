@@ -93,7 +93,7 @@ def display_welcome_page():
             # Logo with actual image in circle
             st.markdown(f"""
             <div style="text-align: center; margin-bottom: 1rem;">
-                <div style="width: 150px; height: 150px; background-color: #E30613; 
+                <div style="width: 150px; height: 150px; background-color: #ffffff; 
                             border-radius: 50%; margin: 0 auto; display: flex; 
                             align-items: center; justify-content: center; 
                             box-shadow: 0 4px 6px rgba(0,0,0,0.3); overflow: hidden;">
@@ -106,10 +106,10 @@ def display_welcome_page():
             # Fallback to G placeholder
             st.markdown("""
             <div style="text-align: center; margin-bottom: 1rem;">
-                <div style="width: 150px; height: 150px; background-color: #E30613; 
+                <div style="width: 150px; height: 150px; background-color: #ffffff; 
                             border-radius: 50%; margin: 0 auto; display: flex; 
                             align-items: center; justify-content: center; box-shadow: 0 4px 6px rgba(0,0,0,0.3);">
-                    <span style="color: white; font-size: 60px; font-weight: bold;">G</span>
+                    <span style="color: #E30613; font-size: 60px; font-weight: bold;">G</span>
                 </div>
             </div>
             """, unsafe_allow_html=True)
