@@ -1,0 +1,48 @@
+name: Deploy to Railway
+
+on:
+  push:
+    branches:
+      - main
+      - develop
+  pull_request:
+    types: [opened, synchronize]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+    
+    - name: Deploy to Railway Production
+      if: github.ref == 'refs/heads/main'
+      uses: bervProject/railway-deploy@main
+      env:
+        RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
+      with:
+        service: amusing-insight
+        environment: production
+    
+    - name: Deploy to Railway Development
+      if: github.ref == 'refs/heads/develop'
+      uses: bervProject/railway-deploy@main
+      env:
+        RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
+      with:
+        service: amusing-insight-dev
+        environment: development
+    
+    - name: Comment on PR
+      if: github.event_name == 'pull_request'
+      uses: actions/github-script@v6
+      with:
+        script: |
+          const environment = context.payload.pull_request.head.ref === 'develop' ? 'development' : 'staging';
+          github.rest.issues.createComment({
+            issue_number: context.issue.number,
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            body: `🚂 Railway deployment initiated for ${environment} environment!`
+          })

@@ -1,0 +1,41 @@
+# XTrillion Guinness Development Dockerfile
+# Simplified for faster development builds
+
+FROM python:3.10-slim
+
+# Install runtime dependencies
+RUN apt-get update && apt-get install -y \
+    curl \
+    git \
+    && rm -rf /var/lib/apt/lists/*
+
+# Set working directory
+WORKDIR /app
+
+# Copy requirements first for better caching
+COPY requirements.txt .
+
+# Install Python dependencies
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Copy application files
+COPY . .
+
+# Create streamlit config directory
+RUN mkdir -p .streamlit
+
+# Default port (Railway will override with $PORT)
+ENV PORT=8501
+EXPOSE $PORT
+
+# Set environment variables
+ENV STREAMLIT_SERVER_ADDRESS=0.0.0.0
+ENV PYTHONUNBUFFERED=1
+ENV ENVIRONMENT=development
+
+# Add development banner
+RUN echo "import streamlit as st" > dev_banner.py && \
+    echo "st.warning('⚠️ DEVELOPMENT ENVIRONMENT - Not for production use')" >> dev_banner.py
+
+# Run the application
+CMD streamlit run xtrillion_guinness.py --server.port=$PORT --server.address=0.0.0.0
