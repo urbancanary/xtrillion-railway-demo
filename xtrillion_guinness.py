@@ -1,15 +1,15 @@
-# xtrillion19.py
+# xtrillion_guinness.py - Guinness Global Investors Platform
 
 import streamlit as st
 st.set_page_config(
-    page_title="XTrillion Demo",
-    page_icon="🌟",
+    page_title="Guinness Global Investors",
+    page_icon="🌐",
     layout="wide",
     initial_sidebar_state="expanded",
     menu_items={
         'Get Help': None,
         'Report a bug': None,
-        'About': "XTrillion Demo Application"
+        'About': "Guinness Global Investors - Portfolio Management Platform"
     }
 )
 #from chatbot_andy35 import ChatbotAndy, create_google_doc
@@ -31,9 +31,9 @@ from report_utils import create_fund_report_tab
 from user_guide import display_user_guide
 from bond_information import create_bond_information_tab, get_bond_options
 from qa_engine5 import QAEngine, detect_intent
-from welcome_page import display_welcome_page  # Import the new welcome page
+from welcome_page_guinness import display_welcome_page  # Import the new welcome page
 from streamlit_deep_dive_radio_wrapped import deep_dive_radio_page, get_sorted_media_files, get_last_modified_date, load_processed_files
-import sidebar_demo
+import sidebar_guinness as sidebar_demo  # Use Guinness-branded sidebar
 from report_utils import fetch_fund_data_with_cache  # Import the new function
 import chatbot_demo
 
@@ -60,21 +60,12 @@ for key in ['chat_history']:
 
 
 available_reports = {
-
     "Shin Kong Emerging Wealthy Nations Bond Fund": "🟠 SKEWNBF",
     "Shin Kong Environmental Sustainability Bond Fund": "🟢 SKESBF",
     "Israel": "🇮🇱 Israel",
     "Qatar": "🇶🇦 Qatar",
     "Mexico": "🇲🇽 Mexico",
     "Saudi Arabia": "🇸🇦 Saudi Arabia",
-    "Bond Information": "🖥️ Bond Information",
-    "RVM Grid": "📊 RVM Grid",
-    "ChatbotPage": "💬 ChatbotPage",
-    "Ask Jay": "👴 Ask Jay",
-    "Report Writer": "📝 Report Writer",
-    "Deep Dive Radio": "📻 Deep Dive Radio",
-    "Streaming Radio": "📡 Streaming Radio",
-    "User Guide": "📖 User Guide",
     "Welcome": "👋 Welcome"
 }
 
@@ -365,14 +356,6 @@ def render_main_content():
         create_country_report_tab("Mexico", color_palette)
     elif current_report == "🇸🇦 Saudi Arabia":
         create_country_report_tab("Saudi Arabia", color_palette)
-    elif current_report == "📻 Deep Dive Radio":
-        sorted_files = get_sorted_media_files()
-        render_deep_dive_radio(sorted_files)
-    elif current_report == "💬 ChatbotPage":
-        render_chatbot_page()
-    elif current_report == "📊 RVM Grid":
-        # Use the corrected layout with sidebar status
-        create_rvm_grid_tab()
     else:
         st.warning(f"Selected report '{current_report}' is not available.")
 
