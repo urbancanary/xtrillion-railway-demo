@@ -2,19 +2,19 @@
 
 ## 1. Portfolio Analysis Enhancements
 - ✅ **Fixed**: Move all pie chart legends to the right to avoid overlap
-- [ ] Add portfolio summary cards above the charts showing:
-  - Total portfolio value
+- ✅ **Implemented**: Add portfolio summary cards above the charts showing:
   - Number of holdings
-  - Average yield
+  - Portfolio weight percentage
+  - Average yield (YTM)
   - Average duration
-- [ ] Add export functionality for charts (PNG/PDF)
+- ✅ **Implemented**: Add export functionality for charts (HTML format)
 - [ ] Add date range selector for historical comparisons
 
 ## 2. Data Table Improvements
 - [ ] Add column sorting functionality
-- [ ] Add search/filter box above the table
-- [ ] Add export to Excel/CSV button
-- [ ] Highlight rows on hover for better readability
+- ✅ **Implemented**: Add search/filter box above the table
+- ✅ **Implemented**: Add export to CSV button
+- ✅ **Implemented**: Highlight rows on hover for better readability
 - [ ] Add pagination for large datasets
 
 ## 3. Navigation & Layout
@@ -30,13 +30,17 @@
 - [ ] Implement dark/light theme toggle
 
 ## 5. Information Display
-- [ ] Add tooltips to explain financial terms (YTM, Duration, etc.)
+- ✅ **Implemented**: Add tooltips to explain financial terms (YTM, Duration, etc.)
+  - Added tooltips in summary cards
+  - Added tooltips in pie chart hover templates
+  - Added expandable "Column Definitions" guide
 - [ ] Add a glossary page under Tools
-- [ ] Add "Last Updated" timestamp to reports
+- ✅ **Implemented**: Add "Last Updated" timestamp to reports
 - [ ] Add market news feed widget
 
 ## 6. Performance & UX
-- [ ] Add skeleton loaders while data loads
+- ✅ **Partially Implemented**: Add loading indicators (spinners) while data loads
+- [ ] Add skeleton loaders for better visual feedback
 - [ ] Implement lazy loading for large tables
 - [ ] Add error boundaries with friendly error messages
 - [ ] Cache chart configurations in session state

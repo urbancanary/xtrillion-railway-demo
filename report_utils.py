@@ -1,5 +1,6 @@
 import streamlit as st
 import pandas as pd
+import numpy as np
 import plotly.express as px
 import requests
 import plotly.graph_objects as go
@@ -7,6 +8,21 @@ import colorsys
 from io import StringIO
 import json
 from fetch_data import fetch_fund_data  # Import the function from fetch_data.py
+from datetime import datetime
+
+# Financial term tooltips
+FINANCIAL_TERMS = {
+    "YTM": "Yield to Maturity - The total expected return if a bond is held until maturity",
+    "Duration": "A measure of a bond's price sensitivity to interest rate changes",
+    "ESG": "Environmental, Social, and Governance rating",
+    "NFA": "National Financial Authority rating",
+    "Spread": "The difference between the bond yield and a benchmark rate",
+    "Accrued Interest": "Interest earned but not yet paid since the last coupon payment"
+}
+
+def add_tooltip(term, definition):
+    """Add a tooltip icon next to a term"""
+    return f'{term} <span title="{definition}" style="cursor: help; color: #888;">ⓘ</span>'
 
 # Guinness brand color palette
 color_palette = [
@@ -41,6 +57,24 @@ def apply_custom_css():
             color: #1f1f1f;
             background-color: #f5f5f5;
         }
+        /* Print-friendly styles */
+        @media print {
+            .stApp {
+                background-color: white !important;
+                color: black !important;
+            }
+            .reportColumn, .chartColumn {
+                background-color: white !important;
+                color: black !important;
+            }
+            .data-table th {
+                background-color: #f0f0f0 !important;
+                color: black !important;
+            }
+            .stButton, .stDownloadButton {
+                display: none !important;
+            }
+        }
         </style>
         """,
         unsafe_allow_html=True
@@ -68,7 +102,8 @@ def create_country_report_tab(entity_name, color_palette, db_name="credit_resear
     apply_custom_css()
     st.write(f"### {entity_name} Report")
     
-    data = fetch_country_data(entity_name, db_name, table_name)
+    with st.spinner(f'Loading {entity_name} country report...'):
+        data = fetch_country_data(entity_name, db_name, table_name)
     
     if data and len(data) > 0:
         report = data[0]
@@ -220,10 +255,65 @@ def create_pie_chart(data, names, values, title, legend_position='right'):
     )
     return fig
 
+def create_portfolio_summary_cards(fund_data):
+    """Create summary metric cards for the portfolio"""
+    # Calculate metrics
+    total_holdings = len(fund_data[fund_data['name'] != 'Cash'])
+    total_weight = fund_data[fund_data['name'] != 'Cash']['weighting'].sum()
+    
+    # Calculate average yield and duration (excluding Cash and NaN values)
+    non_cash_data = fund_data[fund_data['name'] != 'Cash'].copy()
+    avg_yield = non_cash_data['yield'].replace('Cash', np.nan).astype(float).mean()
+    avg_duration = non_cash_data['duration'].replace('Cash', np.nan).astype(float).mean()
+    
+    # Create four columns for the metric cards
+    col1, col2, col3, col4 = st.columns(4)
+    
+    with col1:
+        st.markdown("""
+        <div style="background-color: #2a2a2a; padding: 1.5rem; border-radius: 10px; text-align: center; border-left: 4px solid #E30613;">
+            <h4 style="color: #E30613; margin: 0; font-size: 0.9rem;">HOLDINGS</h4>
+            <h2 style="color: white; margin: 0.5rem 0; font-size: 2rem;">{}</h2>
+            <p style="color: #888; margin: 0; font-size: 0.8rem;">Securities</p>
+        </div>
+        """.format(total_holdings), unsafe_allow_html=True)
+    
+    with col2:
+        st.markdown("""
+        <div style="background-color: #2a2a2a; padding: 1.5rem; border-radius: 10px; text-align: center; border-left: 4px solid #002855;">
+            <h4 style="color: #002855; margin: 0; font-size: 0.9rem;">PORTFOLIO WEIGHT</h4>
+            <h2 style="color: white; margin: 0.5rem 0; font-size: 2rem;">{:.1f}%</h2>
+            <p style="color: #888; margin: 0; font-size: 0.8rem;">Allocated</p>
+        </div>
+        """.format(total_weight), unsafe_allow_html=True)
+    
+    with col3:
+        st.markdown("""
+        <div style="background-color: #2a2a2a; padding: 1.5rem; border-radius: 10px; text-align: center; border-left: 4px solid #8B0000;">
+            <h4 style="color: #8B0000; margin: 0; font-size: 0.9rem;">AVG YIELD</h4>
+            <h2 style="color: white; margin: 0.5rem 0; font-size: 2rem;">{:.2f}%</h2>
+            <p style="color: #888; margin: 0; font-size: 0.8rem;" title="Yield to Maturity - The total expected return if held until maturity">YTM ⓘ</p>
+        </div>
+        """.format(avg_yield if not np.isnan(avg_yield) else 0), unsafe_allow_html=True)
+    
+    with col4:
+        st.markdown("""
+        <div style="background-color: #2a2a2a; padding: 1.5rem; border-radius: 10px; text-align: center; border-left: 4px solid #4A5568;">
+            <h4 style="color: #4A5568; margin: 0; font-size: 0.9rem;">AVG DURATION</h4>
+            <h2 style="color: white; margin: 0.5rem 0; font-size: 2rem;">{:.1f}</h2>
+            <p style="color: #888; margin: 0; font-size: 0.8rem;" title="A measure of bond price sensitivity to interest rate changes">Years ⓘ</p>
+        </div>
+        """.format(avg_duration if not np.isnan(avg_duration) else 0), unsafe_allow_html=True)
+    
+    # Add spacing after cards
+    st.markdown("<br>", unsafe_allow_html=True)
+
 def create_pie_charts_and_table(fund_data):
     if fund_data is not None:
-        # Convert 'weighting' to numeric, replacing any non-numeric values with NaN
-        fund_data['weighting'] = pd.to_numeric(fund_data['weighting'], errors='coerce')
+        # Add loading indicator
+        with st.spinner('Loading portfolio analytics...'):
+            # Convert 'weighting' to numeric, replacing any non-numeric values with NaN
+            fund_data['weighting'] = pd.to_numeric(fund_data['weighting'], errors='coerce')
         
         # Remove any rows where 'weighting' is NaN
         fund_data = fund_data.dropna(subset=['weighting'])
@@ -234,7 +324,12 @@ def create_pie_charts_and_table(fund_data):
             # Add "Cash" for missing NFA ratings
             fund_data[nfa_column] = fund_data[nfa_column].fillna('Cash')
             fig_nfa = create_pie_chart(fund_data, nfa_column, 'weighting', "NFA Star Rating Distribution", legend_position='right')
-            fig_nfa.update_traces(hoverinfo="label+percent", textinfo='percent', textfont=dict(size=12))
+            fig_nfa.update_traces(
+                hoverinfo="label+percent", 
+                textinfo='percent', 
+                textfont=dict(size=12),
+                hovertemplate='<b>%{label}</b><br>Weight: %{percent}<br><i>NFA: National Financial Authority rating</i><br>Higher stars indicate stronger financial fundamentals<extra></extra>'
+            )
         else:
             st.warning("NFA Star Rating data not available.")
 
@@ -249,7 +344,13 @@ def create_pie_charts_and_table(fund_data):
 
             # Create the ESG pie chart using the esg column and set hover and label settings
             fig_esg = create_pie_chart(fund_data, esg_column, 'weighting', "ESG Rating Distribution", legend_position='right')
-            fig_esg.update_traces(hoverinfo="label+percent", textinfo='percent', textfont=dict(size=12), rotation=90)
+            fig_esg.update_traces(
+                hoverinfo="label+percent", 
+                textinfo='percent', 
+                textfont=dict(size=12), 
+                rotation=90,
+                hovertemplate='<b>%{label}</b><br>Weight: %{percent}<br><i>ESG: Environmental, Social & Governance rating</i><br>Higher ratings indicate better sustainability practices<extra></extra>'
+            )
         else:
             st.warning("ESG Rating data not available.")
 
@@ -271,8 +372,15 @@ def create_pie_charts_and_table(fund_data):
         else:
             st.warning("Region data not available.")
 
-        # Portfolio Analysis Section
-        st.markdown("<h3 style='margin-top: 1rem; margin-bottom: 0.5rem;'>📊 Portfolio Analysis</h3>", unsafe_allow_html=True)
+        # Add summary cards
+        create_portfolio_summary_cards(fund_data)
+        
+        # Portfolio Analysis Section with timestamp
+        col1, col2 = st.columns([3, 1])
+        with col1:
+            st.markdown("<h3 style='margin-top: 1rem; margin-bottom: 0.5rem;'>📊 Portfolio Analysis</h3>", unsafe_allow_html=True)
+        with col2:
+            st.markdown(f"<p style='text-align: right; color: #888; margin-top: 1.5rem; font-size: 0.9rem;'>Last updated: {datetime.now().strftime('%Y-%m-%d %H:%M')}</p>", unsafe_allow_html=True)
         st.markdown("---")
         
         # Create tabs for better chart display
@@ -304,16 +412,55 @@ def create_pie_charts_and_table(fund_data):
                         width=None,  # Use full width
                         margin=dict(l=20, r=20, t=40, b=20)
                     )
-                    st.plotly_chart(fig, use_container_width=True)
+                    
+                    # Create columns for chart and export button
+                    chart_col, export_col = st.columns([5, 1])
+                    with chart_col:
+                        st.plotly_chart(fig, use_container_width=True, key=f"chart_{i}")
+                    with export_col:
+                        # Add export button
+                        if st.download_button(
+                            label="📥 Export",
+                            data=fig.to_html(include_plotlyjs='cdn'),
+                            file_name=f"{chart_type}_chart.html",
+                            mime="text/html",
+                            key=f"export_{i}"
+                        ):
+                            st.success("Chart exported successfully!", icon="✅")
 
-        # Holdings Data Section
-        st.markdown("### 📋 Holdings Data")
-        st.markdown("---")
-        
         # Apply the filters to the table data
         filtered_data = filter_dataframe(fund_data)
+        
+        # Add search functionality
+        search_col1, search_col2 = st.columns([2, 3])
+        with search_col1:
+            search_term = st.text_input("🔍 Search holdings", placeholder="Type to search...", key="search_holdings")
+        
+        # Apply search filter if term is entered
+        if search_term:
+            # Search across multiple columns
+            mask = filtered_data.apply(lambda row: row.astype(str).str.contains(search_term, case=False, na=False).any(), axis=1)
+            filtered_data = filtered_data[mask]
+            if len(filtered_data) == 0:
+                st.warning(f"No results found for '{search_term}'")
+        
+        # Holdings Data Section with export button
+        col1, col2 = st.columns([3, 1])
+        with col1:
+            st.markdown("### 📋 Holdings Data")
+        with col2:
+            # Export to CSV button
+            csv = convert_df_to_csv(filtered_data)
+            st.download_button(
+                label="📊 Export CSV",
+                data=csv,
+                file_name=f"portfolio_holdings_{datetime.now().strftime('%Y%m%d')}.csv",
+                mime="text/csv",
+                key="export_csv"
+            )
+        st.markdown("---")
 
-        # Style the DataFrame using Styler
+        # Style the DataFrame using Styler with hover effects
         styled_df = filtered_data.style.map(lambda _: 'color: white') \
             .set_table_styles([
                 {'selector': 'th', 'props': [
@@ -321,7 +468,10 @@ def create_pie_charts_and_table(fund_data):
                     ('color', 'white'),
                     ('font-weight', 'bold'),
                     ('padding', '10px'),
-                    ('text-align', 'left')
+                    ('text-align', 'left'),
+                    ('position', 'sticky'),
+                    ('top', '0'),
+                    ('z-index', '10')
                 ]},
                 {'selector': 'td', 'props': [
                     ('padding', '10px'), 
@@ -331,7 +481,8 @@ def create_pie_charts_and_table(fund_data):
                     ('text-overflow', 'ellipsis'),  # Handle overflow with ellipsis if needed
                     ('text-align', 'left'),
                     ('background-color', '#1e1e1e'),
-                    ('max-width', '300px')
+                    ('max-width', '300px'),
+                    ('transition', 'background-color 0.2s ease')
                 ]},
                 {'selector': '.row_heading, .col_heading', 'props': [
                     ('background-color', '#1e1e1e'),  # Row header color
@@ -339,12 +490,31 @@ def create_pie_charts_and_table(fund_data):
                 ]},
                 {'selector': 'tbody tr:nth-child(even)', 'props': [
                     ('background-color', '#252525')  # Even row background color
+                ]},
+                {'selector': 'tbody tr:hover', 'props': [
+                    ('background-color', '#3a3a3a !important'),  # Hover color
+                    ('cursor', 'pointer')
+                ]},
+                {'selector': 'tbody tr:hover td', 'props': [
+                    ('background-color', '#3a3a3a !important')  # Ensure all cells in row highlight
                 ]}
             ])
 
-        # Add an expander for full-screen view #ADD BACK IN NEEDED
-        #with st.expander("View Data Table in Full Screen", expanded=False):
-         #   st.table(styled_df)
+        # Display the styled dataframe
+        st.dataframe(styled_df, use_container_width=True, height=600)
+        
+        # Add help text for table columns
+        with st.expander("📖 Column Definitions", expanded=False):
+            st.markdown("""
+            **Financial Terms Guide:**
+            - **Yield (YTM)**: Yield to Maturity - The total expected return if a bond is held until maturity
+            - **Duration**: A measure of a bond's price sensitivity to interest rate changes (in years)
+            - **Spread**: The difference between the bond yield and a benchmark rate (in basis points)
+            - **Accrued Interest**: Interest earned but not yet paid since the last coupon payment
+            - **ESG Rating**: Environmental, Social, and Governance score (higher is better)
+            - **NFA Rating**: National Financial Authority rating (more stars indicate stronger fundamentals)
+            - **Weighting**: Percentage of the portfolio allocated to this holding
+            """)
 
     else:
         st.error("No fund data available to display.")

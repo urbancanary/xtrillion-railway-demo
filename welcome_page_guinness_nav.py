@@ -45,15 +45,18 @@ def display_welcome_page():
             margin: 2rem 0;
         }
         .feature-card {
-            background-color: #2a2a2a;
+            background: linear-gradient(135deg, #2a2a2a 0%, #1a1a1a 100%);
             border-radius: 10px;
             padding: 1.5rem;
             border: 1px solid #3a3a3a;
-            transition: transform 0.2s;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }
         .feature-card:hover {
             transform: translateY(-5px);
             border-color: #E30613;
+            background: linear-gradient(135deg, #3a3a3a 0%, #2a2a2a 100%);
+            box-shadow: 0 6px 12px rgba(227, 6, 19, 0.2);
         }
         .feature-icon {
             font-size: 2rem;

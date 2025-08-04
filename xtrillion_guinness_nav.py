@@ -89,27 +89,27 @@ def chatbot():
     st.write("Welcome to the Xtrillion Chatbot! Ask me anything about our reports and data.")
     chatbot_demo.main()
 
-# Define navigation pages
+# Define navigation pages with correct path handling
 pages = {
     "Main": [
-        st.Page(welcome_page, title="Welcome", icon="👋"),
-        st.Page(ggi_portfolio, title="GGI Portfolio", icon="🌐"),
-        st.Page(skewnbf_portfolio, title="SKEWNBF", icon="🟠"),
-        st.Page(skesbf_portfolio, title="SKESBF", icon="🟢"),
+        st.Page(welcome_page, title="Welcome", icon="👋", url_path="welcome"),
+        st.Page(ggi_portfolio, title="GGI Portfolio", icon="🌐", url_path="ggi"),
+        st.Page(skewnbf_portfolio, title="SKEWNBF", icon="🟠", url_path="skewnbf"),
+        st.Page(skesbf_portfolio, title="SKESBF", icon="🟢", url_path="skesbf"),
     ],
     "Country Reports": [
-        st.Page(israel_report, title="Israel", icon="🇮🇱"),
-        st.Page(qatar_report, title="Qatar", icon="🇶🇦"),
-        st.Page(mexico_report, title="Mexico", icon="🇲🇽"),
-        st.Page(saudi_arabia_report, title="Saudi Arabia", icon="🇸🇦"),
+        st.Page(israel_report, title="Israel", icon="🇮🇱", url_path="israel"),
+        st.Page(qatar_report, title="Qatar", icon="🇶🇦", url_path="qatar"),
+        st.Page(mexico_report, title="Mexico", icon="🇲🇽", url_path="mexico"),
+        st.Page(saudi_arabia_report, title="Saudi Arabia", icon="🇸🇦", url_path="saudi-arabia"),
     ],
     "Tools": [
-        st.Page(user_guide, title="User Guide", icon="📖"),
+        st.Page(user_guide, title="User Guide", icon="📖", url_path="guide"),
     ]
 }
 
 # Create navigation
-pg = st.navigation(pages)
+pg = st.navigation(pages, position="sidebar")
 
 # Add custom CSS
 st.markdown("""
