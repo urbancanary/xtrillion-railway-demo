@@ -342,14 +342,18 @@ def fetch_fund_data_with_cache(fund_name, time_selection):
     
 def create_fund_report_tab(fund_name, color_palette, time_selection="Latest"):
     apply_custom_css()
-    st.write(f"### {fund_name} Fund Report ({time_selection})")
+    # Avoid redundant "Fund" in title
+    if "Fund" in fund_name:
+        st.write(f"### {fund_name} Report ({time_selection})")
+    else:
+        st.write(f"### {fund_name} Fund Report ({time_selection})")
     
-    # Special handling for Guinness Global Investors Fund - use local data
-    if fund_name == "Guinness Global Investors Fund":
+    # Special handling for GGI Wealthy Nations Bond Fund - use local data
+    if fund_name == "GGI Wealthy Nations Bond Fund":
         try:
             # Load local data
             fund_data = pd.read_csv('data.csv')
-            # Filter for GGI fund only
+            # Filter for GGI fund only (still uses old name in data)
             fund_data = fund_data[fund_data['fund_name'] == 'Guinness Global Investors Fund']
             
             # Remove cash row for charts (but keep for table)
