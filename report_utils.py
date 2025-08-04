@@ -203,9 +203,9 @@ def create_pie_chart(data, names, values, title, legend_position='right'):
         ),
         paper_bgcolor='#1f1f1f',
         plot_bgcolor='#1f1f1f',
-        font=dict(color='white', size=14),
-        height=540,
-        width=540,
+        font=dict(color='white', size=16),
+        height=500,
+        width=None,  # Will be set by container
         transition_duration=500,
         legend=dict(
             bgcolor='rgba(0,0,0,0)',
@@ -271,19 +271,45 @@ def create_pie_charts_and_table(fund_data):
         else:
             st.warning("Region data not available.")
 
-        # Adjust column layout for better centering and alignment of pie charts
-        col1, col2 = st.columns([1.4, 1])  # Balance the column widths
-        with col1:
-            if 'region' in fund_data.columns:
-                st.plotly_chart(fig_region, use_container_width=True)
-            if esg_column:
-                st.plotly_chart(fig_esg, use_container_width=True)
-        with col2:
-            if nfa_column:
-                st.plotly_chart(fig_nfa, use_container_width=True)
-            if esg_column:
-                st.plotly_chart(fig_esg_6, use_container_width=True)
+        # Portfolio Analysis Section
+        st.markdown("### 📊 Portfolio Analysis")
+        st.markdown("---")
+        
+        # Create tabs for better chart display
+        chart_tabs = []
+        chart_contents = []
+        
+        if 'region' in fund_data.columns:
+            chart_tabs.append("🌍 Region Distribution")
+            chart_contents.append(("region", fig_region))
+        
+        if nfa_column:
+            chart_tabs.append("⭐ NFA Star Rating")
+            chart_contents.append(("nfa", fig_nfa))
+        
+        if esg_column:
+            chart_tabs.append("🌱 ESG Rating")
+            chart_contents.append(("esg", fig_esg))
+            chart_tabs.append("📊 ESG 6+ Analysis")
+            chart_contents.append(("esg6", fig_esg_6))
+        
+        if chart_tabs:
+            tabs = st.tabs(chart_tabs)
+            
+            for i, (tab, (chart_type, fig)) in enumerate(zip(tabs, chart_contents)):
+                with tab:
+                    # Update figure size for better display in tabs
+                    fig.update_layout(
+                        height=600,
+                        width=None,  # Use full width
+                        margin=dict(l=20, r=20, t=50, b=20)
+                    )
+                    st.plotly_chart(fig, use_container_width=True)
 
+        # Holdings Data Section
+        st.markdown("### 📋 Holdings Data")
+        st.markdown("---")
+        
         # Apply the filters to the table data
         filtered_data = filter_dataframe(fund_data)
 
