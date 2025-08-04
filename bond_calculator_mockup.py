@@ -111,9 +111,9 @@ def create_single_bond_tab():
         }
         results_df = pd.DataFrame(results_data)
         
-        # Style the dataframe
+        # Style the dataframe - remove gradient since Change contains strings
         st.dataframe(
-            results_df.style.background_gradient(subset=['Change'], cmap='RdYlGn_r'),
+            results_df,
             use_container_width=True,
             hide_index=True
         )
@@ -209,8 +209,17 @@ def show_batch_results():
         "Status": ["✅ Success", "✅ Success", "✅ Success", "✅ Success", "✅ Success"]
     })
     
+    # Apply gradient styling with proper numeric columns
+    styled_df = results_df.style.format({
+        'YTM (%)': '{:.3f}',
+        'Duration': '{:.3f}',
+        'Convexity': '{:.2f}',
+        'Clean Price': '{:.3f}',
+        'Accrued': '{:.3f}'
+    }).background_gradient(subset=['YTM (%)', 'Duration'], cmap='YlOrRd')
+    
     st.dataframe(
-        results_df.style.background_gradient(subset=['YTM (%)', 'Duration'], cmap='YlOrRd'),
+        styled_df,
         use_container_width=True,
         hide_index=True
     )
