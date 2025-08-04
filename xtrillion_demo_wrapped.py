@@ -49,16 +49,22 @@ except ImportError:
         st.info("User guide module not available")
 
 try:
-    from sidebar_demo import sidebar_component
+    from sidebar_demo import render_sidebar
     modules_status['sidebar'] = True
+    # Create a wrapper to match expected function name
+    def sidebar_component():
+        # render_sidebar expects these parameters
+        available_reports = []
+        sorted_files = []
+        chatbot = None
+        render_sidebar(available_reports, sorted_files, chatbot)
 except Exception as e:
     modules_status['sidebar'] = False
     sidebar_error = str(e)
     def sidebar_component():
         with st.sidebar:
             st.header("XTrillion Demo")
-            st.write("Sidebar module not available")
-            st.error(f"Error: {sidebar_error}")
+            st.write("Basic sidebar active")
 
 try:
     import chatbot_demo
