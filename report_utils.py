@@ -398,9 +398,6 @@ def create_pie_charts_and_table(fund_data):
             fig_region.update_traces(hoverinfo="label+percent", textinfo='percent', textfont=dict(size=12), rotation=90)
         else:
             st.warning("Region data not available.")
-
-        # Add summary cards
-        create_portfolio_summary_cards(fund_data)
         
         # Create tabs for better chart display
         chart_tabs = []
@@ -446,6 +443,9 @@ def create_pie_charts_and_table(fund_data):
                             key=f"export_{i}"
                         ):
                             st.success("Chart exported successfully!", icon="✅")
+        
+        # Add summary cards after charts
+        create_portfolio_summary_cards(fund_data)
 
         # Apply the filters to the table data
         filtered_data = filter_dataframe(fund_data)
