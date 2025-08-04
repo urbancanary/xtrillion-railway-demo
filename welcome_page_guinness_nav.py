@@ -8,7 +8,7 @@ def display_welcome_page():
     st.markdown("""
     <style>
         .welcome-container {
-            text-align: center;
+            text-align: left;
             max-width: 1000px;
             margin: 0 auto;
             padding: 2rem;
@@ -90,9 +90,9 @@ def display_welcome_page():
     logo_base64 = get_logo_base64()
     
     if logo_base64:
-        # Logo and brand text in horizontal layout
+        # Logo and brand text in horizontal layout - left aligned
         st.markdown(f"""
-        <div style="display: flex; align-items: center; justify-content: center; margin-bottom: 2rem;">
+        <div style="display: flex; align-items: center; justify-content: flex-start; margin-bottom: 2rem;">
             <div style="width: 120px; height: 120px; background-color: #ffffff; 
                         border-radius: 50%; display: flex; 
                         align-items: center; justify-content: center; 
@@ -114,9 +114,9 @@ def display_welcome_page():
         </div>
         """, unsafe_allow_html=True)
     else:
-        # Fallback with G placeholder
+        # Fallback with G placeholder - left aligned
         st.markdown("""
-        <div style="display: flex; align-items: center; justify-content: center; margin-bottom: 2rem;">
+        <div style="display: flex; align-items: center; justify-content: flex-start; margin-bottom: 2rem;">
             <div style="width: 120px; height: 120px; background-color: #ffffff; 
                         border-radius: 50%; display: flex; 
                         align-items: center; justify-content: center; 
@@ -184,7 +184,7 @@ def display_welcome_page():
     # Footer
     st.markdown("<br><br>", unsafe_allow_html=True)
     st.markdown("""
-    <div style="text-align: center; color: #666; font-size: 0.9rem;">
+    <div style="text-align: center; color: #666; font-size: 0.9rem; margin-top: 3rem;">
     © 2024 Guinness Global Investors. 100% Employee Owned.
     </div>
     """, unsafe_allow_html=True)
