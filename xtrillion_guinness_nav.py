@@ -147,15 +147,36 @@ st.markdown("""
 
 # Add Guinness branding to sidebar
 with st.sidebar:
-    # Logo
+    # Logo in circular frame
     st.markdown("""
-        <div style="text-align: center; padding: 20px 0;">
+        <style>
+        .sidebar-logo-circle {
+            background-color: #E30613;
+            border-radius: 50%;
+            width: 120px;
+            height: 120px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 20px auto;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+            padding: 20px;
+        }
+        .sidebar-logo-circle img {
+            max-width: 100%;
+            max-height: 100%;
+            filter: brightness(0) invert(1);
+        }
+        </style>
+        <div style="text-align: center;">
+            <div class="sidebar-logo-circle">
         """, unsafe_allow_html=True)
     
-    # Display the actual Guinness logo
-    st.image("guinness_logo.png", width=150)
+    # Display the logo
+    st.image("guinness_logo.png", width=80)
     
     st.markdown("""
+            </div>
             <p style="color: #E30613; font-style: italic; font-size: 14px; margin-top: 10px;">Positively Different</p>
         </div>
     """, unsafe_allow_html=True)
