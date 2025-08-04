@@ -120,16 +120,21 @@ pages = {
     ]
 }
 
-# Add Guinness branding to sidebar FIRST
+# Add logo to sidebar
 with st.sidebar:
-    # Get base64 encoded logo
+    # Create a container for the logo that will be positioned at top
+    logo_placeholder = st.container()
+
+# Create navigation
+pg = st.navigation(pages, position="sidebar")
+
+# Now add logo content to the placeholder
+with logo_placeholder:
     logo_base64 = get_logo_base64()
-    
     if logo_base64:
-        # Logo with actual image in circle
         st.markdown(f"""
-            <div style="text-align: center; padding: 20px 0;">
-                <div style="width: 120px; height: 120px; background-color: #ffffff; 
+            <div style="text-align: center; padding: 20px 0 30px 0; margin-top: -3rem;">
+                <div style="width: 100px; height: 100px; background-color: #ffffff; 
                             border-radius: 50%; margin: 0 auto; display: flex; 
                             align-items: center; justify-content: center; 
                             box-shadow: 0 4px 6px rgba(0,0,0,0.3); overflow: hidden;">
@@ -140,22 +145,18 @@ with st.sidebar:
             </div>
         """, unsafe_allow_html=True)
     else:
-        # Fallback to G placeholder
         st.markdown("""
-            <div style="text-align: center; padding: 20px 0;">
-                <div style="width: 120px; height: 120px; background-color: #ffffff; 
+            <div style="text-align: center; padding: 20px 0 30px 0; margin-top: -3rem;">
+                <div style="width: 100px; height: 100px; background-color: #ffffff; 
                             border-radius: 50%; margin: 0 auto; display: flex; 
-                            align-items: center; justify-content: center; box-shadow: 0 4px 6px rgba(0,0,0,0.3);">
-                    <span style="color: #E30613; font-size: 48px; font-weight: bold;">G</span>
+                            align-items: center; justify-content: center; 
+                            box-shadow: 0 4px 6px rgba(0,0,0,0.3);">
+                    <span style="color: #E30613; font-size: 42px; font-weight: bold;">G</span>
                 </div>
                 <p style="color: #E30613; font-style: italic; font-size: 14px; margin-top: 10px;">Positively Different</p>
             </div>
         """, unsafe_allow_html=True)
 
-# Create navigation AFTER sidebar content
-pg = st.navigation(pages, position="sidebar")
-
-# Add custom CSS
 st.markdown("""
     <style>
     /* Guinness brand colors */
@@ -171,6 +172,16 @@ st.markdown("""
     
     section[data-testid="stSidebar"] > div {
         background-color: #2a2a2a !important;
+    }
+    
+    /* Force logo container to top */
+    section[data-testid="stSidebar"] > div > div:first-child {
+        order: -1;
+        position: sticky;
+        top: 0;
+        background-color: #2a2a2a;
+        z-index: 999;
+        padding-bottom: 0;
     }
     
     /* Navigation styling - same color as sidebar */
