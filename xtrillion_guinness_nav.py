@@ -29,6 +29,7 @@ from user_guide import display_user_guide
 from bond_information import create_bond_information_tab
 from welcome_page_guinness_nav import display_welcome_page
 from logo_utils import get_logo_base64
+from bond_calculator_mockup import create_bond_calculator_page, add_custom_styles
 import chatbot_demo
 
 # Define Guinness brand color palette
@@ -89,6 +90,10 @@ def chatbot():
     st.write("Welcome to the Xtrillion Chatbot! Ask me anything about our reports and data.")
     chatbot_demo.main()
 
+def bond_calculator():
+    add_custom_styles()
+    create_bond_calculator_page()
+
 # Define navigation pages with correct path handling
 pages = {
     "Main": [
@@ -104,6 +109,7 @@ pages = {
         st.Page(saudi_arabia_report, title="Saudi Arabia", icon="🇸🇦", url_path="saudi-arabia"),
     ],
     "Tools": [
+        st.Page(bond_calculator, title="Bond Calculator", icon="🧮", url_path="calculator"),
         st.Page(user_guide, title="User Guide", icon="📖", url_path="guide"),
     ]
 }
