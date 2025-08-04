@@ -95,8 +95,6 @@ pages = {
         st.Page(saudi_arabia_report, title="Saudi Arabia", icon="🇸🇦"),
     ],
     "Tools": [
-        st.Page(bond_info, title="Bond Information", icon="🖥️"),
-        st.Page(chatbot, title="Chatbot", icon="💬"),
         st.Page(user_guide, title="User Guide", icon="📖"),
     ]
 }
@@ -113,39 +111,44 @@ st.markdown("""
         color: #ffffff;
     }
     
-    /* Navigation styling */
+    /* Navigation styling - darker to match theme */
     [data-testid="stSidebarNav"] {
-        background-color: #002855;
+        background-color: #2a2a2a;
     }
     
     [data-testid="stSidebarNav"] a {
         color: #ffffff !important;
+        background-color: #2a2a2a !important;
     }
     
     [data-testid="stSidebarNav"] a:hover {
-        background-color: #E30613 !important;
+        background-color: #3a3a3a !important;
     }
     
     /* Selected page styling */
     [data-testid="stSidebarNav"] a[aria-selected="true"] {
         background-color: #E30613 !important;
     }
+    
+    /* Sidebar background */
+    section[data-testid="stSidebar"] {
+        background-color: #1a1a1a;
+    }
     </style>
     """, unsafe_allow_html=True)
 
 # Add Guinness branding to sidebar
 with st.sidebar:
-    # Logo placeholder
+    # Logo
     st.markdown("""
         <div style="text-align: center; padding: 20px 0;">
-            <div style="width: 120px; height: 120px; background-color: #E30613; 
-                        border-radius: 50%; margin: 0 auto; display: flex; 
-                        align-items: center; justify-content: center;">
-                <span style="color: white; font-size: 48px; font-weight: bold;">G</span>
-            </div>
-            <h2 style="color: #E30613; margin-top: 10px;">Guinness</h2>
-            <p style="color: #ffffff; font-size: 14px; margin-top: -10px;">Global Investors</p>
-            <p style="color: #E30613; font-style: italic; font-size: 12px;">Positively Different</p>
+        """, unsafe_allow_html=True)
+    
+    # Display the actual Guinness logo
+    st.image("guinness_logo.png", width=150)
+    
+    st.markdown("""
+            <p style="color: #E30613; font-style: italic; font-size: 14px; margin-top: 10px;">Positively Different</p>
         </div>
     """, unsafe_allow_html=True)
 
