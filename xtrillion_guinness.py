@@ -244,14 +244,14 @@ st.markdown("""
     </style>
     """, unsafe_allow_html=True)
 
-# Define the color palette used by the reports
+# Define Guinness brand color palette
 color_palette = [
-    "#FFA500",  # Bright Orange
-    "#007FFF",  # Azure Blue
-    "#DC143C",  # Cherry Red
-    "#39FF14",  # Electric Lime Green
-    "#00FFFF",  # Cyan
-    "#DA70D6"   # Vivid Purple
+    "#E30613",  # Guinness Red (Primary)
+    "#002855",  # Guinness Navy Blue
+    "#8B0000",  # Dark Red
+    "#FF6B6B",  # Light Red
+    "#4A5568",  # Charcoal Grey
+    "#CBD5E0"   # Light Grey
 ]
 
 def scroll_to_top():

@@ -31,14 +31,14 @@ from welcome_page_guinness_nav import display_welcome_page
 from logo_utils import get_logo_base64
 import chatbot_demo
 
-# Define color palette
+# Define Guinness brand color palette
 color_palette = [
-    "#FFA500",  # Bright Orange
-    "#007FFF",  # Azure Blue
-    "#DC143C",  # Cherry Red
-    "#39FF14",  # Electric Lime Green
-    "#00FFFF",  # Cyan
-    "#DA70D6"   # Vivid Purple
+    "#E30613",  # Guinness Red (Primary)
+    "#002855",  # Guinness Navy Blue
+    "#8B0000",  # Dark Red
+    "#FF6B6B",  # Light Red
+    "#4A5568",  # Charcoal Grey
+    "#CBD5E0"   # Light Grey
 ]
 
 # Page functions
