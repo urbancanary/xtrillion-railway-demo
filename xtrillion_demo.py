@@ -16,8 +16,9 @@ st.set_page_config(
 import uuid
 from langchain.schema import AIMessage, HumanMessage
 import os
-from google.oauth2 import service_account
-from googleapiclient.discovery import build
+# Google services imports - commented out for Guinness version
+# from google.oauth2 import service_account
+# from googleapiclient.discovery import build
 import numpy as np
 import time
 from pathlib import Path
@@ -78,40 +79,63 @@ available_reports = {
 }
 
 def initialize_google_services():
-    SERVICE_ACCOUNT_FILE = 'credentials.json'
-    SCOPES = ['https://www.googleapis.com/auth/documents', 'https://www.googleapis.com/auth/drive']
-
-    try:
-        # Try to load from file first
-        if os.path.exists(SERVICE_ACCOUNT_FILE):
-            credentials = service_account.Credentials.from_service_account_file(
-                SERVICE_ACCOUNT_FILE, scopes=SCOPES)
-        else:
-            # Try to load from environment variable
-            import json
-            import base64
-            creds_base64 = os.getenv('GOOGLE_CREDENTIALS_BASE64')
-            if creds_base64:
-                creds_json = base64.b64decode(creds_base64).decode('utf-8')
-                creds_dict = json.loads(creds_json)
-                credentials = service_account.Credentials.from_service_account_info(
-                    creds_dict, scopes=SCOPES)
-            else:
-                st.warning("Google credentials not found. Some features may be limited.")
-                return None, None
-
-        docs_service = build('docs', 'v1', credentials=credentials)
-        drive_service = build('drive', 'v3', credentials=credentials)
-
-        st.session_state.docs_service = docs_service
-        st.session_state.drive_service = drive_service
-
-        st.success("Google services initialized successfully.")
-
-        return docs_service, drive_service  # Return the services
-    except Exception as e:
-        st.error(f"Failed to initialize Google services: {str(e)}")
-        return None, None  # Return None for both in case of failure
+    """
+    TODO: Google Docs Integration
+    =============================
+    This feature allows exporting reports to Google Docs and managing 
+    documents in Google Drive. Currently disabled for Guinness version.
+    
+    To re-enable:
+    1. Uncomment the code below
+    2. Add credentials.json or set GOOGLE_CREDENTIALS_BASE64 env var
+    3. Test with appropriate Google Workspace permissions
+    
+    Features when enabled:
+    - Export reports as Google Docs
+    - Save chat conversations to Drive
+    - Collaborative document editing
+    """
+    
+    # Placeholder - return None for both services
+    st.session_state.docs_service = None
+    st.session_state.drive_service = None
+    return None, None
+    
+    # --- ORIGINAL GOOGLE SERVICES CODE (COMMENTED OUT) ---
+    # SERVICE_ACCOUNT_FILE = 'credentials.json'
+    # SCOPES = ['https://www.googleapis.com/auth/documents', 'https://www.googleapis.com/auth/drive']
+    #
+    # try:
+    #     # Try to load from file first
+    #     if os.path.exists(SERVICE_ACCOUNT_FILE):
+    #         credentials = service_account.Credentials.from_service_account_file(
+    #             SERVICE_ACCOUNT_FILE, scopes=SCOPES)
+    #     else:
+    #         # Try to load from environment variable
+    #         import json
+    #         import base64
+    #         creds_base64 = os.getenv('GOOGLE_CREDENTIALS_BASE64')
+    #         if creds_base64:
+    #             creds_json = base64.b64decode(creds_base64).decode('utf-8')
+    #             creds_dict = json.loads(creds_json)
+    #             credentials = service_account.Credentials.from_service_account_info(
+    #                 creds_dict, scopes=SCOPES)
+    #         else:
+    #             st.warning("Google credentials not found. Some features may be limited.")
+    #             return None, None
+    #
+    #     docs_service = build('docs', 'v1', credentials=credentials)
+    #     drive_service = build('drive', 'v3', credentials=credentials)
+    #
+    #     st.session_state.docs_service = docs_service
+    #     st.session_state.drive_service = drive_service
+    #
+    #     st.success("Google services initialized successfully.")
+    #
+    #     return docs_service, drive_service  # Return the services
+    # except Exception as e:
+    #     st.error(f"Failed to initialize Google services: {str(e)}")
+    #     return None, None  # Return None for both in case of failure
 
 # Initialize session state attribute if it does not exist
 if 'welcome_shown' not in st.session_state:
@@ -145,26 +169,27 @@ if 'file_info' not in st.session_state:
     st.session_state.file_info = {}
 
 
-# Function to initialize Google services
-def initialize_google_services():
-    SERVICE_ACCOUNT_FILE = 'credentials.json'
-    SCOPES = ['https://www.googleapis.com/auth/documents', 'https://www.googleapis.com/auth/drive']
-
-    try:
-        credentials = service_account.Credentials.from_service_account_file(
-            SERVICE_ACCOUNT_FILE, scopes=SCOPES)
-
-        docs_service = build('docs', 'v1', credentials=credentials)
-        drive_service = build('drive', 'v3', credentials=credentials)
-
-        st.session_state.docs_service = docs_service
-        st.session_state.drive_service = drive_service
-
-        st.success("Google services initialized successfully.")
-    except Exception as e:
-        st.error(f"Failed to initialize Google services: {str(e)}")
-        # Return None for both services in case of an exception
-        return None, None
+# DUPLICATE FUNCTION - REMOVED (see line 80 for the main implementation)
+# This was causing issues - keeping commented for reference
+# def initialize_google_services():
+#     SERVICE_ACCOUNT_FILE = 'credentials.json'
+#     SCOPES = ['https://www.googleapis.com/auth/documents', 'https://www.googleapis.com/auth/drive']
+#
+#     try:
+#         credentials = service_account.Credentials.from_service_account_file(
+#             SERVICE_ACCOUNT_FILE, scopes=SCOPES)
+#
+#         docs_service = build('docs', 'v1', credentials=credentials)
+#         drive_service = build('drive', 'v3', credentials=credentials)
+#
+#         st.session_state.docs_service = docs_service
+#         st.session_state.drive_service = drive_service
+#
+#         st.success("Google services initialized successfully.")
+#     except Exception as e:
+#         st.error(f"Failed to initialize Google services: {str(e)}")
+#         # Return None for both services in case of an exception
+#         return None, None
 
 # Initialize Google services
 if st.session_state.docs_service is None or st.session_state.drive_service is None:
