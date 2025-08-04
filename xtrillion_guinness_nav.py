@@ -158,9 +158,9 @@ with st.sidebar:
                 <div style="width: 120px; height: 120px; background-color: #E30613; 
                             border-radius: 50%; margin: 0 auto; display: flex; 
                             align-items: center; justify-content: center; 
-                            box-shadow: 0 4px 6px rgba(0,0,0,0.3); padding: 20px;">
+                            box-shadow: 0 4px 6px rgba(0,0,0,0.3); overflow: hidden;">
                     <img src="data:image/png;base64,{logo_base64}" 
-                         style="width: 80px; height: auto; filter: brightness(0) invert(1);">
+                         style="width: 70%; height: auto; object-fit: contain;">
                 </div>
                 <p style="color: #E30613; font-style: italic; font-size: 14px; margin-top: 10px;">Positively Different</p>
             </div>

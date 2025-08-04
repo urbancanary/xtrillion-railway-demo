@@ -96,9 +96,9 @@ def display_welcome_page():
                 <div style="width: 150px; height: 150px; background-color: #E30613; 
                             border-radius: 50%; margin: 0 auto; display: flex; 
                             align-items: center; justify-content: center; 
-                            box-shadow: 0 4px 6px rgba(0,0,0,0.3); padding: 25px;">
+                            box-shadow: 0 4px 6px rgba(0,0,0,0.3); overflow: hidden;">
                     <img src="data:image/png;base64,{logo_base64}" 
-                         style="width: 100px; height: auto; filter: brightness(0) invert(1);">
+                         style="width: 70%; height: auto; object-fit: contain;">
                 </div>
             </div>
             """, unsafe_allow_html=True)
