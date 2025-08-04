@@ -120,28 +120,33 @@ st.markdown("""
         color: #ffffff;
     }
     
-    /* Navigation styling - darker to match theme */
+    /* Sidebar background - match main screen */
+    section[data-testid="stSidebar"] {
+        background-color: #1f1f1f;
+    }
+    
+    /* Navigation styling - slightly lighter for visibility */
     [data-testid="stSidebarNav"] {
         background-color: #2a2a2a;
+        border-radius: 8px;
+        padding: 0.5rem;
+        margin-bottom: 1rem;
     }
     
     [data-testid="stSidebarNav"] a {
         color: #ffffff !important;
-        background-color: #2a2a2a !important;
+        background-color: transparent !important;
+        border-radius: 4px;
+        margin-bottom: 0.25rem;
     }
     
     [data-testid="stSidebarNav"] a:hover {
-        background-color: #3a3a3a !important;
+        background-color: rgba(255, 255, 255, 0.1) !important;
     }
     
     /* Selected page styling */
     [data-testid="stSidebarNav"] a[aria-selected="true"] {
         background-color: #E30613 !important;
-    }
-    
-    /* Sidebar background */
-    section[data-testid="stSidebar"] {
-        background-color: #1a1a1a;
     }
     </style>
     """, unsafe_allow_html=True)
