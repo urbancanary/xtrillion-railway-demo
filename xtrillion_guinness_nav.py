@@ -14,12 +14,20 @@ st.set_page_config(
     }
 )
 
+# Initialize session state to prevent errors
+if "state" not in st.session_state:
+    st.session_state.state = {
+        "current_report": "👋 Welcome",
+        "time_selection": "Latest",
+        "mode": "auto"
+    }
+
 # Import necessary modules
 from credit_reports import create_country_report_tab
 from report_utils import create_fund_report_tab
 from user_guide import display_user_guide
 from bond_information import create_bond_information_tab
-from welcome_page_guinness import display_welcome_page
+from welcome_page_guinness_nav import display_welcome_page
 import chatbot_demo
 
 # Define color palette
