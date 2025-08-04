@@ -130,41 +130,8 @@ pages = {
     ]
 }
 
-# Add logo to sidebar FIRST
-with st.sidebar:
-    logo_base64 = get_logo_base64()
-    if logo_base64:
-        st.markdown(f"""
-            <div style="text-align: center; padding: 1rem 0 2rem 0;">
-                <div style="width: 80px; height: 80px; background-color: #ffffff; 
-                            border-radius: 50%; margin: 0 auto; display: flex; 
-                            align-items: center; justify-content: center; 
-                            box-shadow: 0 4px 6px rgba(0,0,0,0.3); overflow: hidden;">
-                    <img src="data:image/png;base64,{logo_base64}" 
-                         style="width: 70%; height: auto; object-fit: contain;">
-                </div>
-                <p style="color: #C8102E; font-style: italic; font-size: 14px; margin-top: 10px; margin-bottom: 0;">
-                    Positively Different
-                </p>
-            </div>
-        """, unsafe_allow_html=True)
-    else:
-        st.markdown("""
-            <div style="text-align: center; padding: 1rem 0 2rem 0;">
-                <div style="width: 80px; height: 80px; background-color: #ffffff; 
-                            border-radius: 50%; margin: 0 auto; display: flex; 
-                            align-items: center; justify-content: center; 
-                            box-shadow: 0 4px 6px rgba(0,0,0,0.3);">
-                    <span style="color: #C8102E; font-size: 36px; font-weight: bold;">G</span>
-                </div>
-                <p style="color: #C8102E; font-style: italic; font-size: 14px; margin-top: 10px; margin-bottom: 0;">
-                    Positively Different
-                </p>
-            </div>
-        """, unsafe_allow_html=True)
-    
-    # Add a separator
-    st.markdown("---")
+# Get logo for CSS injection
+logo_base64 = get_logo_base64()
 
 # Check if we need to navigate to a specific page
 if 'navigate_to' in st.session_state:
@@ -196,63 +163,131 @@ else:
 # Create navigation with optional default
 pg = st.navigation(pages, position="sidebar")
 
-st.markdown("""
+# Inject logo at the top of sidebar using CSS
+if logo_base64:
+    logo_html = f"""
+        <div style="text-align: center; padding: 1rem 0 2rem 0; background-color: #2a2a2a;">
+            <div style="width: 80px; height: 80px; background-color: #ffffff; 
+                        border-radius: 50%; margin: 0 auto; display: flex; 
+                        align-items: center; justify-content: center; 
+                        box-shadow: 0 4px 6px rgba(0,0,0,0.3); overflow: hidden;">
+                <img src="data:image/png;base64,{logo_base64}" 
+                     style="width: 70%; height: auto; object-fit: contain;">
+            </div>
+            <p style="color: #C8102E; font-style: italic; font-size: 14px; margin-top: 10px; margin-bottom: 0;">
+                Positively Different
+            </p>
+        </div>
+        <hr style="margin: 0 1rem 1rem 1rem; border-color: #444;">
+    """
+else:
+    logo_html = """
+        <div style="text-align: center; padding: 1rem 0 2rem 0; background-color: #2a2a2a;">
+            <div style="width: 80px; height: 80px; background-color: #ffffff; 
+                        border-radius: 50%; margin: 0 auto; display: flex; 
+                        align-items: center; justify-content: center; 
+                        box-shadow: 0 4px 6px rgba(0,0,0,0.3);">
+                <span style="color: #C8102E; font-size: 36px; font-weight: bold;">G</span>
+            </div>
+            <p style="color: #C8102E; font-style: italic; font-size: 14px; margin-top: 10px; margin-bottom: 0;">
+                Positively Different
+            </p>
+        </div>
+        <hr style="margin: 0 1rem 1rem 1rem; border-color: #444;">
+    """
+
+st.markdown(f"""
     <style>
     /* Guinness brand colors */
-    .stApp {
+    .stApp {{
         background-color: #1f1f1f;
         color: #ffffff;
-    }
+    }}
     
     /* Sidebar background - match navigation background */
-    section[data-testid="stSidebar"] {
+    section[data-testid="stSidebar"] {{
         background-color: #2a2a2a !important;
-    }
+    }}
     
-    section[data-testid="stSidebar"] > div {
+    section[data-testid="stSidebar"] > div {{
         background-color: #2a2a2a !important;
-    }
+    }}
     
-    /* Navigation styling - same color as sidebar */
-    [data-testid="stSidebarNav"] {
+    /* Add logo at the very top of sidebar */
+    section[data-testid="stSidebar"] > div > div:first-child::before {{
+        content: '';
+        display: block;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 180px;
+        background-color: #2a2a2a;
+        z-index: 1000;
+    }}
+    
+    /* Push navigation down to make room for logo */
+    [data-testid="stSidebarNav"] {{
         background-color: #2a2a2a;
         border-radius: 8px;
         padding: 0.5rem;
-        margin-top: 0;
-    }
+        margin-top: 180px !important;
+        position: relative;
+        z-index: 1;
+    }}
     
-    [data-testid="stSidebarNav"] a {
+    [data-testid="stSidebarNav"] a {{
         color: #ffffff !important;
         background-color: transparent !important;
         border-radius: 4px;
         margin-bottom: 0.25rem;
         transition: all 0.2s ease;
-    }
+    }}
     
-    [data-testid="stSidebarNav"] a:hover {
+    [data-testid="stSidebarNav"] a:hover {{
         background-color: rgba(255, 255, 255, 0.1) !important;
         transform: translateX(5px);
-    }
+    }}
     
     /* Selected page styling */
-    [data-testid="stSidebarNav"] a[aria-selected="true"] {
+    [data-testid="stSidebarNav"] a[aria-selected="true"] {{
         background-color: #C8102E !important;
         font-weight: bold;
-    }
+    }}
     
     /* Ensure navigation sections have proper spacing */
-    [data-testid="stSidebarNav"] > ul > li {
+    [data-testid="stSidebarNav"] > ul > li {{
         margin-bottom: 1rem;
-    }
+    }}
     
     /* Section headers styling */
-    [data-testid="stSidebarNav"] > ul > li > span {
+    [data-testid="stSidebarNav"] > ul > li > span {{
         color: #888;
         font-size: 0.8rem;
         text-transform: uppercase;
         letter-spacing: 0.1em;
-    }
+    }}
     </style>
+    
+    <script>
+    // Inject logo HTML at the top of sidebar
+    const checkSidebar = setInterval(() => {{
+        const sidebar = document.querySelector('section[data-testid="stSidebar"] > div > div');
+        if (sidebar && !document.querySelector('.guinness-logo')) {{
+            const logoDiv = document.createElement('div');
+            logoDiv.className = 'guinness-logo';
+            logoDiv.innerHTML = `{logo_html}`;
+            logoDiv.style.position = 'fixed';
+            logoDiv.style.top = '0';
+            logoDiv.style.left = '0';
+            logoDiv.style.width = '100%';
+            logoDiv.style.zIndex = '1001';
+            logoDiv.style.backgroundColor = '#2a2a2a';
+            sidebar.insertBefore(logoDiv, sidebar.firstChild);
+            clearInterval(checkSidebar);
+        }}
+    }}, 100);
+    </script>
     """, unsafe_allow_html=True)
 
 # Run the selected page
