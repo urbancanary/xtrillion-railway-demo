@@ -60,7 +60,19 @@ def render_sidebar(available_reports, sorted_files, chatbot=None):
 
         # Allow users to select reports to display
         with st.expander("🔍 Select Reports to Display", expanded=False):
+            # Define which items should be selectable (first 6 + Welcome)
+            selectable_items = [
+                "Shin Kong Emerging Wealthy Nations Bond Fund",
+                "Shin Kong Environmental Sustainability Bond Fund", 
+                "Israel",
+                "Qatar",
+                "Mexico",
+                "Saudi Arabia",
+                "Welcome"
+            ]
+            
             for report_name, tab_name in available_reports.items():
+                # Special handling for Welcome page
                 if tab_name == "👋 Welcome":
                     st.checkbox(
                         report_name,
@@ -71,21 +83,39 @@ def render_sidebar(available_reports, sorted_files, chatbot=None):
                     )
                     continue
 
+                # Check if this item should be selectable
+                is_selectable = report_name in selectable_items
+                
+                # Create help text for disabled items
+                help_text = None if is_selectable else "Coming soon - this feature is under development"
+
                 unique_key = f"checkbox_{report_name.replace(' ', '_').lower()}_{tab_name.replace(' ', '_').lower()}_sidebar"
-                checked = st.checkbox(
-                    report_name,
-                    value=st.session_state.state["report_checkboxes"].get(report_name, True),
-                    key=unique_key
-                )
+                
+                # For non-selectable items, always show as unchecked and disabled
+                if not is_selectable:
+                    st.checkbox(
+                        report_name,
+                        value=False,
+                        disabled=True,
+                        key=unique_key,
+                        help=help_text
+                    )
+                else:
+                    # Original behavior for selectable items
+                    checked = st.checkbox(
+                        report_name,
+                        value=st.session_state.state["report_checkboxes"].get(report_name, True),
+                        key=unique_key
+                    )
 
-                # Update which reports are visible in the dropdown
-                if checked and tab_name not in st.session_state.state["dropdown_reports"]:
-                    st.session_state.state["dropdown_reports"].append(tab_name)
-                elif not checked and tab_name in st.session_state.state["dropdown_reports"]:
-                    st.session_state.state["dropdown_reports"].remove(tab_name)
+                    # Update which reports are visible in the dropdown
+                    if checked and tab_name not in st.session_state.state["dropdown_reports"]:
+                        st.session_state.state["dropdown_reports"].append(tab_name)
+                    elif not checked and tab_name in st.session_state.state["dropdown_reports"]:
+                        st.session_state.state["dropdown_reports"].remove(tab_name)
 
-                # Store checkbox state
-                st.session_state.state["report_checkboxes"][report_name] = checked
+                    # Store checkbox state
+                    st.session_state.state["report_checkboxes"][report_name] = checked
 
         # Embedding mode selector at the bottom of the sidebar
         st.markdown("## Chat Mode")

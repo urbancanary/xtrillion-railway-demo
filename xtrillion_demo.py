@@ -197,10 +197,27 @@ if st.session_state.docs_service is None or st.session_state.drive_service is No
 
 def initialize_app_state():
     if "state" not in st.session_state:
+        # Define selectable items
+        selectable_items = [
+            "Shin Kong Emerging Wealthy Nations Bond Fund",
+            "Shin Kong Environmental Sustainability Bond Fund", 
+            "Israel",
+            "Qatar",
+            "Mexico",
+            "Saudi Arabia",
+            "Welcome"
+        ]
+        
+        # Initialize dropdown with only selectable items
+        selectable_tabs = [tab for name, tab in available_reports.items() if name in selectable_items]
+        
+        # Initialize checkboxes - True for selectable, False for others
+        checkboxes = {name: name in selectable_items for name in available_reports}
+        
         st.session_state.state = {
-            "selected_reports": list(available_reports.values()),
-            "dropdown_reports": list(available_reports.values()),
-            "report_checkboxes": {name: True for name in available_reports},
+            "selected_reports": selectable_tabs,
+            "dropdown_reports": selectable_tabs,
+            "report_checkboxes": checkboxes,
             "current_report": "👋 Welcome",  # Updated to match the dropdown entry
             "time_selection": "Latest",
             "mode": "auto"
@@ -451,17 +468,8 @@ def render_ask_jay():
     st.write("Ask Jay page is under construction.")
 
 def main():
- 
-
-    if "state" not in st.session_state:
-        st.session_state.state = {
-            "selected_reports": list(available_reports.values()),
-            "dropdown_reports": list(available_reports.values()),
-            "report_checkboxes": {name: True for name in available_reports},
-            "current_report": "🇲🇽 Mexico",  # Set the default to Mexico
-            "time_selection": "Latest",
-            "mode": "auto"
-        }
+    # Initialize app state first
+    initialize_app_state()
 
     if "selected_report" not in st.session_state:
         st.session_state.selected_report = st.session_state.state["current_report"]
