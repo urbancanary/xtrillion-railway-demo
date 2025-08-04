@@ -248,7 +248,7 @@ def create_pie_charts_and_table(fund_data):
             fund_data['esg_numeric'] = pd.to_numeric(fund_data[esg_column], errors='coerce')
 
             # Create the ESG pie chart using the esg column and set hover and label settings
-            fig_esg = create_pie_chart(fund_data, esg_column, 'weighting', "ESG Rating Distribution", legend_position='left')
+            fig_esg = create_pie_chart(fund_data, esg_column, 'weighting', "ESG Rating Distribution", legend_position='right')
             fig_esg.update_traces(hoverinfo="label+percent", textinfo='percent', textfont=dict(size=12), rotation=90)
         else:
             st.warning("ESG Rating data not available.")
@@ -266,7 +266,7 @@ def create_pie_charts_and_table(fund_data):
         # Check if 'region' column exists
         if 'region' in fund_data.columns:
             # Create a Region pie chart and set hover and label settings
-            fig_region = create_pie_chart(fund_data, 'region', 'weighting', "Region Distribution", legend_position='left')
+            fig_region = create_pie_chart(fund_data, 'region', 'weighting', "Region Distribution", legend_position='right')
             fig_region.update_traces(hoverinfo="label+percent", textinfo='percent', textfont=dict(size=12), rotation=90)
         else:
             st.warning("Region data not available.")
