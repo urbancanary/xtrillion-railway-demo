@@ -242,6 +242,7 @@ def create_pie_chart(data, names, values, title, legend_position='right'):
         height=500,
         width=None,  # Will be set by container
         transition_duration=500,
+        margin=dict(l=20, r=20, t=60, b=100),  # More bottom margin for labels
         legend=dict(
             bgcolor='rgba(0,0,0,0)',
             bordercolor='rgba(0,0,0,0)',
@@ -422,11 +423,11 @@ def create_pie_charts_and_table(fund_data):
             
             for i, (tab, (chart_type, fig)) in enumerate(zip(tabs, chart_contents)):
                 with tab:
-                    # Update figure size for better display in tabs
+                    # Update figure size for better display in tabs with more bottom margin for labels
                     fig.update_layout(
-                        height=550,
+                        height=600,
                         width=None,  # Use full width
-                        margin=dict(l=20, r=20, t=40, b=20)
+                        margin=dict(l=20, r=20, t=40, b=80)  # Increased bottom margin for labels
                     )
                     
                     # Create columns for chart and export button
@@ -557,11 +558,11 @@ def fetch_fund_data_with_cache(fund_name, time_selection):
     
 def create_fund_report_tab(fund_name, color_palette, time_selection="Latest"):
     apply_custom_css()
-    # Avoid redundant "Fund" in title
+    # Avoid redundant "Fund" in title with reduced margins
     if "Fund" in fund_name:
-        st.markdown(f"<h3 style='margin-top: 0; padding-top: 0;'>{fund_name} Report ({time_selection})</h3>", unsafe_allow_html=True)
+        st.markdown(f"<h3 style='margin-top: -2rem; margin-bottom: 1rem; padding: 0;'>{fund_name} Report ({time_selection})</h3>", unsafe_allow_html=True)
     else:
-        st.markdown(f"<h3 style='margin-top: 0; padding-top: 0;'>{fund_name} Fund Report ({time_selection})</h3>", unsafe_allow_html=True)
+        st.markdown(f"<h3 style='margin-top: -2rem; margin-bottom: 1rem; padding: 0;'>{fund_name} Fund Report ({time_selection})</h3>", unsafe_allow_html=True)
     
     # Special handling for GGI Wealthy Nations Bond Fund - use local data
     if fund_name == "GGI Wealthy Nations Bond Fund":
