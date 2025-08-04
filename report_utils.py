@@ -402,14 +402,6 @@ def create_pie_charts_and_table(fund_data):
         # Add summary cards
         create_portfolio_summary_cards(fund_data)
         
-        # Portfolio Analysis Section with timestamp
-        col1, col2 = st.columns([3, 1])
-        with col1:
-            st.markdown("<h3 style='margin-top: 1rem; margin-bottom: 0.5rem;'>📊 Portfolio Analysis</h3>", unsafe_allow_html=True)
-        with col2:
-            st.markdown(f"<p style='text-align: right; color: #888; margin-top: 1.5rem; font-size: 0.9rem;'>Last updated: {datetime.now().strftime('%Y-%m-%d %H:%M')}</p>", unsafe_allow_html=True)
-        st.markdown("---")
-        
         # Create tabs for better chart display
         chart_tabs = []
         chart_contents = []
