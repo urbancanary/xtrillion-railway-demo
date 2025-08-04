@@ -1,0 +1,12 @@
+*.pyc
+__pycache__/
+.git/
+*.db
+*.sqlite
+*.wav
+*.mp3
+*.mp4
+backups/
+rvm_app*/
+full_app*/
+deep_dive_radio/

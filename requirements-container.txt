@@ -1,0 +1,27 @@
+# Core dependencies for XTrillion Demo
+streamlit==1.35.0
+pandas==2.0.3
+numpy==1.24.3
+plotly==5.22.0
+requests==2.31.0
+python-dateutil==2.8.2
+
+# Google services
+google-api-python-client==2.134.0
+google-auth==2.30.0
+google-auth-httplib2==0.2.0
+
+# LLM and NLP
+openai==1.35.3
+langchain==0.2.5
+langchain-community==0.2.5
+
+# Additional utilities
+openpyxl==3.1.2
+nest-asyncio==1.6.0
+Pillow==10.3.0
+
+# Remove heavy dependencies for container
+# QuantLib-Python==1.18  # Only needed for bond calculations
+# yfinance==0.2.37  # Only needed for financial data
+# google-cloud-storage==2.13.0  # Only needed for cloud operations
