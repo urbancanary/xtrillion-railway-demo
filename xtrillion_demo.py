@@ -82,8 +82,23 @@ def initialize_google_services():
     SCOPES = ['https://www.googleapis.com/auth/documents', 'https://www.googleapis.com/auth/drive']
 
     try:
-        credentials = service_account.Credentials.from_service_account_file(
-            SERVICE_ACCOUNT_FILE, scopes=SCOPES)
+        # Try to load from file first
+        if os.path.exists(SERVICE_ACCOUNT_FILE):
+            credentials = service_account.Credentials.from_service_account_file(
+                SERVICE_ACCOUNT_FILE, scopes=SCOPES)
+        else:
+            # Try to load from environment variable
+            import json
+            import base64
+            creds_base64 = os.getenv('GOOGLE_CREDENTIALS_BASE64')
+            if creds_base64:
+                creds_json = base64.b64decode(creds_base64).decode('utf-8')
+                creds_dict = json.loads(creds_json)
+                credentials = service_account.Credentials.from_service_account_info(
+                    creds_dict, scopes=SCOPES)
+            else:
+                st.warning("Google credentials not found. Some features may be limited.")
+                return None, None
 
         docs_service = build('docs', 'v1', credentials=credentials)
         drive_service = build('drive', 'v3', credentials=credentials)
