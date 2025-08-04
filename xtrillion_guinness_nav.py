@@ -130,10 +130,41 @@ pages = {
     ]
 }
 
-# Add logo to sidebar
+# Add logo to sidebar FIRST
 with st.sidebar:
-    # Create a container for the logo that will be positioned at top
-    logo_placeholder = st.container()
+    logo_base64 = get_logo_base64()
+    if logo_base64:
+        st.markdown(f"""
+            <div style="text-align: center; padding: 1rem 0 2rem 0;">
+                <div style="width: 80px; height: 80px; background-color: #ffffff; 
+                            border-radius: 50%; margin: 0 auto; display: flex; 
+                            align-items: center; justify-content: center; 
+                            box-shadow: 0 4px 6px rgba(0,0,0,0.3); overflow: hidden;">
+                    <img src="data:image/png;base64,{logo_base64}" 
+                         style="width: 70%; height: auto; object-fit: contain;">
+                </div>
+                <p style="color: #C8102E; font-style: italic; font-size: 14px; margin-top: 10px; margin-bottom: 0;">
+                    Positively Different
+                </p>
+            </div>
+        """, unsafe_allow_html=True)
+    else:
+        st.markdown("""
+            <div style="text-align: center; padding: 1rem 0 2rem 0;">
+                <div style="width: 80px; height: 80px; background-color: #ffffff; 
+                            border-radius: 50%; margin: 0 auto; display: flex; 
+                            align-items: center; justify-content: center; 
+                            box-shadow: 0 4px 6px rgba(0,0,0,0.3);">
+                    <span style="color: #C8102E; font-size: 36px; font-weight: bold;">G</span>
+                </div>
+                <p style="color: #C8102E; font-style: italic; font-size: 14px; margin-top: 10px; margin-bottom: 0;">
+                    Positively Different
+                </p>
+            </div>
+        """, unsafe_allow_html=True)
+    
+    # Add a separator
+    st.markdown("---")
 
 # Check if we need to navigate to a specific page
 if 'navigate_to' in st.session_state:
@@ -165,35 +196,6 @@ else:
 # Create navigation with optional default
 pg = st.navigation(pages, position="sidebar")
 
-# Now add logo content to the placeholder
-with logo_placeholder:
-    logo_base64 = get_logo_base64()
-    if logo_base64:
-        st.markdown(f"""
-            <div style="text-align: center; padding: 20px 0 30px 0; margin-top: -3rem;">
-                <div style="width: 100px; height: 100px; background-color: #ffffff; 
-                            border-radius: 50%; margin: 0 auto; display: flex; 
-                            align-items: center; justify-content: center; 
-                            box-shadow: 0 4px 6px rgba(0,0,0,0.3); overflow: hidden;">
-                    <img src="data:image/png;base64,{logo_base64}" 
-                         style="width: 70%; height: auto; object-fit: contain;">
-                </div>
-                <p style="color: #C8102E; font-style: italic; font-size: 14px; margin-top: 10px;">Positively Different</p>
-            </div>
-        """, unsafe_allow_html=True)
-    else:
-        st.markdown("""
-            <div style="text-align: center; padding: 20px 0 30px 0; margin-top: -3rem;">
-                <div style="width: 100px; height: 100px; background-color: #ffffff; 
-                            border-radius: 50%; margin: 0 auto; display: flex; 
-                            align-items: center; justify-content: center; 
-                            box-shadow: 0 4px 6px rgba(0,0,0,0.3);">
-                    <span style="color: #C8102E; font-size: 42px; font-weight: bold;">G</span>
-                </div>
-                <p style="color: #C8102E; font-style: italic; font-size: 14px; margin-top: 10px;">Positively Different</p>
-            </div>
-        """, unsafe_allow_html=True)
-
 st.markdown("""
     <style>
     /* Guinness brand colors */
@@ -211,22 +213,12 @@ st.markdown("""
         background-color: #2a2a2a !important;
     }
     
-    /* Force logo container to top */
-    section[data-testid="stSidebar"] > div > div:first-child {
-        order: -1;
-        position: sticky;
-        top: 0;
-        background-color: #2a2a2a;
-        z-index: 999;
-        padding-bottom: 0;
-    }
-    
     /* Navigation styling - same color as sidebar */
     [data-testid="stSidebarNav"] {
         background-color: #2a2a2a;
         border-radius: 8px;
         padding: 0.5rem;
-        margin-bottom: 1rem;
+        margin-top: 0;
     }
     
     [data-testid="stSidebarNav"] a {
@@ -234,15 +226,31 @@ st.markdown("""
         background-color: transparent !important;
         border-radius: 4px;
         margin-bottom: 0.25rem;
+        transition: all 0.2s ease;
     }
     
     [data-testid="stSidebarNav"] a:hover {
         background-color: rgba(255, 255, 255, 0.1) !important;
+        transform: translateX(5px);
     }
     
     /* Selected page styling */
     [data-testid="stSidebarNav"] a[aria-selected="true"] {
         background-color: #C8102E !important;
+        font-weight: bold;
+    }
+    
+    /* Ensure navigation sections have proper spacing */
+    [data-testid="stSidebarNav"] > ul > li {
+        margin-bottom: 1rem;
+    }
+    
+    /* Section headers styling */
+    [data-testid="stSidebarNav"] > ul > li > span {
+        color: #888;
+        font-size: 0.8rem;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
     }
     </style>
     """, unsafe_allow_html=True)
