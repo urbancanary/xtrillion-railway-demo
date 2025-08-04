@@ -28,6 +28,7 @@ from report_utils import create_fund_report_tab
 from user_guide import display_user_guide
 from bond_information import create_bond_information_tab
 from welcome_page_guinness_nav import display_welcome_page
+from logo_utils import get_logo_base64
 import chatbot_demo
 
 # Define color palette
@@ -147,39 +148,35 @@ st.markdown("""
 
 # Add Guinness branding to sidebar
 with st.sidebar:
-    # Logo in circular frame
-    st.markdown("""
-        <style>
-        .sidebar-logo-circle {
-            background-color: #E30613;
-            border-radius: 50%;
-            width: 120px;
-            height: 120px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 20px auto;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
-            padding: 20px;
-        }
-        .sidebar-logo-circle img {
-            max-width: 100%;
-            max-height: 100%;
-            filter: brightness(0) invert(1);
-        }
-        </style>
-        <div style="text-align: center;">
-            <div class="sidebar-logo-circle">
-        """, unsafe_allow_html=True)
+    # Get base64 encoded logo
+    logo_base64 = get_logo_base64()
     
-    # Display the logo
-    st.image("guinness_logo.png", width=80)
-    
-    st.markdown("""
+    if logo_base64:
+        # Logo with actual image in circle
+        st.markdown(f"""
+            <div style="text-align: center; padding: 20px 0;">
+                <div style="width: 120px; height: 120px; background-color: #E30613; 
+                            border-radius: 50%; margin: 0 auto; display: flex; 
+                            align-items: center; justify-content: center; 
+                            box-shadow: 0 4px 6px rgba(0,0,0,0.3); padding: 20px;">
+                    <img src="data:image/png;base64,{logo_base64}" 
+                         style="width: 80px; height: auto; filter: brightness(0) invert(1);">
+                </div>
+                <p style="color: #E30613; font-style: italic; font-size: 14px; margin-top: 10px;">Positively Different</p>
             </div>
-            <p style="color: #E30613; font-style: italic; font-size: 14px; margin-top: 10px;">Positively Different</p>
-        </div>
-    """, unsafe_allow_html=True)
+        """, unsafe_allow_html=True)
+    else:
+        # Fallback to G placeholder
+        st.markdown("""
+            <div style="text-align: center; padding: 20px 0;">
+                <div style="width: 120px; height: 120px; background-color: #E30613; 
+                            border-radius: 50%; margin: 0 auto; display: flex; 
+                            align-items: center; justify-content: center; box-shadow: 0 4px 6px rgba(0,0,0,0.3);">
+                    <span style="color: white; font-size: 48px; font-weight: bold;">G</span>
+                </div>
+                <p style="color: #E30613; font-style: italic; font-size: 14px; margin-top: 10px;">Positively Different</p>
+            </div>
+        """, unsafe_allow_html=True)
 
 # Run the selected page
 pg.run()

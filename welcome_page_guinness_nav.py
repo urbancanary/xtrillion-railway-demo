@@ -1,4 +1,5 @@
 import streamlit as st
+from logo_utils import get_logo_base64
 
 def display_welcome_page():
     """Display the Guinness-branded welcome page"""
@@ -85,34 +86,33 @@ def display_welcome_page():
     # Logo in circular frame
     col1, col2, col3 = st.columns([1, 2, 1])
     with col2:
-        # Create a container with circular background
-        st.markdown("""
-        <style>
-        .logo-circle {
-            background-color: #E30613;
-            border-radius: 50%;
-            width: 150px;
-            height: 150px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 1rem auto;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
-            padding: 25px;
-        }
-        .logo-circle img {
-            max-width: 100%;
-            max-height: 100%;
-            filter: brightness(0) invert(1);
-        }
-        </style>
-        <div class="logo-circle">
-        """, unsafe_allow_html=True)
+        # Get base64 encoded logo
+        logo_base64 = get_logo_base64()
         
-        # Display the logo
-        st.image("guinness_logo.png", width=100)
-        
-        st.markdown("</div>", unsafe_allow_html=True)
+        if logo_base64:
+            # Logo with actual image in circle
+            st.markdown(f"""
+            <div style="text-align: center; margin-bottom: 1rem;">
+                <div style="width: 150px; height: 150px; background-color: #E30613; 
+                            border-radius: 50%; margin: 0 auto; display: flex; 
+                            align-items: center; justify-content: center; 
+                            box-shadow: 0 4px 6px rgba(0,0,0,0.3); padding: 25px;">
+                    <img src="data:image/png;base64,{logo_base64}" 
+                         style="width: 100px; height: auto; filter: brightness(0) invert(1);">
+                </div>
+            </div>
+            """, unsafe_allow_html=True)
+        else:
+            # Fallback to G placeholder
+            st.markdown("""
+            <div style="text-align: center; margin-bottom: 1rem;">
+                <div style="width: 150px; height: 150px; background-color: #E30613; 
+                            border-radius: 50%; margin: 0 auto; display: flex; 
+                            align-items: center; justify-content: center; box-shadow: 0 4px 6px rgba(0,0,0,0.3);">
+                    <span style="color: white; font-size: 60px; font-weight: bold;">G</span>
+                </div>
+            </div>
+            """, unsafe_allow_html=True)
     
     # Brand text
     st.markdown('<h1 class="brand-title">Guinness</h1>', unsafe_allow_html=True)
