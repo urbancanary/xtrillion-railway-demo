@@ -9,16 +9,17 @@ def display_welcome_page():
     <style>
         .welcome-container {
             text-align: center;
-            max-width: 800px;
+            max-width: 1000px;
             margin: 0 auto;
             padding: 2rem;
         }
         .brand-title {
             color: #E30613;
-            font-size: 2.8rem;
+            font-size: 2.5rem;
             font-weight: bold;
             margin-bottom: 0.5rem;
             line-height: 1.2;
+            white-space: nowrap;
         }
         .brand-subtitle {
             color: #ffffff;
