@@ -259,7 +259,7 @@ def create_portfolio_summary_cards(fund_data):
     """Create summary metric cards for the portfolio"""
     # Calculate metrics
     total_holdings = len(fund_data[fund_data['name'] != 'Cash'])
-    total_weight = fund_data[fund_data['name'] != 'Cash']['weighting'].sum()
+    total_weight = fund_data['weighting'].sum()  # Include Cash in total weight to show 100%
     
     # Calculate average yield and duration (excluding Cash and NaN values)
     non_cash_data = fund_data[fund_data['name'] != 'Cash'].copy()
@@ -317,6 +317,33 @@ def create_pie_charts_and_table(fund_data):
         
         # Remove any rows where 'weighting' is NaN
         fund_data = fund_data.dropna(subset=['weighting'])
+        
+        # Calculate total weight
+        total_weight = fund_data['weighting'].sum()
+        
+        # If total weight is less than 100, add a Cash row
+        if total_weight < 100:
+            cash_weight = 100 - total_weight
+            cash_row = pd.DataFrame({
+                'name': ['Cash'],
+                'weighting': [cash_weight],
+                'yield': ['Cash'],
+                'duration': ['Cash'],
+                'region': ['Cash'],
+                'nfa_star_rating': ['Cash'] if 'nfa_star_rating' in fund_data.columns else None,
+                'nfa': ['Cash'] if 'nfa' in fund_data.columns else None,
+                'esg': ['Cash'] if 'esg' in fund_data.columns else None,
+                'esg_country_star_rating': ['Cash'] if 'esg_country_star_rating' in fund_data.columns else None
+            })
+            # Remove None columns
+            cash_row = cash_row.dropna(axis=1)
+            # Add all other columns from fund_data with 'Cash' as value
+            for col in fund_data.columns:
+                if col not in cash_row.columns:
+                    cash_row[col] = 'Cash'
+            
+            # Append cash row to fund_data
+            fund_data = pd.concat([fund_data, cash_row], ignore_index=True)
         
         # Check if 'nfa_star_rating' column exists
         nfa_column = next((col for col in ['nfa_star_rating', 'nfa'] if col in fund_data.columns), None)
@@ -552,11 +579,9 @@ def create_fund_report_tab(fund_name, color_palette, time_selection="Latest"):
             # Filter for GGI fund only (still uses old name in data)
             fund_data = fund_data[fund_data['fund_name'] == 'Guinness Global Investors Fund']
             
-            # Remove cash row for charts (but keep for table)
-            fund_data_for_charts = fund_data[fund_data['name'] != 'Cash'].copy()
-            
             if not fund_data.empty:
-                create_pie_charts_and_table(fund_data_for_charts)
+                # Pass all data including any existing Cash row
+                create_pie_charts_and_table(fund_data)
             else:
                 st.error(f"No data found for {fund_name} in local data.")
         except Exception as e:
