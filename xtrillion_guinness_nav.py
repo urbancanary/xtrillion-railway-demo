@@ -120,50 +120,7 @@ pages = {
     ]
 }
 
-# Create navigation
-pg = st.navigation(pages, position="sidebar")
-
-# Add custom CSS
-st.markdown("""
-    <style>
-    /* Guinness brand colors */
-    .stApp {
-        background-color: #1f1f1f;
-        color: #ffffff;
-    }
-    
-    /* Sidebar background - match main screen */
-    section[data-testid="stSidebar"] {
-        background-color: #1f1f1f;
-    }
-    
-    /* Navigation styling - slightly lighter for visibility */
-    [data-testid="stSidebarNav"] {
-        background-color: #2a2a2a;
-        border-radius: 8px;
-        padding: 0.5rem;
-        margin-bottom: 1rem;
-    }
-    
-    [data-testid="stSidebarNav"] a {
-        color: #ffffff !important;
-        background-color: transparent !important;
-        border-radius: 4px;
-        margin-bottom: 0.25rem;
-    }
-    
-    [data-testid="stSidebarNav"] a:hover {
-        background-color: rgba(255, 255, 255, 0.1) !important;
-    }
-    
-    /* Selected page styling */
-    [data-testid="stSidebarNav"] a[aria-selected="true"] {
-        background-color: #E30613 !important;
-    }
-    </style>
-    """, unsafe_allow_html=True)
-
-# Add Guinness branding to sidebar
+# Add Guinness branding to sidebar FIRST
 with st.sidebar:
     # Get base64 encoded logo
     logo_base64 = get_logo_base64()
@@ -194,6 +151,53 @@ with st.sidebar:
                 <p style="color: #E30613; font-style: italic; font-size: 14px; margin-top: 10px;">Positively Different</p>
             </div>
         """, unsafe_allow_html=True)
+
+# Create navigation AFTER sidebar content
+pg = st.navigation(pages, position="sidebar")
+
+# Add custom CSS
+st.markdown("""
+    <style>
+    /* Guinness brand colors */
+    .stApp {
+        background-color: #1f1f1f;
+        color: #ffffff;
+    }
+    
+    /* Sidebar background - match navigation background */
+    section[data-testid="stSidebar"] {
+        background-color: #2a2a2a !important;
+    }
+    
+    section[data-testid="stSidebar"] > div {
+        background-color: #2a2a2a !important;
+    }
+    
+    /* Navigation styling - same color as sidebar */
+    [data-testid="stSidebarNav"] {
+        background-color: #2a2a2a;
+        border-radius: 8px;
+        padding: 0.5rem;
+        margin-bottom: 1rem;
+    }
+    
+    [data-testid="stSidebarNav"] a {
+        color: #ffffff !important;
+        background-color: transparent !important;
+        border-radius: 4px;
+        margin-bottom: 0.25rem;
+    }
+    
+    [data-testid="stSidebarNav"] a:hover {
+        background-color: rgba(255, 255, 255, 0.1) !important;
+    }
+    
+    /* Selected page styling */
+    [data-testid="stSidebarNav"] a[aria-selected="true"] {
+        background-color: #E30613 !important;
+    }
+    </style>
+    """, unsafe_allow_html=True)
 
 # Run the selected page
 pg.run()
