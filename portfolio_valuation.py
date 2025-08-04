@@ -292,7 +292,7 @@ def show_pnl_analysis(data):
             top_gainers.style.format({
                 'p&l': '${:,.0f}',
                 'p&l_pct': '{:.2f}%'
-            }).background_gradient(subset=['p&l_pct'], cmap='Greens'),
+            }).applymap(lambda x: 'color: #66CC66; font-weight: bold' if isinstance(x, (int, float)) else '', subset=['p&l_pct']),
             use_container_width=True,
             hide_index=True
         )
@@ -302,7 +302,7 @@ def show_pnl_analysis(data):
             top_losers.style.format({
                 'p&l': '${:,.0f}',
                 'p&l_pct': '{:.2f}%'
-            }).background_gradient(subset=['p&l_pct'], cmap='Reds'),
+            }).applymap(lambda x: 'color: #CC3333; font-weight: bold' if isinstance(x, (int, float)) else '', subset=['p&l_pct']),
             use_container_width=True,
             hide_index=True
         )

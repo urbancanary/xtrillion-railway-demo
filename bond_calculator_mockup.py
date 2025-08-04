@@ -209,14 +209,14 @@ def show_batch_results():
         "Status": ["✅ Success", "✅ Success", "✅ Success", "✅ Success", "✅ Success"]
     })
     
-    # Apply gradient styling with proper numeric columns
+    # Apply styling with proper numeric columns
     styled_df = results_df.style.format({
         'YTM (%)': '{:.3f}',
         'Duration': '{:.3f}',
         'Convexity': '{:.2f}',
         'Clean Price': '{:.3f}',
         'Accrued': '{:.3f}'
-    }).background_gradient(subset=['YTM (%)', 'Duration'], cmap='YlOrRd')
+    })
     
     st.dataframe(
         styled_df,
