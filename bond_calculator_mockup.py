@@ -441,13 +441,18 @@ def add_custom_styles():
         height: 50px;
         padding-left: 20px;
         padding-right: 20px;
-        background-color: #f0f0f0;
+        background-color: #3a3a3a;
         border-radius: 8px 8px 0 0;
+        color: #ffffff !important;
+    }
+    
+    .stTabs [data-baseweb="tab"]:hover {
+        background-color: #4a4a4a;
     }
     
     .stTabs [aria-selected="true"] {
-        background-color: #E30613;
-        color: white;
+        background-color: #C8102E;
+        color: white !important;
     }
     
     /* Button styling */
