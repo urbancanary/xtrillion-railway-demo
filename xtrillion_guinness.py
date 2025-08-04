@@ -60,6 +60,7 @@ for key in ['chat_history']:
 
 
 available_reports = {
+    "Guinness Global Investors Fund": "🌐 GGI",
     "Shin Kong Emerging Wealthy Nations Bond Fund": "🟠 SKEWNBF",
     "Shin Kong Environmental Sustainability Bond Fund": "🟢 SKESBF",
     "Israel": "🇮🇱 Israel",
@@ -190,6 +191,7 @@ def initialize_app_state():
     if "state" not in st.session_state:
         # Define selectable items
         selectable_items = [
+            "Guinness Global Investors Fund",
             "Shin Kong Emerging Wealthy Nations Bond Fund",
             "Shin Kong Environmental Sustainability Bond Fund", 
             "Israel",
@@ -336,6 +338,12 @@ def render_main_content():
         create_bond_information_tab()
     elif current_report == "📖 User Guide":
         display_user_guide()
+    elif current_report == "🌐 GGI":
+        create_fund_report_tab(
+            "Guinness Global Investors Fund",
+            color_palette,
+            st.session_state.state["time_selection"]
+        )
     elif current_report == "🟠 SKEWNBF":
         create_fund_report_tab(
             "Shin Kong Emerging Wealthy Nations Bond Fund",
