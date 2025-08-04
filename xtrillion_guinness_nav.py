@@ -33,14 +33,15 @@ from bond_calculator_mockup import create_bond_calculator_page, add_custom_style
 from portfolio_valuation import create_portfolio_valuation_page, add_valuation_styles
 import chatbot_demo
 
-# Define Guinness brand color palette
+# Official Guinness brand color palette
 color_palette = [
-    "#E30613",  # Guinness Red (Primary)
-    "#002855",  # Guinness Navy Blue
-    "#8B0000",  # Dark Red
-    "#FF6B6B",  # Light Red
-    "#4A5568",  # Charcoal Grey
-    "#CBD5E0"   # Light Grey
+    "#C8102E",  # Pantone 186 C - Primary Red
+    "#21315C",  # Pantone 534 C - Secondary Primary Dark Blue
+    "#236192",  # Pantone 647 C - Secondary Blue
+    "#9DB9D5",  # Pantone 644 C - Secondary Light Blue
+    "#6BBBAE",  # Pantone 536 C - Secondary Teal
+    "#D6D2C4",  # Pantone 7527 C - Secondary Beige
+    "#808285",  # Black 60% - Grey
 ]
 
 # Page functions
@@ -141,7 +142,7 @@ with logo_placeholder:
                     <img src="data:image/png;base64,{logo_base64}" 
                          style="width: 70%; height: auto; object-fit: contain;">
                 </div>
-                <p style="color: #E30613; font-style: italic; font-size: 14px; margin-top: 10px;">Positively Different</p>
+                <p style="color: #C8102E; font-style: italic; font-size: 14px; margin-top: 10px;">Positively Different</p>
             </div>
         """, unsafe_allow_html=True)
     else:
@@ -151,9 +152,9 @@ with logo_placeholder:
                             border-radius: 50%; margin: 0 auto; display: flex; 
                             align-items: center; justify-content: center; 
                             box-shadow: 0 4px 6px rgba(0,0,0,0.3);">
-                    <span style="color: #E30613; font-size: 42px; font-weight: bold;">G</span>
+                    <span style="color: #C8102E; font-size: 42px; font-weight: bold;">G</span>
                 </div>
-                <p style="color: #E30613; font-style: italic; font-size: 14px; margin-top: 10px;">Positively Different</p>
+                <p style="color: #C8102E; font-style: italic; font-size: 14px; margin-top: 10px;">Positively Different</p>
             </div>
         """, unsafe_allow_html=True)
 
@@ -205,7 +206,7 @@ st.markdown("""
     
     /* Selected page styling */
     [data-testid="stSidebarNav"] a[aria-selected="true"] {
-        background-color: #E30613 !important;
+        background-color: #C8102E !important;
     }
     </style>
     """, unsafe_allow_html=True)

@@ -24,14 +24,15 @@ def add_tooltip(term, definition):
     """Add a tooltip icon next to a term"""
     return f'{term} <span title="{definition}" style="cursor: help; color: #888;">ⓘ</span>'
 
-# Guinness brand color palette
+# Official Guinness brand color palette
 color_palette = [
-    "#E30613",  # Guinness Red (Primary)
-    "#002855",  # Guinness Navy Blue
-    "#8B0000",  # Dark Red
-    "#FF6B6B",  # Light Red
-    "#4A5568",  # Charcoal Grey
-    "#CBD5E0"   # Light Grey
+    "#C8102E",  # Pantone 186 C - Primary Red
+    "#21315C",  # Pantone 534 C - Secondary Primary Dark Blue
+    "#236192",  # Pantone 647 C - Secondary Blue
+    "#9DB9D5",  # Pantone 644 C - Secondary Light Blue
+    "#6BBBAE",  # Pantone 536 C - Secondary Teal
+    "#D6D2C4",  # Pantone 7527 C - Secondary Beige
+    "#808285",  # Black 60% - Grey
 ]
 
 # Apply custom CSS for consistent styling across the app
@@ -272,37 +273,37 @@ def create_portfolio_summary_cards(fund_data):
     
     with col1:
         st.markdown("""
-        <div style="background-color: #2a2a2a; padding: 1.5rem; border-radius: 10px; text-align: center; border-left: 4px solid #E30613;">
-            <h4 style="color: #E30613; margin: 0; font-size: 0.9rem;">HOLDINGS</h4>
+        <div style="background-color: #2a2a2a; padding: 1.5rem; border-radius: 10px; text-align: center; border-left: 4px solid #C8102E;">
+            <h4 style="color: #C8102E; margin: 0; font-size: 0.9rem;">HOLDINGS</h4>
             <h2 style="color: white; margin: 0.5rem 0; font-size: 2rem;">{}</h2>
-            <p style="color: #888; margin: 0; font-size: 0.8rem;">Securities</p>
+            <p style="color: #808285; margin: 0; font-size: 0.8rem;">Securities</p>
         </div>
         """.format(total_holdings), unsafe_allow_html=True)
     
     with col2:
         st.markdown("""
-        <div style="background-color: #2a2a2a; padding: 1.5rem; border-radius: 10px; text-align: center; border-left: 4px solid #002855;">
-            <h4 style="color: #002855; margin: 0; font-size: 0.9rem;">PORTFOLIO WEIGHT</h4>
+        <div style="background-color: #2a2a2a; padding: 1.5rem; border-radius: 10px; text-align: center; border-left: 4px solid #21315C;">
+            <h4 style="color: #21315C; margin: 0; font-size: 0.9rem;">PORTFOLIO WEIGHT</h4>
             <h2 style="color: white; margin: 0.5rem 0; font-size: 2rem;">{:.1f}%</h2>
-            <p style="color: #888; margin: 0; font-size: 0.8rem;">Allocated</p>
+            <p style="color: #808285; margin: 0; font-size: 0.8rem;">Allocated</p>
         </div>
         """.format(total_weight), unsafe_allow_html=True)
     
     with col3:
         st.markdown("""
-        <div style="background-color: #2a2a2a; padding: 1.5rem; border-radius: 10px; text-align: center; border-left: 4px solid #8B0000;">
-            <h4 style="color: #8B0000; margin: 0; font-size: 0.9rem;">AVG YIELD</h4>
+        <div style="background-color: #2a2a2a; padding: 1.5rem; border-radius: 10px; text-align: center; border-left: 4px solid #236192;">
+            <h4 style="color: #236192; margin: 0; font-size: 0.9rem;">AVG YIELD</h4>
             <h2 style="color: white; margin: 0.5rem 0; font-size: 2rem;">{:.2f}%</h2>
-            <p style="color: #888; margin: 0; font-size: 0.8rem;" title="Yield to Maturity - The total expected return if held until maturity">YTM ⓘ</p>
+            <p style="color: #808285; margin: 0; font-size: 0.8rem;" title="Yield to Maturity - The total expected return if held until maturity">YTM ⓘ</p>
         </div>
         """.format(avg_yield if not np.isnan(avg_yield) else 0), unsafe_allow_html=True)
     
     with col4:
         st.markdown("""
-        <div style="background-color: #2a2a2a; padding: 1.5rem; border-radius: 10px; text-align: center; border-left: 4px solid #4A5568;">
-            <h4 style="color: #4A5568; margin: 0; font-size: 0.9rem;">AVG DURATION</h4>
+        <div style="background-color: #2a2a2a; padding: 1.5rem; border-radius: 10px; text-align: center; border-left: 4px solid #6BBBAE;">
+            <h4 style="color: #6BBBAE; margin: 0; font-size: 0.9rem;">AVG DURATION</h4>
             <h2 style="color: white; margin: 0.5rem 0; font-size: 2rem;">{:.1f}</h2>
-            <p style="color: #888; margin: 0; font-size: 0.8rem;" title="A measure of bond price sensitivity to interest rate changes">Years ⓘ</p>
+            <p style="color: #808285; margin: 0; font-size: 0.8rem;" title="A measure of bond price sensitivity to interest rate changes">Years ⓘ</p>
         </div>
         """.format(avg_duration if not np.isnan(avg_duration) else 0), unsafe_allow_html=True)
     

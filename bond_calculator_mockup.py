@@ -8,17 +8,6 @@ import numpy as np
 def create_bond_calculator_page():
     """Create the bond calculator page with mock data"""
     
-    # Page header with description
-    st.markdown("""
-    <div style="background: linear-gradient(135deg, #E30613 0%, #8B0000 100%); 
-                padding: 2rem; border-radius: 10px; margin-bottom: 2rem;">
-        <h1 style="color: white; margin: 0;">🧮 Advanced Bond Calculator</h1>
-        <p style="color: #f0f0f0; margin: 0.5rem 0 0 0;">
-        Powered by XTrillion Bond Analytics API - Institutional-grade calculations with Bloomberg-validated accuracy
-        </p>
-    </div>
-    """, unsafe_allow_html=True)
-    
     # Create tabs for different input methods
     tab1, tab2, tab3, tab4 = st.tabs([
         "📝 Single Bond", 
@@ -463,14 +452,14 @@ def add_custom_styles():
     
     /* Button styling */
     .stButton > button[kind="primary"] {
-        background-color: #E30613;
+        background-color: #C8102E;
         color: white;
         border: none;
         font-weight: bold;
     }
     
     .stButton > button[kind="primary"]:hover {
-        background-color: #8B0000;
+        background-color: #21315C;
     }
     
     /* Success/Info/Warning boxes */
