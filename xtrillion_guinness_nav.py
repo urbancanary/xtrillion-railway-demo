@@ -30,7 +30,7 @@ from credit_reports import create_country_report_tab
 from report_utils import create_fund_report_tab
 from user_guide import display_user_guide
 from bond_information import create_bond_information_tab
-from welcome_page_guinness_nav import display_welcome_page
+from welcome_page_guinness_nav_fixed import display_welcome_page
 from logo_utils import get_logo_base64
 from bond_calculator_mockup import create_bond_calculator_page, add_custom_styles
 from portfolio_valuation import create_portfolio_valuation_page, add_valuation_styles
@@ -114,9 +114,12 @@ def ai_assistant():
     create_ai_assistant_page()
 
 # Define navigation pages with correct path handling
+# Use default=True for welcome page to ensure it loads when URL path is not found
+welcome_page_obj = st.Page(welcome_page, title="Welcome", icon="👋", url_path="welcome", default=True)
+
 pages = {
     "Main": [
-        st.Page(welcome_page, title="Welcome", icon="👋", url_path="welcome"),
+        welcome_page_obj,
         st.Page(ggi_portfolio, title="GGI Portfolio", icon="🌐", url_path="ggi"),
         st.Page(skewnbf_portfolio, title="SKEWNBF", icon="🟠", url_path="skewnbf"),
         st.Page(skesbf_portfolio, title="SKESBF", icon="🟢", url_path="skesbf"),
@@ -171,34 +174,7 @@ with st.sidebar:
     
     st.markdown("---")
 
-# Check if we need to navigate to a specific page
-if 'navigate_to' in st.session_state:
-    # Map navigation targets to page functions
-    nav_map = {
-        'ggi': ggi_portfolio,
-        'skewnbf': skewnbf_portfolio,
-        'skesbf': skesbf_portfolio,
-        'israel': israel_report,
-        'qatar': qatar_report,
-        'mexico': mexico_report,
-        'saudi-arabia': saudi_arabia_report,
-        'calculator': bond_calculator,
-        'valuation': portfolio_valuation
-    }
-    
-    # Get the target page function
-    target = st.session_state.navigate_to
-    if target in nav_map:
-        # Clear the navigation flag
-        del st.session_state.navigate_to
-        # Set the default page
-        default_page = nav_map[target]
-    else:
-        default_page = welcome_page
-else:
-    default_page = welcome_page
-
-# Create navigation with optional default
+# Create navigation with the welcome page as default
 pg = st.navigation(pages, position="sidebar")
 
 st.markdown("""
