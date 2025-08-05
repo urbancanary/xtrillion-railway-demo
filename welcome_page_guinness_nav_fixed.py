@@ -287,23 +287,23 @@ def display_welcome_page():
     with col4:
         st.markdown("""
         <div class="feature-card">
-            <span class="feature-emoji">🧮</span>
-            <div class="feature-title">Analytics Tools</div>
+            <span class="feature-emoji">💰</span>
+            <div class="feature-title">Portfolio Tools</div>
             <div class="feature-description">
-                Bond calculator, trade simulator, portfolio valuation tools, and AI-powered 
-                analytics assistant
+                Portfolio valuation with P&L analysis, risk metrics, and comprehensive 
+                user guide for all platform features
             </div>
         </div>
         """, unsafe_allow_html=True)
         
         if st.button(
-            "Open Bond Calculator →",
-            key="calc_link",
+            "Open Portfolio Valuation →",
+            key="valuation_link",
             use_container_width=True,
-            help="Click to use Bond Calculator"
+            help="Click to use Portfolio Valuation"
         ):
             st.session_state.sidebar_state = "expanded"
-            st.info("👈 Please select a tool from the sidebar menu")
+            st.info("👈 Please select 'Portfolio Valuation' from the sidebar menu")
     
     st.markdown('</div>', unsafe_allow_html=True)
     
@@ -314,7 +314,7 @@ def display_welcome_page():
             <ol style="color: #cccccc; line-height: 1.8;">
                 <li><strong>Select a Portfolio:</strong> Choose from GGI, SKEWNBF, or SKESBF funds in the sidebar</li>
                 <li><strong>Explore Analytics:</strong> View detailed holdings, performance metrics, and risk analysis</li>
-                <li><strong>Use Tools:</strong> Calculate bond prices, simulate trades, or get AI-powered insights</li>
+                <li><strong>Use Tools:</strong> Access portfolio valuation and view the comprehensive user guide</li>
                 <li><strong>Export Data:</strong> Download reports and data in multiple formats</li>
             </ol>
         </div>
@@ -330,13 +330,13 @@ def display_welcome_page():
             - Real-time portfolio valuation
             - P&L analysis and attribution
             - Risk metrics and stress testing
-            - Trade simulation and what-if analysis
+            - Holdings breakdown and analytics
             
-            **Analytics Engine**
-            - Yield to maturity calculations
-            - Duration and convexity analysis
-            - Spread analysis vs benchmarks
-            - Cash flow projections
+            **Coming Soon**
+            - Bond calculator with YTM analysis
+            - Trade simulator for what-if scenarios
+            - AI-powered portfolio assistant
+            - Advanced risk analytics
             """)
         
         with col2:
@@ -347,11 +347,11 @@ def display_welcome_page():
             - Customizable chart visualizations
             - Historical performance tracking
             
-            **AI Assistant**
-            - Natural language queries
-            - Portfolio insights and recommendations
-            - Market analysis and trends
-            - Educational resources
+            **Available Tools**
+            - Portfolio Valuation with P&L
+            - Country-specific bond reports
+            - Fund performance analytics
+            - Comprehensive user guide
             """)
     
     # Footer

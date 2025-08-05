@@ -132,9 +132,10 @@ pages = {
     ],
     "Tools": [
         st.Page(portfolio_valuation, title="Portfolio Valuation", icon="💰", url_path="valuation"),
-        st.Page(trade_calculator, title="Trade Calculator", icon="💱", url_path="trades"),
-        st.Page(bond_calculator, title="Bond Calculator", icon="🧮", url_path="calculator"),
-        st.Page(ai_assistant, title="AI Assistant", icon="🤖", url_path="assistant"),
+        # Temporarily disabled for production prep
+        # st.Page(trade_calculator, title="Trade Calculator", icon="💱", url_path="trades"),
+        # st.Page(bond_calculator, title="Bond Calculator", icon="🧮", url_path="calculator"),
+        # st.Page(ai_assistant, title="AI Assistant", icon="🤖", url_path="assistant"),
         st.Page(user_guide, title="User Guide", icon="📖", url_path="guide"),
     ]
 }
