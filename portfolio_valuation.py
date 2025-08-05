@@ -73,7 +73,7 @@ def create_valuation_summary(data):
     with col1:
         st.markdown(f"""
         <div style="background-color: #2a2a2a; padding: 1.5rem; border-radius: 10px; text-align: center; border-left: 4px solid #C8102E;">
-            <h4 style="color: #C8102E; margin: 0; font-size: 0.9rem;">TOTAL MARKET VALUE</h4>
+            <h4 style="color: #9DB9D5; margin: 0; font-size: 0.9rem;">TOTAL MARKET VALUE</h4>
             <h2 style="color: white; margin: 0.5rem 0; font-size: 1.8rem;">${total_market_value:,.0f}</h2>
             <p style="color: #888; margin: 0; font-size: 0.8rem;">Current portfolio value</p>
         </div>
@@ -93,7 +93,7 @@ def create_valuation_summary(data):
     with col3:
         st.markdown(f"""
         <div style="background-color: #2a2a2a; padding: 1.5rem; border-radius: 10px; text-align: center; border-left: 4px solid #21315C;">
-            <h4 style="color: #21315C; margin: 0; font-size: 0.9rem;">PORTFOLIO YTM</h4>
+            <h4 style="color: #9DB9D5; margin: 0; font-size: 0.9rem;">PORTFOLIO YTM</h4>
             <h2 style="color: white; margin: 0.5rem 0; font-size: 1.8rem;">{weighted_yield:.3f}%</h2>
             <p style="color: #888; margin: 0; font-size: 0.8rem;">Weighted average</p>
         </div>
@@ -102,7 +102,7 @@ def create_valuation_summary(data):
     with col4:
         st.markdown(f"""
         <div style="background-color: #2a2a2a; padding: 1.5rem; border-radius: 10px; text-align: center; border-left: 4px solid #236192;">
-            <h4 style="color: #236192; margin: 0; font-size: 0.9rem;">DURATION</h4>
+            <h4 style="color: #9DB9D5; margin: 0; font-size: 0.9rem;">DURATION</h4>
             <h2 style="color: white; margin: 0.5rem 0; font-size: 1.8rem;">{weighted_duration:.2f}</h2>
             <p style="color: #888; margin: 0; font-size: 0.8rem;">Years (modified)</p>
         </div>
@@ -111,7 +111,7 @@ def create_valuation_summary(data):
     with col5:
         st.markdown(f"""
         <div style="background-color: #2a2a2a; padding: 1.5rem; border-radius: 10px; text-align: center; border-left: 4px solid #6BBBAE;">
-            <h4 style="color: #6BBBAE; margin: 0; font-size: 0.9rem;">POSITIONS</h4>
+            <h4 style="color: #9DB9D5; margin: 0; font-size: 0.9rem;">POSITIONS</h4>
             <h2 style="color: white; margin: 0.5rem 0; font-size: 1.8rem;">{len(non_cash)}</h2>
             <p style="color: #888; margin: 0; font-size: 0.8rem;">Active holdings</p>
         </div>
@@ -430,7 +430,7 @@ def show_duration_risk(data):
     with col1:
         st.markdown("""
         <div style="background-color: #2a2a2a; padding: 1rem; border-radius: 8px;">
-            <h5 style="color: #C8102E; margin: 0;">DV01</h5>
+            <h5 style="color: #9DB9D5; margin: 0;">DV01</h5>
             <h3 style="color: white; margin: 0.5rem 0;">${:,.0f}</h3>
             <p style="color: #888; margin: 0; font-size: 0.9rem;">Per 1bp move</p>
         </div>
@@ -439,7 +439,7 @@ def show_duration_risk(data):
     with col2:
         st.markdown("""
         <div style="background-color: #2a2a2a; padding: 1rem; border-radius: 8px;">
-            <h5 style="color: #21315C; margin: 0;">Convexity</h5>
+            <h5 style="color: #9DB9D5; margin: 0;">Convexity</h5>
             <h3 style="color: white; margin: 0.5rem 0;">{:.1f}</h3>
             <p style="color: #888; margin: 0; font-size: 0.9rem;">Portfolio convexity</p>
         </div>
@@ -449,7 +449,7 @@ def show_duration_risk(data):
         spread_duration = total_duration * 0.85  # Mock adjustment
         st.markdown("""
         <div style="background-color: #2a2a2a; padding: 1rem; border-radius: 8px;">
-            <h5 style="color: #236192; margin: 0;">Spread Duration</h5>
+            <h5 style="color: #9DB9D5; margin: 0;">Spread Duration</h5>
             <h3 style="color: white; margin: 0.5rem 0;">{:.2f}</h3>
             <p style="color: #888; margin: 0; font-size: 0.9rem;">Credit sensitivity</p>
         </div>
@@ -459,7 +459,7 @@ def show_duration_risk(data):
         var_95 = portfolio_value * 0.025  # Mock 95% VaR
         st.markdown("""
         <div style="background-color: #2a2a2a; padding: 1rem; border-radius: 8px;">
-            <h5 style="color: #6BBBAE; margin: 0;">VaR (95%)</h5>
+            <h5 style="color: #9DB9D5; margin: 0;">VaR (95%)</h5>
             <h3 style="color: white; margin: 0.5rem 0;">${:,.0f}</h3>
             <p style="color: #888; margin: 0; font-size: 0.9rem;">1-day VaR</p>
         </div>

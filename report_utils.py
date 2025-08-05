@@ -277,7 +277,7 @@ def create_portfolio_summary_cards(fund_data):
     with col1:
         st.markdown("""
         <div style="background-color: #2a2a2a; padding: 1.5rem; border-radius: 10px; text-align: center; border-left: 4px solid #C8102E;">
-            <h4 style="color: #C8102E; margin: 0; font-size: 0.9rem;">HOLDINGS</h4>
+            <h4 style="color: #9DB9D5; margin: 0; font-size: 0.9rem;">HOLDINGS</h4>
             <h2 style="color: white; margin: 0.5rem 0; font-size: 2rem;">{}</h2>
             <p style="color: #808285; margin: 0; font-size: 0.8rem;">Securities</p>
         </div>
@@ -286,7 +286,7 @@ def create_portfolio_summary_cards(fund_data):
     with col2:
         st.markdown("""
         <div style="background-color: #2a2a2a; padding: 1.5rem; border-radius: 10px; text-align: center; border-left: 4px solid #21315C;">
-            <h4 style="color: #21315C; margin: 0; font-size: 0.9rem;">PORTFOLIO WEIGHT</h4>
+            <h4 style="color: #9DB9D5; margin: 0; font-size: 0.9rem;">PORTFOLIO WEIGHT</h4>
             <h2 style="color: white; margin: 0.5rem 0; font-size: 2rem;">{:.1f}%</h2>
             <p style="color: #808285; margin: 0; font-size: 0.8rem;">Allocated</p>
         </div>
@@ -295,7 +295,7 @@ def create_portfolio_summary_cards(fund_data):
     with col3:
         st.markdown("""
         <div style="background-color: #2a2a2a; padding: 1.5rem; border-radius: 10px; text-align: center; border-left: 4px solid #236192;">
-            <h4 style="color: #236192; margin: 0; font-size: 0.9rem;">AVG YIELD</h4>
+            <h4 style="color: #9DB9D5; margin: 0; font-size: 0.9rem;">AVG YIELD</h4>
             <h2 style="color: white; margin: 0.5rem 0; font-size: 2rem;">{:.2f}%</h2>
             <p style="color: #808285; margin: 0; font-size: 0.8rem;" title="Yield to Maturity - The total expected return if held until maturity">YTM ⓘ</p>
         </div>
@@ -304,7 +304,7 @@ def create_portfolio_summary_cards(fund_data):
     with col4:
         st.markdown("""
         <div style="background-color: #2a2a2a; padding: 1.5rem; border-radius: 10px; text-align: center; border-left: 4px solid #6BBBAE;">
-            <h4 style="color: #6BBBAE; margin: 0; font-size: 0.9rem;">AVG DURATION</h4>
+            <h4 style="color: #9DB9D5; margin: 0; font-size: 0.9rem;">AVG DURATION</h4>
             <h2 style="color: white; margin: 0.5rem 0; font-size: 2rem;">{:.1f}</h2>
             <p style="color: #808285; margin: 0; font-size: 0.8rem;" title="A measure of bond price sensitivity to interest rate changes">Years ⓘ</p>
         </div>

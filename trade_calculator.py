@@ -147,7 +147,7 @@ def create_sell_interface(portfolio_data):
         with summary_col1:
             st.markdown(f"""
             <div style="background-color: #2a2a2a; padding: 1.5rem; border-radius: 10px;">
-                <h5 style="color: #C8102E; margin: 0;">Sale Details</h5>
+                <h5 style="color: #9DB9D5; margin: 0;">Sale Details</h5>
                 <p style="margin: 0.5rem 0;"><strong>Face Amount:</strong> ${sale_amount:,.0f}</p>
                 <p style="margin: 0.5rem 0;"><strong>Sale Price:</strong> {sale_price:.3f}</p>
                 <p style="margin: 0.5rem 0;"><strong>Portion Sold:</strong> {sale_percentage:.1f}%</p>
@@ -157,7 +157,7 @@ def create_sell_interface(portfolio_data):
         with summary_col2:
             st.markdown(f"""
             <div style="background-color: #2a2a2a; padding: 1.5rem; border-radius: 10px;">
-                <h5 style="color: #236192; margin: 0;">Financial Impact</h5>
+                <h5 style="color: #9DB9D5; margin: 0;">Financial Impact</h5>
                 <p style="margin: 0.5rem 0;"><strong>Gross Proceeds:</strong> ${proceeds:,.0f}</p>
                 <p style="margin: 0.5rem 0;"><strong>Cost Basis:</strong> ${cost_basis_sold:,.0f}</p>
                 <p style="margin: 0.5rem 0;"><strong>Market Value:</strong> ${market_value_sold:,.0f}</p>

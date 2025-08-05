@@ -454,13 +454,13 @@ def add_custom_styles():
     }
     
     .stTabs [aria-selected="true"] {
-        background-color: #C8102E;
+        background-color: #6BBBAE;
         color: white !important;
     }
     
     /* Button styling */
     .stButton > button[kind="primary"] {
-        background-color: #C8102E;
+        background-color: #6BBBAE;
         color: white;
         border: none;
         font-weight: bold;

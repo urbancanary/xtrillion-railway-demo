@@ -57,7 +57,7 @@ def create_interactive_holdings_table(fund_data):
             "--ag-header-foreground-color": "#ffffff",
             "--ag-odd-row-background-color": "#252525",
             "--ag-row-hover-color": "#3a3a3a",
-            "--ag-selected-row-background-color": "#C8102E",
+            "--ag-selected-row-background-color": "#6BBBAE",
             "--ag-font-size": "14px",
             "--ag-row-height": "40px",
         }
@@ -161,7 +161,7 @@ def display_bond_details(bond_data):
             title={'text': "Weight %"},
             gauge={
                 'axis': {'range': [None, 10], 'tickwidth': 1, 'tickcolor': "darkblue"},
-                'bar': {'color': "#C8102E"},
+                'bar': {'color': "#6BBBAE"},
                 'bgcolor': "white",
                 'borderwidth': 2,
                 'bordercolor': "gray",
@@ -169,7 +169,7 @@ def display_bond_details(bond_data):
                     {'range': [0, 2.5], 'color': '#9DB9D5'},
                     {'range': [2.5, 5], 'color': '#236192'},
                     {'range': [5, 7.5], 'color': '#21315C'},
-                    {'range': [7.5, 10], 'color': '#C8102E'}
+                    {'range': [7.5, 10], 'color': '#6BBBAE'}
                 ],
                 'threshold': {
                     'line': {'color': "red", 'width': 4},

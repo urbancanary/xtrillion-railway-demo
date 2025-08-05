@@ -174,7 +174,7 @@ if logo_base64:
                 <img src="data:image/png;base64,{logo_base64}" 
                      style="width: 70%; height: auto; object-fit: contain;">
             </div>
-            <p style="color: #C8102E; font-style: italic; font-size: 14px; margin-top: 10px; margin-bottom: 0;">
+            <p style="color: #6BBBAE; font-style: italic; font-size: 14px; margin-top: 10px; margin-bottom: 0;">
                 Positively Different
             </p>
         </div>
@@ -187,9 +187,9 @@ else:
                         border-radius: 50%; margin: 0 auto; display: flex; 
                         align-items: center; justify-content: center; 
                         box-shadow: 0 4px 6px rgba(0,0,0,0.3);">
-                <span style="color: #C8102E; font-size: 36px; font-weight: bold;">G</span>
+                <span style="color: #6BBBAE; font-size: 36px; font-weight: bold;">G</span>
             </div>
-            <p style="color: #C8102E; font-style: italic; font-size: 14px; margin-top: 10px; margin-bottom: 0;">
+            <p style="color: #6BBBAE; font-style: italic; font-size: 14px; margin-top: 10px; margin-bottom: 0;">
                 Positively Different
             </p>
         </div>
@@ -251,7 +251,7 @@ st.markdown(f"""
     
     /* Selected page styling */
     [data-testid="stSidebarNav"] a[aria-selected="true"] {{
-        background-color: #C8102E !important;
+        background-color: #6BBBAE !important;
         font-weight: bold;
     }}
     

@@ -14,7 +14,7 @@ def display_welcome_page():
             padding: 2rem;
         }
         .brand-title {
-            color: #C8102E;
+            color: #9DB9D5;
             font-size: 2.5rem;
             font-weight: bold;
             margin-bottom: 0.5rem;
@@ -27,7 +27,7 @@ def display_welcome_page():
             margin-bottom: 0.5rem;
         }
         .brand-tagline {
-            color: #C8102E;
+            color: #6BBBAE;
             font-style: italic;
             font-size: 1.2rem;
             margin-bottom: 2rem;
@@ -63,7 +63,7 @@ def display_welcome_page():
             margin-bottom: 0.5rem;
         }
         .feature-title {
-            color: #C8102E;
+            color: #9DB9D5;
             font-weight: bold;
             margin-bottom: 0.5rem;
         }
@@ -105,11 +105,11 @@ def display_welcome_page():
                      style="width: 70%; height: auto; object-fit: contain;">
             </div>
             <div style="text-align: left;">
-                <h1 style="color: #C8102E; font-size: 2.5rem; font-weight: bold; 
+                <h1 style="color: #9DB9D5; font-size: 2.5rem; font-weight: bold; 
                            margin: 0; line-height: 1.2; white-space: nowrap;">
                     Guinness Global Investors
                 </h1>
-                <p style="color: #C8102E; font-style: italic; font-size: 1.2rem; 
+                <p style="color: #6BBBAE; font-style: italic; font-size: 1.2rem; 
                           margin: 0.5rem 0 0 0;">
                     Positively Different
                 </p>
@@ -124,14 +124,14 @@ def display_welcome_page():
                         border-radius: 50%; display: flex; 
                         align-items: center; justify-content: center; 
                         box-shadow: 0 4px 6px rgba(0,0,0,0.3); margin-right: 2rem;">
-                <span style="color: #C8102E; font-size: 48px; font-weight: bold;">G</span>
+                <span style="color: #6BBBAE; font-size: 48px; font-weight: bold;">G</span>
             </div>
             <div style="text-align: left;">
-                <h1 style="color: #C8102E; font-size: 2.5rem; font-weight: bold; 
+                <h1 style="color: #9DB9D5; font-size: 2.5rem; font-weight: bold; 
                            margin: 0; line-height: 1.2; white-space: nowrap;">
                     Guinness Global Investors
                 </h1>
-                <p style="color: #C8102E; font-style: italic; font-size: 1.2rem; 
+                <p style="color: #6BBBAE; font-style: italic; font-size: 1.2rem; 
                           margin: 0.5rem 0 0 0;">
                     Positively Different
                 </p>
@@ -178,7 +178,7 @@ def display_welcome_page():
             margin-bottom: 0.5rem;
         }
         .card-title {
-            color: #C8102E;
+            color: #9DB9D5;
             font-weight: bold;
             font-size: 1.1rem;
             margin-bottom: 0.5rem;
