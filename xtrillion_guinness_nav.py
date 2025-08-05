@@ -246,11 +246,12 @@ st.markdown("""
     
     /* Section headers styling */
     [data-testid="stSidebarNav"] > ul > li > span {
-        color: #888;
-        font-size: 0.75rem;  /* Slightly smaller */
+        color: #9DB9D5;  /* Use light blue instead of grey */
+        font-size: 0.95rem;  /* Larger, more readable size */
+        font-weight: 600;  /* Semi-bold for emphasis */
         text-transform: uppercase;
-        letter-spacing: 0.05em;  /* Tighter letter spacing */
-        margin-bottom: 0.25rem;
+        letter-spacing: 0.08em;  /* Slightly wider letter spacing */
+        margin-bottom: 0.5rem;  /* More space under section headers */
         display: block;
     }
     </style>
