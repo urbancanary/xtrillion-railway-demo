@@ -29,4 +29,3 @@ textColor = "#ffffff"
 [client]
 # Show error details
 showErrorDetails = true
-EOF < /dev/null

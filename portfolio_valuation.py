@@ -173,7 +173,7 @@ def show_position_details(data):
         'P&L': '${:,.0f}',
         'P&L %': '{:.2f}%',
         'Weight %': '{:.2f}%'
-    }).applymap(color_pnl, subset=['P&L', 'P&L %'])
+    }).map(color_pnl, subset=['P&L', 'P&L %'])
     
     # Add filters
     col1, col2, col3 = st.columns(3)
@@ -206,7 +206,7 @@ def show_position_details(data):
             'P&L': '${:,.0f}',
             'P&L %': '{:.2f}%',
             'Weight %': '{:.2f}%'
-        }).applymap(color_pnl, subset=['P&L', 'P&L %']),
+        }).map(color_pnl, subset=['P&L', 'P&L %']),
         use_container_width=True,
         height=400
     )
@@ -294,7 +294,7 @@ def show_pnl_analysis(data):
             top_gainers.style.format({
                 'p&l': '${:,.0f}',
                 'p&l_pct': '{:.2f}%'
-            }).applymap(lambda x: 'color: #66CC66; font-weight: bold' if isinstance(x, (int, float)) else '', subset=['p&l_pct']),
+            }).map(lambda x: 'color: #66CC66; font-weight: bold' if isinstance(x, (int, float)) else '', subset=['p&l_pct']),
             use_container_width=True,
             hide_index=True
         )
@@ -304,7 +304,7 @@ def show_pnl_analysis(data):
             top_losers.style.format({
                 'p&l': '${:,.0f}',
                 'p&l_pct': '{:.2f}%'
-            }).applymap(lambda x: 'color: #CC3333; font-weight: bold' if isinstance(x, (int, float)) else '', subset=['p&l_pct']),
+            }).map(lambda x: 'color: #CC3333; font-weight: bold' if isinstance(x, (int, float)) else '', subset=['p&l_pct']),
             use_container_width=True,
             hide_index=True
         )
@@ -361,7 +361,7 @@ def show_yield_analysis(data):
     labels = ['< 3%', '3-4%', '4-5%', '5-6%', '6-7%', '> 7%']
     non_cash['yield_bucket'] = pd.cut(non_cash['yield_numeric'], bins=bins, labels=labels)
     
-    bucket_summary = non_cash.groupby('yield_bucket').agg({
+    bucket_summary = non_cash.groupby('yield_bucket', observed=True).agg({
         'weighting': 'sum',
         'market_value': 'sum',
         'name': 'count'
@@ -395,7 +395,7 @@ def show_duration_risk(data):
         labels = ['0-3Y', '3-5Y', '5-7Y', '7-10Y', '10-15Y', '>15Y']
         non_cash['duration_bucket'] = pd.cut(non_cash['duration_numeric'], bins=bins, labels=labels)
         
-        duration_dist = non_cash.groupby('duration_bucket')['weighting'].sum().reset_index()
+        duration_dist = non_cash.groupby('duration_bucket', observed=True)['weighting'].sum().reset_index()
         
         fig_duration = px.pie(
             duration_dist,
@@ -554,7 +554,7 @@ def show_scenario_analysis(data):
             'Portfolio Value': '${:,.0f}',
             'P&L': '${:,.0f}',
             'P&L %': '{:.2f}%'
-        }).applymap(
+        }).map(
             lambda x: 'color: #66CC66' if isinstance(x, (int, float)) and x > 0 
             else 'color: #CC3333' if isinstance(x, (int, float)) and x < 0 
             else '', 
