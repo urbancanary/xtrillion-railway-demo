@@ -57,6 +57,18 @@ def create_valuation_summary(data):
     total_pnl = total_market_value - total_cost
     pnl_pct = (total_pnl / total_cost) * 100 if total_cost > 0 else 0
     
+    # Calculate total accrued interest if available
+    total_accrued = 0
+    if 'accrued_dollars' in data.columns:
+        total_accrued = data['accrued_dollars'].sum()
+    elif 'accrued_interest' in data.columns:
+        # Calculate accrued dollars from percentage
+        non_cash = data[data['name'] != 'Cash'].copy()
+        for idx, row in non_cash.iterrows():
+            accrued_pct = pd.to_numeric(row.get('accrued_interest', 0), errors='coerce')
+            face_amt = row['face_amount']
+            total_accrued += face_amt * accrued_pct / 100
+    
     # Weighted averages (excluding cash)
     non_cash = data[data['name'] != 'Cash'].copy()
     non_cash['yield_numeric'] = pd.to_numeric(non_cash['yield'], errors='coerce')
