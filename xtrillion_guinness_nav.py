@@ -37,7 +37,7 @@ from portfolio_valuation import create_portfolio_valuation_page, add_valuation_s
 from trade_calculator import create_trade_calculator_page, add_trade_styles
 from ai_assistant import create_ai_assistant_page, add_ai_styles
 import chatbot_demo
-from debug_deployment import *
+from debug_deployment import show_debug_info
 
 # Official Guinness brand color palette
 color_palette = [
@@ -115,7 +115,7 @@ def ai_assistant():
     create_ai_assistant_page()
 
 def debug_page():
-    import debug_deployment
+    show_debug_info()
 
 # Define navigation pages with correct path handling
 # Use default=True for welcome page to ensure it loads when URL path is not found
