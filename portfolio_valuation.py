@@ -80,6 +80,7 @@ def create_valuation_summary(data):
     weighted_duration = (non_cash['duration_numeric'] * non_cash['weighting'] / total_weight).sum()
     
     # Display summary cards
+    # Display summary metrics with accrued interest
     col1, col2, col3, col4, col5 = st.columns(5)
     
     with col1:
