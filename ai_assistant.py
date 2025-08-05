@@ -30,7 +30,7 @@ def create_ai_assistant_page():
             st.info("For local development: Add ANTHROPIC_API_KEY to .streamlit/secrets.toml")
             return
             
-        # Initialize client for version 0.18.1
+        # Initialize client for anthropic version 0.18.1
         client = anthropic.Client(api_key)
     except Exception as e:
         st.error(f"Error initializing AI assistant: {str(e)}")
