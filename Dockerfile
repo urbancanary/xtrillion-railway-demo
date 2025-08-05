@@ -63,5 +63,10 @@ ENV PYTHONUNBUFFERED=1
 HEALTHCHECK --interval=30s --timeout=10s --start-period=5s --retries=3 \
     CMD curl -f http://localhost:$PORT/_stcore/health || exit 1
 
-# Run the application
-CMD streamlit run xtrillion_guinness_nav.py --server.port=$PORT --server.address=0.0.0.0
+# Run the application with better URL handling
+CMD streamlit run xtrillion_guinness_nav.py \
+    --server.port=$PORT \
+    --server.address=0.0.0.0 \
+    --server.baseUrlPath="" \
+    --server.enableCORS=false \
+    --server.enableXsrfProtection=false

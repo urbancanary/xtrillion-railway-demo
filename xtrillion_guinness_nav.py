@@ -175,7 +175,13 @@ with st.sidebar:
     st.markdown("---")
 
 # Create navigation with the welcome page as default
-pg = st.navigation(pages, position="sidebar")
+# Add URL parameter handling for better routing
+try:
+    pg = st.navigation(pages, position="sidebar")
+except Exception as e:
+    st.error(f"Navigation error: {str(e)}")
+    # Fallback to welcome page
+    welcome_page()
 
 st.markdown("""
     <style>
@@ -240,4 +246,9 @@ st.markdown("""
     """, unsafe_allow_html=True)
 
 # Run the selected page
-pg.run()
+# Run the navigation - this handles all page routing
+if pg:
+    pg.run()
+else:
+    # If navigation fails, show welcome page
+    welcome_page()

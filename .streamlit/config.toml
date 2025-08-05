@@ -1,21 +1,32 @@
-[theme]
-base = "dark"
-primaryColor = "#FF4B4B"
-backgroundColor = "#1f1f1f"
-secondaryBackgroundColor = "#1f1f1f"
-textColor = "#ffffff"
-font = "sans serif"
-
-[browser]
-gatherUsageStats = false
-
 [server]
-headless = true
-enableCORS = false
+# Enable XSRF protection
 enableXsrfProtection = false
 
-[ui]
-hideTopBar = false
+# Enable CORS handling
+enableCORS = false
+
+# Port configuration
+port = 8501
+
+# Address to bind to
+address = "0.0.0.0"
+
+# Disable usage stats
+gatherUsageStats = false
+
+[browser]
+# Disable automatic browser opening
+serverAddress = "0.0.0.0"
+
+[theme]
+# Dark theme matching Guinness branding
+base = "dark"
+primaryColor = "#C8102E"
+backgroundColor = "#1f1f1f"
+secondaryBackgroundColor = "#2a2a2a"
+textColor = "#ffffff"
 
 [client]
-showSidebarNavigation = true
+# Show error details
+showErrorDetails = true
+EOF < /dev/null
