@@ -130,7 +130,40 @@ pages = {
     ]
 }
 
-# We'll add the logo after navigation is created
+# Add logo to sidebar
+with st.sidebar:
+    logo_base64 = get_logo_base64()
+    if logo_base64:
+        st.markdown(f"""
+            <div style="text-align: center; padding: 0.5rem 0 1rem 0; margin-bottom: 0.5rem;">
+                <div style="width: 60px; height: 60px; background-color: #ffffff; 
+                            border-radius: 50%; margin: 0 auto; display: flex; 
+                            align-items: center; justify-content: center; 
+                            box-shadow: 0 4px 6px rgba(0,0,0,0.3); overflow: hidden;">
+                    <img src="data:image/png;base64,{logo_base64}" 
+                         style="width: 70%; height: auto; object-fit: contain;">
+                </div>
+                <p style="color: #6BBBAE; font-style: italic; font-size: 12px; margin: 5px 0 0 0;">
+                    Positively Different
+                </p>
+            </div>
+        """, unsafe_allow_html=True)
+    else:
+        st.markdown("""
+            <div style="text-align: center; padding: 0.5rem 0 1rem 0; margin-bottom: 0.5rem;">
+                <div style="width: 60px; height: 60px; background-color: #ffffff; 
+                            border-radius: 50%; margin: 0 auto; display: flex; 
+                            align-items: center; justify-content: center; 
+                            box-shadow: 0 4px 6px rgba(0,0,0,0.3);">
+                    <span style="color: #6BBBAE; font-size: 30px; font-weight: bold;">G</span>
+                </div>
+                <p style="color: #6BBBAE; font-style: italic; font-size: 12px; margin: 5px 0 0 0;">
+                    Positively Different
+                </p>
+            </div>
+        """, unsafe_allow_html=True)
+    
+    st.markdown("---")
 
 # Check if we need to navigate to a specific page
 if 'navigate_to' in st.session_state:
@@ -162,104 +195,64 @@ else:
 # Create navigation with optional default
 pg = st.navigation(pages, position="sidebar")
 
-# Add logo after navigation
-logo_base64 = get_logo_base64()
-if logo_base64:
-    logo_html = f"""
-        <div class="sidebar-logo" style="position: fixed; top: 10px; left: 10px; width: 240px; z-index: 999; background-color: #2a2a2a; text-align: center; padding: 10px;">
-            <div style="width: 60px; height: 60px; background-color: #ffffff; 
-                        border-radius: 50%; margin: 0 auto; display: flex; 
-                        align-items: center; justify-content: center; 
-                        box-shadow: 0 4px 6px rgba(0,0,0,0.3); overflow: hidden;">
-                <img src="data:image/png;base64,{logo_base64}" 
-                     style="width: 70%; height: auto; object-fit: contain;">
-            </div>
-            <p style="color: #6BBBAE; font-style: italic; font-size: 12px; margin: 5px 0 0 0;">
-                Positively Different
-            </p>
-        </div>
-    """
-else:
-    logo_html = """
-        <div class="sidebar-logo" style="position: fixed; top: 10px; left: 10px; width: 240px; z-index: 999; background-color: #2a2a2a; text-align: center; padding: 10px;">
-            <div style="width: 60px; height: 60px; background-color: #ffffff; 
-                        border-radius: 50%; margin: 0 auto; display: flex; 
-                        align-items: center; justify-content: center; 
-                        box-shadow: 0 4px 6px rgba(0,0,0,0.3);">
-                <span style="color: #6BBBAE; font-size: 30px; font-weight: bold;">G</span>
-            </div>
-            <p style="color: #6BBBAE; font-style: italic; font-size: 12px; margin: 5px 0 0 0;">
-                Positively Different
-            </p>
-        </div>
-    """
-
-st.markdown(f"""
-    {logo_html}
+st.markdown("""
     <style>
     /* Guinness brand colors */
-    .stApp {{
+    .stApp {
         background-color: #1f1f1f;
         color: #ffffff;
-    }}
+    }
     
     /* Sidebar background - match navigation background */
-    section[data-testid="stSidebar"] {{
+    section[data-testid="stSidebar"] {
         background-color: #2a2a2a !important;
-    }}
+    }
     
-    section[data-testid="stSidebar"] > div {{
+    section[data-testid="stSidebar"] > div {
         background-color: #2a2a2a !important;
-        padding-top: 100px !important; /* Make room for logo */
-    }}
+    }
     
     /* Navigation styling - same color as sidebar */
-    [data-testid="stSidebarNav"] {{
+    [data-testid="stSidebarNav"] {
         background-color: #2a2a2a;
         border-radius: 8px;
         padding: 0.5rem;
-    }}
+    }
     
-    [data-testid="stSidebarNav"] a {{
+    [data-testid="stSidebarNav"] a {
         color: #ffffff !important;
         background-color: transparent !important;
         border-radius: 4px;
-        margin-bottom: 0.25rem;
+        margin-bottom: 0.1rem;  /* Reduced spacing */
+        padding: 0.5rem 0.75rem;  /* More compact padding */
         transition: all 0.2s ease;
-    }}
+    }
     
-    [data-testid="stSidebarNav"] a:hover {{
+    [data-testid="stSidebarNav"] a:hover {
         background-color: rgba(255, 255, 255, 0.1) !important;
         transform: translateX(5px);
-    }}
+    }
     
     /* Selected page styling */
-    [data-testid="stSidebarNav"] a[aria-selected="true"] {{
+    [data-testid="stSidebarNav"] a[aria-selected="true"] {
         background-color: #6BBBAE !important;
         font-weight: bold;
-    }}
+    }
     
-    /* Ensure navigation sections have proper spacing */
-    [data-testid="stSidebarNav"] > ul > li {{
-        margin-bottom: 1rem;
-    }}
+    /* Reduce spacing between navigation sections */
+    [data-testid="stSidebarNav"] > ul > li {
+        margin-bottom: 0.5rem;  /* Reduced from 1rem */
+    }
     
     /* Section headers styling */
-    [data-testid="stSidebarNav"] > ul > li > span {{
+    [data-testid="stSidebarNav"] > ul > li > span {
         color: #888;
-        font-size: 0.8rem;
+        font-size: 0.75rem;  /* Slightly smaller */
         text-transform: uppercase;
-        letter-spacing: 0.1em;
-    }}
-    
-    /* Fix main content area - no extra header */
-    .main > div:first-child {{
-        padding-top: 0 !important;
-    }}
-    
-    section.main > div {{
-        padding-top: 1rem !important;
-    }}
+        letter-spacing: 0.05em;  /* Tighter letter spacing */
+        margin-bottom: 0.25rem;
+        display: block;
+    }
     </style>
     """, unsafe_allow_html=True)
 
