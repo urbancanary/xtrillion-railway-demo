@@ -92,6 +92,14 @@ def display_welcome_page():
             margin-bottom: 2rem;
         }
         
+        /* Metrics styling */
+        div[data-testid="metric-container"] {
+            background-color: #2a2a2a;
+            padding: 1rem;
+            border-radius: 8px;
+            border-left: 4px solid #C8102E;
+        }
+        
         .logo-button {
             width: 80px;
             height: 80px;
@@ -194,21 +202,36 @@ def display_welcome_page():
     # Quick stats - if we have data
     try:
         import pandas as pd
-        fund_data = pd.read_csv('data_with_ggi.csv')
+        fund_data = pd.read_csv('data.csv')
         ggi_data = fund_data[fund_data['fund_name'] == 'Guinness Global Investors Fund']
         if not ggi_data.empty:
             total_value = ggi_data['market_value'].sum()
-            num_holdings = len(ggi_data[ggi_data['name'] != 'Cash'])
+            total_cost = ggi_data['total_cost'].sum()
+            total_pnl = total_value - total_cost
+            pnl_pct = (total_pnl / total_cost) * 100 if total_cost > 0 else 0
+            
+            # Calculate weighted metrics (excluding cash)
+            non_cash = ggi_data[ggi_data['name'] != 'Cash'].copy()
+            num_holdings = len(non_cash)
+            
+            # Convert yield and duration to numeric
+            non_cash['yield_numeric'] = pd.to_numeric(non_cash['yield'], errors='coerce')
+            non_cash['duration_numeric'] = pd.to_numeric(non_cash['duration'], errors='coerce')
+            
+            # Calculate weighted averages
+            total_weight = non_cash['weighting'].sum()
+            weighted_yield = (non_cash['yield_numeric'] * non_cash['weighting'] / total_weight).sum()
+            weighted_duration = (non_cash['duration_numeric'] * non_cash['weighting'] / total_weight).sum()
             
             col1, col2, col3, col4 = st.columns(4)
             with col1:
-                st.metric("Portfolio Value", f"${total_value:,.0f}")
+                st.metric("Portfolio Value", f"${total_value:,.0f}", f"{pnl_pct:+.2f}%")
             with col2:
                 st.metric("Holdings", num_holdings)
             with col3:
-                st.metric("Avg Yield", f"{ggi_data['yield'].astype(float).mean():.2f}%")
+                st.metric("Portfolio YTM", f"{weighted_yield:.2f}%")
             with col4:
-                st.metric("Avg Duration", f"{ggi_data['duration'].astype(float).mean():.1f}y")
+                st.metric("Duration", f"{weighted_duration:.1f}y")
     except:
         pass
     
