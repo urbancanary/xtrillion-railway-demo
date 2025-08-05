@@ -14,12 +14,11 @@ def display_welcome_page():
             padding: 2rem;
         }
         .brand-title {
-            color: #9DB9D5;
+            color: #C8102E;
             font-size: 2.5rem;
             font-weight: bold;
             margin-bottom: 0.5rem;
             line-height: 1.2;
-            white-space: nowrap;
         }
         .brand-subtitle {
             color: #ffffff;
@@ -86,9 +85,41 @@ def display_welcome_page():
             margin-top: 2rem;
             border: 1px solid #3a3a3a;
         }
-        .logo-container {
-            text-align: center;
-            margin-bottom: 1.5rem;
+        .logo-title-container {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        
+        .logo-button {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background-color: #2a2a2a;
+            border: 2px solid #3a3a3a;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            flex-shrink: 0;
+        }
+        
+        .logo-button:hover {
+            transform: scale(1.05);
+            border-color: #C8102E;
+            box-shadow: 0 0 20px rgba(200, 16, 46, 0.3);
+        }
+        
+        .logo-button img {
+            width: 50px;
+            height: 50px;
+            object-fit: contain;
+        }
+        
+        .title-section {
+            flex-grow: 1;
         }
         
         /* Modern card styling with glass morphism effect */
@@ -120,13 +151,6 @@ def display_welcome_page():
             opacity: 0;
         }
         
-        /* Add gradient text effect for titles */
-        .brand-title {
-            background: linear-gradient(135deg, #C8102E 0%, #9DB9D5 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
         
         /* Interactive elements highlight */
         .highlight-box {
@@ -142,20 +166,20 @@ def display_welcome_page():
     # Main welcome container
     st.markdown('<div class="welcome-container">', unsafe_allow_html=True)
     
-    # Logo and title section
+    # Logo and title section - circular logo button next to title
     logo_base64 = get_logo_base64()
-    if logo_base64:
-        st.markdown(f"""
-            <div class="logo-container">
-                <img src="data:image/png;base64,{logo_base64}" alt="Guinness Logo" width="150">
-            </div>
-        """, unsafe_allow_html=True)
     
-    # Title section with better typography
-    st.markdown("""
-        <h1 class="brand-title">Guinness Global Investors</h1>
-        <h2 class="brand-subtitle">Fixed Income Portfolio Analytics Platform</h2>
-        <p class="brand-tagline">Institutional-grade bond analytics powered by advanced quantitative models</p>
+    st.markdown(f"""
+        <div class="logo-title-container">
+            <div class="logo-button">
+                <img src="data:image/png;base64,{logo_base64}" alt="Guinness Logo">
+            </div>
+            <div class="title-section">
+                <h1 class="brand-title">Guinness Global Investors</h1>
+                <h2 class="brand-subtitle">Fixed Income Portfolio Analytics Platform</h2>
+                <p class="brand-tagline">Institutional-grade bond analytics powered by advanced quantitative models</p>
+            </div>
+        </div>
     """, unsafe_allow_html=True)
     
     # Welcome text
