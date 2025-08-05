@@ -12,13 +12,25 @@ def create_ai_assistant_page():
     
     # Initialize Anthropic client
     try:
-        # Check if API key exists in secrets
-        if "ANTHROPIC_API_KEY" not in st.secrets:
-            st.error("⚠️ Anthropic API key not configured. Please add ANTHROPIC_API_KEY to your Streamlit secrets.")
-            st.info("To add secrets: Settings → Secrets → Add `ANTHROPIC_API_KEY = 'your-key-here'`")
+        import os
+        
+        # Try environment variable first (for deployment), then Streamlit secrets (for local dev)
+        api_key = os.environ.get("ANTHROPIC_API_KEY")
+        
+        if not api_key:
+            # Try Streamlit secrets as fallback
+            try:
+                api_key = st.secrets.get("ANTHROPIC_API_KEY")
+            except:
+                pass
+        
+        if not api_key:
+            st.error("⚠️ Anthropic API key not configured.")
+            st.info("For Railway deployment: Add ANTHROPIC_API_KEY to your environment variables")
+            st.info("For local development: Add ANTHROPIC_API_KEY to .streamlit/secrets.toml")
             return
             
-        client = anthropic.Anthropic(api_key=st.secrets["ANTHROPIC_API_KEY"])
+        client = anthropic.Anthropic(api_key=api_key)
     except Exception as e:
         st.error(f"Error initializing AI assistant: {str(e)}")
         return
