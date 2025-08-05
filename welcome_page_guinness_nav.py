@@ -105,7 +105,7 @@ def display_welcome_page():
                      style="width: 70%; height: auto; object-fit: contain;">
             </div>
             <div style="text-align: left;">
-                <h1 style="color: #9DB9D5; font-size: 2.5rem; font-weight: bold; 
+                <h1 style="color: #C8102E; font-size: 2.5rem; font-weight: bold; 
                            margin: 0; line-height: 1.2; white-space: nowrap;">
                     Guinness Global Investors
                 </h1>
@@ -127,7 +127,7 @@ def display_welcome_page():
                 <span style="color: #6BBBAE; font-size: 48px; font-weight: bold;">G</span>
             </div>
             <div style="text-align: left;">
-                <h1 style="color: #9DB9D5; font-size: 2.5rem; font-weight: bold; 
+                <h1 style="color: #C8102E; font-size: 2.5rem; font-weight: bold; 
                            margin: 0; line-height: 1.2; white-space: nowrap;">
                     Guinness Global Investors
                 </h1>
@@ -191,54 +191,152 @@ def display_welcome_page():
     </style>
     """, unsafe_allow_html=True)
     
-    # Create clickable cards that open sidebar
+    # Create clickable cards with large emojis
+    st.markdown("""
+    <style>
+        /* Override button styling for feature cards */
+        .feature-button > button {
+            background: linear-gradient(135deg, #2a2a2a 0%, #1a1a1a 100%);
+            border: 1px solid #3a3a3a;
+            height: 120px;
+            padding: 1rem;
+            text-align: left;
+        }
+        .feature-button > button:hover {
+            border-color: #C8102E;
+            background: linear-gradient(135deg, #3a3a3a 0%, #2a2a2a 100%);
+        }
+        .feature-button > button p {
+            margin: 0 !important;
+            text-align: left !important;
+        }
+    </style>
+    """, unsafe_allow_html=True)
+    
     col1, col2 = st.columns(2)
     
     with col1:
         # GGI Portfolio Card
-        ggi_clicked = st.button(
-            "🌐\n\n**GGI Portfolio**\n\nOur flagship Wealthy Nations Bond Fund with diversified holdings",
-            key="ggi_card",
-            use_container_width=True
-        )
-        if ggi_clicked:
-            st.session_state.sidebar_state = "expanded"
-            st.session_state.navigate_to = "ggi"
-            st.rerun()
+        with st.container():
+            st.markdown('<div class="feature-button">', unsafe_allow_html=True)
+            if st.button(
+                "dummy",
+                key="ggi_card",
+                use_container_width=True,
+                help="Click to view GGI Portfolio"
+            ):
+                st.session_state.sidebar_state = "expanded"
+                st.session_state.navigate_to = "ggi"
+                st.rerun()
+            st.markdown('</div>', unsafe_allow_html=True)
+            
+            # Overlay content
+            st.markdown("""
+            <div style="position: relative; margin-top: -115px; pointer-events: none; padding: 1rem;">
+                <div style="display: flex; align-items: flex-start;">
+                    <span style="font-size: 3.5rem; margin-right: 1rem;">🌐</span>
+                    <div>
+                        <div style="color: #9DB9D5; font-weight: bold; font-size: 1.1rem; margin-bottom: 0.3rem;">
+                            GGI Portfolio
+                        </div>
+                        <div style="color: #cccccc; font-size: 0.9rem; line-height: 1.3;">
+                            Our flagship Wealthy Nations Bond Fund with diversified holdings
+                        </div>
+                    </div>
+                </div>
+            </div>
+            """, unsafe_allow_html=True)
         
         # Country Analysis Card
-        country_clicked = st.button(
-            "🌍\n\n**Country Analysis**\n\nIn-depth reports on Israel, Qatar, Mexico, and Saudi Arabia",
-            key="country_card",
-            use_container_width=True
-        )
-        if country_clicked:
-            st.session_state.sidebar_state = "expanded"
-            st.session_state.navigate_to = "israel"
-            st.rerun()
+        with st.container():
+            st.markdown('<div class="feature-button">', unsafe_allow_html=True)
+            if st.button(
+                "dummy",
+                key="country_card",
+                use_container_width=True,
+                help="Click to view Country Analysis"
+            ):
+                st.session_state.sidebar_state = "expanded"
+                st.session_state.navigate_to = "israel"
+                st.rerun()
+            st.markdown('</div>', unsafe_allow_html=True)
+            
+            st.markdown("""
+            <div style="position: relative; margin-top: -115px; pointer-events: none; padding: 1rem;">
+                <div style="display: flex; align-items: flex-start;">
+                    <span style="font-size: 3.5rem; margin-right: 1rem;">🌍</span>
+                    <div>
+                        <div style="color: #9DB9D5; font-weight: bold; font-size: 1.1rem; margin-bottom: 0.3rem;">
+                            Country Analysis
+                        </div>
+                        <div style="color: #cccccc; font-size: 0.9rem; line-height: 1.3;">
+                            In-depth reports on Israel, Qatar, Mexico, and Saudi Arabia
+                        </div>
+                    </div>
+                </div>
+            </div>
+            """, unsafe_allow_html=True)
     
     with col2:
         # Fund Reports Card
-        fund_clicked = st.button(
-            "📊\n\n**Fund Reports**\n\nDetailed analysis of SKEWNBF and SKESBF funds",
-            key="fund_card",
-            use_container_width=True
-        )
-        if fund_clicked:
-            st.session_state.sidebar_state = "expanded"
-            st.session_state.navigate_to = "skewnbf"
-            st.rerun()
+        with st.container():
+            st.markdown('<div class="feature-button">', unsafe_allow_html=True)
+            if st.button(
+                "dummy",
+                key="fund_card",
+                use_container_width=True,
+                help="Click to view Fund Reports"
+            ):
+                st.session_state.sidebar_state = "expanded"
+                st.session_state.navigate_to = "skewnbf"
+                st.rerun()
+            st.markdown('</div>', unsafe_allow_html=True)
+            
+            st.markdown("""
+            <div style="position: relative; margin-top: -115px; pointer-events: none; padding: 1rem;">
+                <div style="display: flex; align-items: flex-start;">
+                    <span style="font-size: 3.5rem; margin-right: 1rem;">📊</span>
+                    <div>
+                        <div style="color: #9DB9D5; font-weight: bold; font-size: 1.1rem; margin-bottom: 0.3rem;">
+                            Fund Reports
+                        </div>
+                        <div style="color: #cccccc; font-size: 0.9rem; line-height: 1.3;">
+                            Detailed analysis of SKEWNBF and SKESBF funds
+                        </div>
+                    </div>
+                </div>
+            </div>
+            """, unsafe_allow_html=True)
         
         # Bond Calculator Card
-        calc_clicked = st.button(
-            "🧮\n\n**Bond Calculator**\n\nAdvanced bond analytics and portfolio calculations",
-            key="calc_card",
-            use_container_width=True
-        )
-        if calc_clicked:
-            st.session_state.sidebar_state = "expanded"
-            st.session_state.navigate_to = "calculator"
-            st.rerun()
+        with st.container():
+            st.markdown('<div class="feature-button">', unsafe_allow_html=True)
+            if st.button(
+                "dummy",
+                key="calc_card",
+                use_container_width=True,
+                help="Click to use Bond Calculator"
+            ):
+                st.session_state.sidebar_state = "expanded"
+                st.session_state.navigate_to = "calculator"
+                st.rerun()
+            st.markdown('</div>', unsafe_allow_html=True)
+            
+            st.markdown("""
+            <div style="position: relative; margin-top: -115px; pointer-events: none; padding: 1rem;">
+                <div style="display: flex; align-items: flex-start;">
+                    <span style="font-size: 3.5rem; margin-right: 1rem;">🧮</span>
+                    <div>
+                        <div style="color: #9DB9D5; font-weight: bold; font-size: 1.1rem; margin-bottom: 0.3rem;">
+                            Bond Calculator
+                        </div>
+                        <div style="color: #cccccc; font-size: 0.9rem; line-height: 1.3;">
+                            Advanced bond analytics and portfolio calculations
+                        </div>
+                    </div>
+                </div>
+            </div>
+            """, unsafe_allow_html=True)
     
     # Navigation hint
     st.markdown("""
