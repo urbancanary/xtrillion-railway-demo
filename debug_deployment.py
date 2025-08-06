@@ -1,13 +1,40 @@
 import streamlit as st
 import pandas as pd
 from datetime import datetime
+import sys
 
 def show_debug_info():
     st.title("🔍 Deployment Debug Info")
     
+    # Show git info
+    import subprocess
+    try:
+        # Get current git commit
+        commit = subprocess.check_output(['git', 'rev-parse', 'HEAD'], text=True).strip()[:7]
+        branch = subprocess.check_output(['git', 'rev-parse', '--abbrev-ref', 'HEAD'], text=True).strip()
+        st.write(f"**Git Branch:** {branch}")
+        st.write(f"**Git Commit:** {commit}")
+    except:
+        st.write("**Git Info:** Not available")
+    
+    # Show environment
+    import os
+    st.write(f"**Environment:** {os.getenv('RAILWAY_ENVIRONMENT', 'local')}")
+    st.write(f"**Python Version:** {sys.version.split()[0]}")
+    
+    # Show main app file
+    st.write(f"**Entry Point:** guinness_app.py")
+    
     # Show deployment timestamp
     st.write(f"**Current Time:** {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
-    st.write("**Script Last Modified:** 2025-08-05")
+    import os
+    try:
+        # Get actual file modification time
+        file_stat = os.stat(__file__)
+        mod_time = datetime.fromtimestamp(file_stat.st_mtime)
+        st.write(f"**Script Last Modified:** {mod_time.strftime('%Y-%m-%d %H:%M:%S')}")
+    except:
+        st.write("**Script Last Modified:** Unable to determine")
     
     # Check data file
     try:

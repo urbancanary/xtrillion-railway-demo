@@ -270,7 +270,25 @@ st.markdown("""
 # Run the selected page
 # Run the navigation - this handles all page routing
 if pg:
-    pg.run()
+    try:
+        pg.run()
+    except Exception as e:
+        st.error(f"Navigation error: {str(e)}")
+        st.info("Falling back to manual navigation...")
+        
+        # Fallback navigation using selectbox
+        page_options = {
+            "Welcome": welcome_page,
+            "GGI Portfolio": ggi_portfolio,
+            "Portfolio Valuation": portfolio_valuation,
+            "Israel Report": israel_report,
+            "User Guide": user_guide,
+            "Debug Info": debug_page
+        }
+        
+        selected = st.selectbox("Select a page:", list(page_options.keys()))
+        if selected in page_options:
+            page_options[selected]()
 else:
     # If navigation fails, show welcome page
     welcome_page()
