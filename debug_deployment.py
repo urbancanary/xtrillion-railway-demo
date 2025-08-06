@@ -7,7 +7,7 @@ def show_debug_info():
     
     # Show deployment timestamp
     st.write(f"**Current Time:** {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
-    st.write(f"**Script Last Modified:** 2025-08-05")
+    st.write("**Script Last Modified:** 2025-08-05")
     
     # Check data file
     try:

@@ -3,7 +3,6 @@ import streamlit as st
 import pandas as pd
 import requests
 import json
-import numpy as np
 
 def load_bond_data():
     """
@@ -132,7 +131,7 @@ def create_bond_information_tab():
     selected_bond = st.session_state.bond_selection_sidebar
 
     # Filter the DataFrame based on the selected bond
-    bond_data = data[data['name'] == selected_bond]
+    bond_data = bond_data[bond_data['name'] == selected_bond]
 
     # Bond Information Layout and Content
     st.title("Bond Information", anchor=False)

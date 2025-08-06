@@ -2,7 +2,6 @@ import streamlit as st
 import pandas as pd
 import numpy as np
 from st_aggrid import AgGrid, GridOptionsBuilder, GridUpdateMode, DataReturnMode
-from st_aggrid.shared import JsCode
 import plotly.graph_objects as go
 import plotly.express as px
 
@@ -132,7 +131,7 @@ def display_bond_details(bond_data):
             "DV01": f"${bond_data.get('dv01', 'N/A')}",
         }
         
-        st.markdown(f"""
+        st.markdown("""
         <div style="background-color: #2a2a2a; padding: 1.5rem; border-radius: 10px;">
         """, unsafe_allow_html=True)
         

@@ -151,7 +151,7 @@ def load_rvm_data():
             df = pd.read_sql_query(query, conn)
             conn.close()
             return df, db_path_used
-        except Exception as e:
+        except Exception:
             # If rvm_grid_wide doesn't exist, try other table names
             conn.close()
             return None, db_path_used
@@ -314,7 +314,7 @@ def main():
                 st.markdown("**📈 Data Details:**")
                 st.markdown(f"**Shape**: {df.shape[0]} ratings × {df.shape[1]-1} durations")
                 st.markdown(f"**Database**: `{Path(db_path).name if db_path else 'Unknown'}`")
-                st.markdown(f"**Last Updated**: Real-time")
+                st.markdown("**Last Updated**: Real-time")
                 
     else:
         st.error("❌ Unable to load RVM grid data")

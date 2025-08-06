@@ -2,8 +2,7 @@ import streamlit as st
 import pandas as pd
 import plotly.graph_objects as go
 import plotly.express as px
-from datetime import datetime, date
-import numpy as np
+from datetime import date
 
 def create_bond_calculator_page():
     """Create the bond calculator page with mock data"""
@@ -43,26 +42,26 @@ def create_single_bond_tab():
         )
         
         if input_type == "ISIN Code":
-            isin = st.text_input("ISIN Code", placeholder="US912810RG64")
+            st.text_input("ISIN Code", placeholder="US912810RG64")
         else:
-            description = st.text_input("Bond Description", placeholder="T 3.5 02/15/2029")
+            st.text_input("Bond Description", placeholder="T 3.5 02/15/2029")
         
         # Price and settlement inputs
         col1a, col1b = st.columns(2)
         with col1a:
-            price = st.number_input("Price", min_value=0.0, max_value=200.0, value=99.5, step=0.125)
+            st.number_input("Price", min_value=0.0, max_value=200.0, value=99.5, step=0.125)
         with col1b:
-            settlement = st.date_input("Settlement Date", value=date.today())
+            st.date_input("Settlement Date", value=date.today())
         
         # Additional parameters in expander
         with st.expander("Advanced Parameters"):
             col1c, col1d = st.columns(2)
             with col1c:
-                face_value = st.number_input("Face Value", value=1000000, step=100000)
-                frequency = st.selectbox("Coupon Frequency", ["Semi-Annual", "Annual", "Quarterly"])
+                st.number_input("Face Value", value=1000000, step=100000)
+                st.selectbox("Coupon Frequency", ["Semi-Annual", "Annual", "Quarterly"])
             with col1d:
-                day_count = st.selectbox("Day Count", ["30/360", "Actual/Actual", "Actual/360"])
-                eom_adjust = st.checkbox("End of Month Adjustment")
+                st.selectbox("Day Count", ["30/360", "Actual/Actual", "Actual/360"])
+                st.checkbox("End of Month Adjustment")
         
         # Calculate button
         if st.button("🚀 Calculate Analytics", type="primary", use_container_width=True):
@@ -241,17 +240,17 @@ def create_portfolio_analysis_tab():
     with col1:
         st.markdown("### Select Portfolio")
         
-        portfolio = st.selectbox(
+        st.selectbox(
             "Choose Portfolio",
             ["GGI Wealthy Nations Bond Fund", "SKEWNBF", "SKESBF", "Custom Portfolio"]
         )
         
-        analysis_date = st.date_input("Analysis Date", value=date.today())
+        st.date_input("Analysis Date", value=date.today())
         
         st.markdown("### Analysis Options")
         
         # Analysis toggles
-        calc_options = {
+        {
             "Calculate Greeks": st.checkbox("Calculate Greeks", value=True),
             "Scenario Analysis": st.checkbox("Scenario Analysis", value=True),
             "Cash Flow Projection": st.checkbox("Cash Flow Projection", value=False),
@@ -353,9 +352,9 @@ def create_bulk_processing_tab():
     with upload_col2:
         st.markdown("#### Processing Options")
         
-        batch_size = st.number_input("Batch Size", min_value=1, max_value=100, value=10)
-        parallel = st.checkbox("Parallel Processing", value=True)
-        save_results = st.checkbox("Auto-save Results", value=True)
+        st.number_input("Batch Size", min_value=1, max_value=100, value=10)
+        st.checkbox("Parallel Processing", value=True)
+        st.checkbox("Auto-save Results", value=True)
         
         if uploaded_file:
             if st.button("⚡ Start Bulk Processing", type="primary", use_container_width=True):

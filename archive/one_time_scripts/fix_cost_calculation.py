@@ -5,7 +5,6 @@ Cost = Face Amount * (Price + Accrued Interest) / 100
 """
 
 import pandas as pd
-import numpy as np
 
 # Read the CSV
 df = pd.read_csv('data.csv')

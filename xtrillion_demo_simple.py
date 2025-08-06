@@ -22,7 +22,7 @@ with st.sidebar:
     st.divider()
     st.info("**Deployment Status**")
     st.success("✅ Deployed on Railway")
-    st.caption(f"Version: 1.0.0")
+    st.caption("Version: 1.0.0")
     st.caption(f"Last updated: {datetime.now().strftime('%Y-%m-%d')}")
 
 # Main content

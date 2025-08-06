@@ -1,6 +1,4 @@
 import streamlit as st
-from pathlib import Path
-import os
 import numpy as np
 
 from bond_information import get_bond_options

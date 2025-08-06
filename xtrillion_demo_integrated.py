@@ -2,10 +2,7 @@
 XTrillion Demo - Integrated Cloud Version
 """
 import streamlit as st
-import uuid
 import os
-import time
-from pathlib import Path
 
 # Configure the page
 st.set_page_config(
@@ -182,8 +179,8 @@ def main():
         
         with col2:
             st.subheader("Environment")
-            st.code(f"Platform: Railway")
-            st.code(f"Python: 3.10")
+            st.code("Platform: Railway")
+            st.code("Python: 3.10")
             st.code(f"Streamlit: {st.__version__}")
 
 if __name__ == "__main__":

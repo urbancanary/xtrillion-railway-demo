@@ -2,9 +2,7 @@ import streamlit as st
 import pandas as pd
 import plotly.express as px
 import requests
-import json
 from datetime import datetime
-import numpy as np
 
 def create_rvm_grid_tab():
     """
@@ -55,7 +53,7 @@ def create_rvm_grid_tab():
                 else:
                     continue
                     
-            except Exception as e:
+            except Exception:
                 continue
                 
         return {"success": False, "error": "Could not connect to cloud database API"}

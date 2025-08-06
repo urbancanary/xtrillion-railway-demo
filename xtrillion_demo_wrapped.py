@@ -4,7 +4,6 @@ XTrillion Demo - Cloud-ready version with graceful fallbacks
 import streamlit as st
 import os
 import sys
-import time
 from datetime import datetime
 
 # Configure the page
@@ -92,7 +91,7 @@ def main():
             st.session_state.active_tab = selected_tab
             
             st.divider()
-            st.caption(f"Version: Cloud Demo")
+            st.caption("Version: Cloud Demo")
             st.caption(f"Time: {datetime.now().strftime('%H:%M:%S')}")
     
     # Main content area

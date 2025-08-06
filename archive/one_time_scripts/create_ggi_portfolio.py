@@ -42,7 +42,7 @@ def create_ggi_portfolio():
     
     # Keep existing bonds but update the portfolio context
     print(f"Created GGI portfolio with {len(ggi_df)} holdings")
-    print(f"Each holding weight: 4%")
+    print("Each holding weight: 4%")
     print(f"Total portfolio weight: {len(ggi_df) * 4}%")
     
     return ggi_df
@@ -52,7 +52,6 @@ def create_ggi_transactions():
     transactions = []
     
     # Read GGI holdings
-    df = pd.read_csv('data.csv')
     ggi_df = create_ggi_portfolio()
     
     # Create buy transactions over the past 6 months
@@ -138,8 +137,8 @@ if __name__ == "__main__":
     
     print("\nGGI Portfolio created successfully!")
     print(f"Total holdings: {len(ggi_portfolio)}")
-    print(f"Portfolio saved to: data_with_ggi.csv")
-    print(f"Transactions saved to: ggi_transactions.csv")
+    print("Portfolio saved to: data_with_ggi.csv")
+    print("Transactions saved to: ggi_transactions.csv")
     
     # Show sample
     print("\nSample GGI holdings:")

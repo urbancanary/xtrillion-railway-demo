@@ -1,7 +1,4 @@
 import streamlit as st
-from pathlib import Path
-import os
-import numpy as np
 
 def render_sidebar(available_reports, sorted_files=None, chatbot=None):
     with st.sidebar:

@@ -30,9 +30,9 @@ class QAEngine:
             with open(self.sentences_file, 'r', encoding='utf-8') as f:
                 self.sentences = [line.strip() for line in f]
             self.embeddings = np.load(self.embeddings_file)
-        except FileNotFoundError as e:
+        except FileNotFoundError:
             pass
-        except Exception as e:
+        except Exception:
             pass
         
     def find_relevant_sentences(self, query, top_k=3):

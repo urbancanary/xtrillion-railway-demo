@@ -13,7 +13,6 @@ Fixes:
 
 import pandas as pd
 import numpy as np
-from datetime import datetime
 
 def fix_portfolio_calculations():
     """Fix GGI portfolio calculations with proper rounding and cash allocation"""
@@ -30,7 +29,7 @@ def fix_portfolio_calculations():
     TOTAL_PORTFOLIO_VALUE = 10_000_000  # $10 million
     ROUNDING_AMOUNT = 100_000  # Round to nearest $100k
     
-    print(f"\nPortfolio parameters:")
+    print("\nPortfolio parameters:")
     print(f"Total portfolio value: ${TOTAL_PORTFOLIO_VALUE:,.0f}")
     print(f"Number of holdings (ex-cash): {len(non_cash)}")
     
@@ -97,7 +96,7 @@ def fix_portfolio_calculations():
         df.loc[cash_idx, 'total_cost'] = cash_amount
         df.loc[cash_idx, 'closing_price'] = 100.0
         
-        print(f"\nCash position:")
+        print("\nCash position:")
         print(f"  Bonds market value: ${total_bonds_market_value:,.2f}")
         print(f"  Cash amount: ${cash_amount:,.2f}")
         print(f"  Percentage: {(cash_amount / TOTAL_PORTFOLIO_VALUE * 100):.2f}%")

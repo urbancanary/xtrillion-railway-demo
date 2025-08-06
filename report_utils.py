@@ -4,8 +4,6 @@ import numpy as np
 import plotly.express as px
 import requests
 import plotly.graph_objects as go
-import colorsys
-from io import StringIO
 import json
 from fetch_data import fetch_fund_data  # Import the function from fetch_data.py
 from datetime import datetime

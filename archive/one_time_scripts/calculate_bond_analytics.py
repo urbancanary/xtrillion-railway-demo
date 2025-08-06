@@ -14,7 +14,6 @@ For each bond in the GGI portfolio.
 
 import pandas as pd
 import requests
-import json
 from datetime import datetime
 import time
 
@@ -128,7 +127,7 @@ def update_portfolio_analytics():
             df.loc[idx, 'spread'] = result['spread']
             
         else:
-            print(f"  ✗ Failed to get analytics")
+            print("  ✗ Failed to get analytics")
             
         # Small delay to avoid overwhelming the API
         time.sleep(0.1)

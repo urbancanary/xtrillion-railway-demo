@@ -21,7 +21,7 @@ def create_ai_assistant_page():
             # Try Streamlit secrets as fallback
             try:
                 api_key = st.secrets.get("ANTHROPIC_API_KEY")
-            except:
+            except Exception:
                 pass
         
         if not api_key:
@@ -68,11 +68,11 @@ def create_ai_assistant_page():
                 avg_yield = pd.to_numeric(ggi_data[ggi_data['name'] != 'Cash']['yield'], errors='coerce').mean()
                 
                 st.markdown(f"""
-                <div style="background-color: #2a2a2a; padding: 1rem; border-radius: 8px; margin-bottom: 1rem;">
-                    <h5 style="color: #9DB9D5; margin: 0;">GGI Portfolio</h5>
-                    <p style="margin: 0.5rem 0;"><strong>Value:</strong> ${total_value:,.0f}</p>
-                    <p style="margin: 0.5rem 0;"><strong>Holdings:</strong> {num_holdings}</p>
-                    <p style="margin: 0.5rem 0;"><strong>Avg Yield:</strong> {avg_yield:.2f}%</p>
+                <div style=\"background-color: #2a2a2a; padding: 1rem; border-radius: 8px; margin-bottom: 1rem;\">
+                    <h5 style=\"color: #9DB9D5; margin: 0;\">GGI Portfolio</h5>
+                    <p style=\"margin: 0.5rem 0;\"><strong>Value:</strong> ${total_value:,.0f}</p>
+                    <p style=\"margin: 0.5rem 0;\"><strong>Holdings:</strong> {num_holdings}</p>
+                    <p style=\"margin: 0.5rem 0;\"><strong>Avg Yield:</strong> {avg_yield:.2f}%</p>
                 </div>
                 """, unsafe_allow_html=True)
                 
@@ -90,7 +90,7 @@ def create_ai_assistant_page():
                     prompt = "How could I optimize my bond portfolio for better risk-adjusted returns?"
                     st.session_state.ai_input = prompt
                     
-        except Exception as e:
+        except Exception:
             st.info("Portfolio data not available")
     
     with chat_col:
@@ -125,7 +125,7 @@ def create_ai_assistant_page():
                         - Financial markets and investment strategies
                         - The Guinness Global Investors platform features
                         
-                        Current context:
+Current context:
                         {context}
                         
                         Be helpful, concise, and use specific examples when possible. If asked about calculations,
@@ -229,7 +229,8 @@ Portfolio Overview:
 - Weighted Average Duration: {weighted_duration:.2f} years
 
 Top 5 Holdings:
-""")
+"""
+)
             for _, holding in top_holdings.iterrows():
                 context_parts.append(f"- {holding['name']}: {holding['weighting']:.1f}% weight, {holding['yield_numeric']:.2f}% yield")
             
@@ -239,7 +240,7 @@ Top 5 Holdings:
             for region, weight in region_dist.items():
                 context_parts.append(f"- {region}: {weight:.1f}%")
                 
-    except Exception as e:
+    except Exception:
         context_parts.append("Portfolio data not available for context.")
     
     # Add platform features context

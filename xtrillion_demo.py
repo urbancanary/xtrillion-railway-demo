@@ -14,12 +14,11 @@ st.set_page_config(
 )
 #from chatbot_andy35 import ChatbotAndy, create_google_doc
 import uuid
-from langchain.schema import AIMessage, HumanMessage
+from langchain.schema import AIMessage
 import os
 # Google services imports - commented out for Guinness version
 # from google.oauth2 import service_account
 # from googleapiclient.discovery import build
-import numpy as np
 import time
 from pathlib import Path
 import random
@@ -29,12 +28,11 @@ import string
 from credit_reports import create_country_report_tab
 from report_utils import create_fund_report_tab
 from user_guide import display_user_guide
-from bond_information import create_bond_information_tab, get_bond_options
+from bond_information import create_bond_information_tab
 from qa_engine5 import QAEngine, detect_intent
 from welcome_page import display_welcome_page  # Import the new welcome page
-from streamlit_deep_dive_radio_wrapped import deep_dive_radio_page, get_sorted_media_files, get_last_modified_date, load_processed_files
+from streamlit_deep_dive_radio_wrapped import get_sorted_media_files, get_last_modified_date, load_processed_files
 import sidebar_demo
-from report_utils import fetch_fund_data_with_cache  # Import the new function
 import chatbot_demo
 
 # Import RVM Grid corrected layout

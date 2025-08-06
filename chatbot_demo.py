@@ -5,6 +5,8 @@ import os
 import numpy as np
 from sklearn.metrics.pairwise import cosine_similarity
 import logging
+import requests
+import time
 
 # Try to import OpenAI with proper error handling
 try:
@@ -14,7 +16,7 @@ try:
         openai_client = OpenAI(api_key=api_key)
     else:
         openai_client = None
-except Exception as e:
+except Exception:
     openai_client = None
 
 class ChatbotAndy:
