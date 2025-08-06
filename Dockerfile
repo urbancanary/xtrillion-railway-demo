@@ -1,52 +1,62 @@
-# XTrillion Demo Dockerfile
-# Using multi-stage build for smaller final image
+# XTrillion Guinness App Dockerfile - Optimized for Railway
+# Single-stage build with retry logic for network resilience
 
-# Build stage
-FROM python:3.10-slim as builder
-
-# Install build dependencies
-RUN apt-get update && apt-get install -y \
-    build-essential \
-    gcc \
-    g++ \
-    cmake \
-    libboost-all-dev \
-    && rm -rf /var/lib/apt/lists/*
-
-# Create virtual environment
-RUN python -m venv /opt/venv
-ENV PATH="/opt/venv/bin:$PATH"
-
-# Install Python dependencies
-COPY requirements.txt /tmp/requirements.txt
-RUN pip install --upgrade pip && \
-    pip install --no-cache-dir -r /tmp/requirements.txt
-
-# Runtime stage
 FROM python:3.10-slim
 
-# Install runtime dependencies
-RUN apt-get update && apt-get install -y \
-    libgomp1 \
-    curl \
-    && rm -rf /var/lib/apt/lists/*
+# Set working directory early
+WORKDIR /app
 
-# Copy virtual environment from builder
-COPY --from=builder /opt/venv /opt/venv
-ENV PATH="/opt/venv/bin:$PATH"
+# Install system dependencies with retry logic
+RUN set -ex && \
+    for i in 1 2 3; do \
+        apt-get update && \
+        apt-get install -y --no-install-recommends \
+            build-essential \
+            gcc \
+            g++ \
+            libgomp1 \
+            curl \
+            ca-certificates && \
+        apt-get clean && \
+        rm -rf /var/lib/apt/lists/* && \
+        break || \
+        if [ $i -lt 3 ]; then \
+            echo "Retrying apt-get (attempt $i/3)..."; \
+            sleep 5; \
+        else \
+            echo "Failed to install dependencies after 3 attempts"; \
+            exit 1; \
+        fi; \
+    done
+
+# Copy requirements first for better caching
+COPY requirements.txt /app/
+
+# Upgrade pip and install Python dependencies with retry logic
+RUN set -ex && \
+    python -m pip install --upgrade pip && \
+    for i in 1 2 3; do \
+        pip install --no-cache-dir -r requirements.txt && \
+        break || \
+        if [ $i -lt 3 ]; then \
+            echo "Retrying pip install (attempt $i/3)..."; \
+            sleep 5; \
+        else \
+            echo "Failed to install Python dependencies after 3 attempts"; \
+            exit 1; \
+        fi; \
+    done
 
 # Create non-root user
 RUN useradd -m -u 1000 xtrillion
 
-# Set working directory
-WORKDIR /app
-
 # Copy application files
 COPY --chown=xtrillion:xtrillion . /app/
 
-# Create necessary directories
+# Create necessary directories and set permissions
 RUN mkdir -p /app/.streamlit && \
-    chown -R xtrillion:xtrillion /app
+    chown -R xtrillion:xtrillion /app && \
+    chmod -R 755 /app
 
 # Switch to non-root user
 USER xtrillion
@@ -59,8 +69,8 @@ EXPOSE $PORT
 ENV STREAMLIT_SERVER_ADDRESS=0.0.0.0
 ENV PYTHONUNBUFFERED=1
 
-# Health check with longer start period for Streamlit
-HEALTHCHECK --interval=30s --timeout=30s --start-period=60s --retries=5 \
+# Health check with Railway-optimized settings
+HEALTHCHECK --interval=30s --timeout=10s --start-period=90s --retries=3 \
     CMD curl -f http://localhost:$PORT/_stcore/health || exit 1
 
 # Run the application with better URL handling

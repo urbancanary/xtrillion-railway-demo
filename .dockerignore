@@ -1,25 +1,76 @@
-.git
+# Version control
+.git/
 .gitignore
-Dockerfile
-Dockerfile.dev
+.gitattributes
+
+# Documentation
 README.md
 CLAUDE.md
 UI_IMPROVEMENTS.md
 README_GUINNESS.md
-old_pages
-__pycache__
-*.pyc
-*.pyo
-*.pyd
-.env.example
+CODE_AUDIT.md
+DEPLOYMENT_TRIGGER.txt
+*.md
+
+# Docker files
+Dockerfile*
+docker-compose*.yml
+.dockerignore
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+ENV/
+.venv/
+*.egg-info/
+.pytest_cache/
+.coverage
+htmlcov/
+.mypy_cache/
+
+# Development/Testing
+test_*.py
+*_test.py
+debug_*.py
 copy_essential_files.sh
-debug_deployment.py
-railway.json
+
+# Deployment configs (keep railway.json)
+# railway.json is needed by Railway
 railway.toml
 render.yaml
-DEPLOY_TRIGGER.txt
-*.csv
-*.png
-*.json
-*.txt
-*.md
+.env.example
+
+# Archives and old code
+old_pages/
+archived_code/
+*.backup
+*.zip
+*.tar.gz
+
+# OS files
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+*~
+
+# IDE
+.vscode/
+.idea/
+*.sublime-*
+
+# Temporary files
+tmp/
+temp/
+cache/
+
+# Keep these files (explicit excludes from ignore)
+!data.csv
+!requirements.txt
+!railway.json
+!.streamlit/config.toml

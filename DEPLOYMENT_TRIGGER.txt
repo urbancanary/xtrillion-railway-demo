@@ -3,17 +3,22 @@ Deployment Trigger File
 
 This file is used to force Railway to redeploy when needed.
 
-Last Update: 2025-08-06 07:58:00
+Last Update: 2025-08-06 08:15:00
 
-Reason: Navigation not working on deployed version, pages not changing.
+Reason: Docker build failure - optimized Dockerfile for Railway environment
 
 Recent Changes:
-- Added caching to improve performance
-- Fixed navigation debugging
-- Updated debug info to show real timestamps
-- Added fallback navigation if st.navigation fails
+- Optimized Dockerfile to handle network issues with retry logic
+- Changed from multi-stage to single-stage build
+- Added retry logic for apt-get and pip install commands
+- Updated .dockerignore to exclude unnecessary files
+- Adjusted health check settings for Railway
 
-If navigation still doesn't work after this deploy, check:
-1. Streamlit version compatibility
-2. st.navigation browser support
-3. Railway environment variables
+Previous issues:
+- Navigation not working on deployed version
+- Docker build failing with network errors
+
+If deployment still fails, check:
+1. Railway build logs for specific errors
+2. Network connectivity issues
+3. Base image availability
