@@ -1,0 +1,19 @@
+Deployment Trigger File
+=======================
+
+This file is used to force Railway to redeploy when needed.
+
+Last Update: 2025-08-06 07:58:00
+
+Reason: Navigation not working on deployed version, pages not changing.
+
+Recent Changes:
+- Added caching to improve performance
+- Fixed navigation debugging
+- Updated debug info to show real timestamps
+- Added fallback navigation if st.navigation fails
+
+If navigation still doesn't work after this deploy, check:
+1. Streamlit version compatibility
+2. st.navigation browser support
+3. Railway environment variables
