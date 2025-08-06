@@ -14,6 +14,11 @@ address = "0.0.0.0"
 # Disable usage stats
 gatherUsageStats = false
 
+# Performance optimizations
+enableWebsocketCompression = true
+maxMessageSize = 200
+maxUploadSize = 200
+
 [browser]
 # Disable automatic browser opening
 serverAddress = "0.0.0.0"
@@ -27,5 +32,15 @@ secondaryBackgroundColor = "#2a2a2a"
 textColor = "#ffffff"
 
 [client]
-# Show error details
+# Show error details (set to false in production)
 showErrorDetails = true
+# Toolbar mode
+toolbarMode = "minimal"
+
+[runner]
+# Disable magic commands for better performance
+magicEnabled = false
+# Post-script grace period
+postScriptGracePeriod = 30
+# Fast reruns
+fastReruns = true

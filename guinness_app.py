@@ -2,6 +2,13 @@
 
 import streamlit as st
 
+# Apply performance optimizations first
+try:
+    from performance_config import apply_performance_settings, inject_performance_css, preload_common_data
+    apply_performance_settings()
+except:
+    pass
+
 # Check if we should start with sidebar collapsed
 initial_state = "collapsed" if 'sidebar_state' not in st.session_state else st.session_state.get('sidebar_state', 'expanded')
 
@@ -16,6 +23,12 @@ st.set_page_config(
         'About': "Guinness Global Investors - Portfolio Management Platform"
     }
 )
+
+# Inject performance CSS
+try:
+    inject_performance_css()
+except:
+    pass
 
 # Initialize session state to prevent errors
 if "state" not in st.session_state:
@@ -180,6 +193,13 @@ with st.sidebar:
 # Add URL parameter handling for better routing
 try:
     pg = st.navigation(pages, position="sidebar")
+    
+    # Preload common data in background for better performance
+    try:
+        preload_common_data()
+    except:
+        pass
+        
 except Exception as e:
     st.error(f"Navigation error: {str(e)}")
     # Fallback to welcome page
