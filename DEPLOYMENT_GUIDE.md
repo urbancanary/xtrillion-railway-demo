@@ -9,13 +9,19 @@
   - Development: https://dev.x-trillion.ai
 - **Service Name**: Likely "zooming-appreciation" or "amusing-insight"
 
+### Repository Details
+- **GitHub Repository**: https://github.com/urbancanary/xtrillion-railway-demo
+- **Default Branch**: develop (for development environment)
+- **Production Branch**: main (if using separate production)
+
 ### Repository Structure
 ```
 xtrillion_guinness_app/
-├── guinness_app.py          # Main entry point
+├── guinness_app.py          # Main entry point (renamed from xtrillion_guinness_nav.py)
 ├── requirements.txt         # Python dependencies
 ├── Dockerfile              # Container configuration
-├── railway.json/toml       # Railway configuration
+├── railway.json            # Railway configuration
+├── railway.toml            # Alternative Railway config
 └── .streamlit/
     └── config.toml         # Streamlit configuration
 ```

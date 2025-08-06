@@ -64,7 +64,7 @@ HEALTHCHECK --interval=30s --timeout=30s --start-period=60s --retries=5 \
     CMD curl -f http://localhost:$PORT/_stcore/health || exit 1
 
 # Run the application with better URL handling
-CMD streamlit run xtrillion_guinness_nav.py \
+CMD streamlit run guinness_app.py \
     --server.port=$PORT \
     --server.address=0.0.0.0 \
     --server.baseUrlPath="" \
